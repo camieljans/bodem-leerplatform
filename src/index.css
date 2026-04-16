@@ -1,0 +1,16 @@
+@import "tailwindcss";
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, 'Segoe UI', Roboto, sans-serif;
+  background: linear-gradient(to bottom, #e8f5e9 0%, #f1f8e9 40%, #f9fbe7 75%, #fdf6ee 100%);
+  min-height: 100vh;
+}
+
+#root {
+  min-height: 100vh;
+}
