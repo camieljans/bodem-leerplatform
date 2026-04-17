@@ -2,6 +2,13 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../App'
 import { supabase } from '../supabase'
+import { opdrachten } from '../data/opdrachten'
+
+const schoolGroepMapping = {
+  'pro': 'basis', 'vmbo-b': 'basis',
+  'vmbo-k': 'midden', 'vmbo-tl': 'midden',
+  'havo': 'havo', 'vwo': 'havo', 'anders': 'midden',
+}
 
 const projectInfo = {
   wormenhotel: {
@@ -31,14 +38,44 @@ export default function Dashboard() {
   const navigate = useNavigate()
   const info = projectInfo[project] || projectInfo.wormenhotel
 
-  const [verzoeken, setVerzoeken] = useState([]) // wachtende koppelingsverzoeken
+  const [verzoeken, setVerzoeken] = useState([])
   const [reageerBezig, setReageerBezig] = useState({})
+  const [voortgang, setVoortgang] = useState(null)
+  const [nieuweAntwoorden, setNieuweAntwoorden] = useState(0)
 
   useEffect(() => {
     if (user && profile?.rol === 'leerling') {
       laadVerzoeken()
+      if (project) {
+        laadVoortgang()
+        laadNieuweAntwoorden()
+      }
     }
-  }, [user, profile])
+  }, [user, profile, project])
+
+  async function laadVoortgang() {
+    const schoolGroep = schoolGroepMapping[profile?.niveau] || 'midden'
+    const weekenData = opdrachten[project]?.[schoolGroep] || []
+    const totaal = weekenData.reduce((sum, w) => sum + (w.taken?.length || 0), 0)
+    const { data } = await supabase
+      .from('opdracht_voortgang')
+      .select('id')
+      .eq('leerling_id', user.id)
+      .eq('project', project)
+    setVoortgang({ gedaan: (data || []).length, totaal })
+  }
+
+  async function laadNieuweAntwoorden() {
+    const { data } = await supabase
+      .from('vragen')
+      .select('id')
+      .eq('leerling_id', user.id)
+      .eq('project', project)
+      .not('antwoord', 'is', null)
+    const gezien = JSON.parse(localStorage.getItem('gezieneAntwoorden') || '[]')
+    const nieuw = (data || []).filter(v => !gezien.includes(v.id)).length
+    setNieuweAntwoorden(nieuw)
+  }
 
   async function laadVerzoeken() {
     const { data: koppelingen } = await supabase
@@ -141,6 +178,45 @@ export default function Dashboard() {
                 </div>
               ))}
             </div>
+          </div>
+        )}
+
+        {/* Voortgangsindicator */}
+        {voortgang && voortgang.totaal > 0 && (
+          <div className="bg-white rounded-2xl shadow p-5 mb-5">
+            <div className="flex items-center justify-between mb-2">
+              <span className="font-semibold text-gray-700 text-sm">📊 Totale voortgang opdrachten</span>
+              <span className="text-sm font-bold text-green-700">{voortgang.gedaan}/{voortgang.totaal}</span>
+            </div>
+            <div className="bg-gray-100 rounded-full h-3">
+              <div
+                className="bg-green-500 h-3 rounded-full transition-all duration-500"
+                style={{ width: `${Math.min(100, Math.round((voortgang.gedaan / voortgang.totaal) * 100))}%` }}
+              />
+            </div>
+            <p className="text-xs text-gray-400 mt-1">{Math.min(100, Math.round((voortgang.gedaan / voortgang.totaal) * 100))}% voltooid</p>
+          </div>
+        )}
+
+        {/* Notificatie nieuwe antwoorden */}
+        {nieuweAntwoorden > 0 && (
+          <div className="bg-blue-50 border border-blue-200 rounded-2xl p-4 mb-5 flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <span className="text-xl">💬</span>
+              <p className="text-blue-800 font-medium text-sm">
+                Je hebt {nieuweAntwoorden} nieuw{nieuweAntwoorden > 1 ? 'e antwoorden' : ' antwoord'} van je begeleider!
+              </p>
+            </div>
+            <button
+              onClick={() => {
+                const gezien = JSON.parse(localStorage.getItem('gezieneAntwoorden') || '[]')
+                localStorage.setItem('gezieneAntwoorden', JSON.stringify([...gezien, ...Array.from({length: nieuweAntwoorden})]))
+                navigate('/vragen')
+              }}
+              className="text-blue-600 text-sm font-semibold hover:underline shrink-0"
+            >
+              Bekijk →
+            </button>
           </div>
         )}
 

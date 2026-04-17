@@ -120,7 +120,17 @@ export default function Logboek() {
         <div className="bg-white rounded-2xl shadow p-6">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-lg font-bold text-gray-800">Week {week}</h2>
-            {bestaand && <span className="text-xs text-gray-400 bg-gray-100 px-2 py-1 rounded-full">Eerder opgeslagen</span>}
+            <div className="flex items-center gap-2">
+              {bestaand && <span className="text-xs text-gray-400 bg-gray-100 px-2 py-1 rounded-full">Eerder opgeslagen</span>}
+              {bestaand?.inhoud && (
+                <button
+                  onClick={() => window.print()}
+                  className="no-print text-xs bg-gray-100 hover:bg-gray-200 text-gray-600 px-3 py-1 rounded-full transition-colors"
+                >
+                  🖨️ Afdrukken
+                </button>
+              )}
+            </div>
           </div>
 
           {ladenEntry ? (
@@ -141,7 +151,22 @@ export default function Logboek() {
                 <input
                   type="file"
                   accept="image/*"
-                  onChange={e => setFoto(e.target.files[0])}
+                  onChange={e => {
+                    const bestand = e.target.files[0]
+                    if (!bestand) return
+                    if (!bestand.type.startsWith('image/')) {
+                      setFout('Alleen afbeeldingen zijn toegestaan (jpg, png, etc.).')
+                      e.target.value = ''
+                      return
+                    }
+                    if (bestand.size > 5 * 1024 * 1024) {
+                      setFout('De foto mag maximaal 5 MB zijn.')
+                      e.target.value = ''
+                      return
+                    }
+                    setFout('')
+                    setFoto(bestand)
+                  }}
                   className="text-sm text-gray-500 file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-green-100 file:text-green-700 file:font-medium hover:file:bg-green-200 cursor-pointer"
                 />
                 {foto && <p className="text-xs text-green-600 mt-1">📎 {foto.name} geselecteerd</p>}

@@ -57,6 +57,9 @@ export default function Begeleider() {
   // Verzoek sturen
   const [verzoekenBezig, setVerzoekenBezig] = useState(new Set())
 
+  // Voortgang per leerling
+  const [leerlingStats, setLeerlingStats] = useState({}) // leerlingId → { logboekWeken, opdrachten }
+
   useEffect(() => {
     if (profile?.rol !== 'begeleider') {
       navigate('/dashboard')
@@ -68,10 +71,14 @@ export default function Begeleider() {
     }
   }, [profile])
 
-  // Herlaad vragen als koppelingen zijn geladen
+  // Herlaad vragen + stats als koppelingen zijn geladen
   useEffect(() => {
     if (Object.keys(koppelingen).length > 0) {
       laadVragen()
+      const goedgekeurdeIds = Object.entries(koppelingen)
+        .filter(([, status]) => status === 'goedgekeurd')
+        .map(([id]) => id)
+      laadLeerlingStats(goedgekeurdeIds)
     }
   }, [koppelingen])
 
@@ -114,6 +121,22 @@ export default function Begeleider() {
       .insert({ begeleider_id: user.id, leerling_id: leerlingId })
     await laadKoppelingen()
     setVerzoekenBezig(prev => { const s = new Set(prev); s.delete(leerlingId); return s })
+  }
+
+  async function laadLeerlingStats(goedgekeurdeIds) {
+    if (goedgekeurdeIds.length === 0) return
+    const [{ data: logboekData }, { data: opdrachtData }] = await Promise.all([
+      supabase.from('logboek').select('leerling_id, week').in('leerling_id', goedgekeurdeIds),
+      supabase.from('opdracht_voortgang').select('leerling_id').in('leerling_id', goedgekeurdeIds),
+    ])
+    const stats = {}
+    for (const id of goedgekeurdeIds) {
+      stats[id] = {
+        logboekWeken: (logboekData || []).filter(e => e.leerling_id === id).length,
+        opdrachten: (opdrachtData || []).filter(e => e.leerling_id === id).length,
+      }
+    }
+    setLeerlingStats(stats)
   }
 
   async function slaFeedbackOp(entryId) {
@@ -364,11 +387,14 @@ export default function Begeleider() {
                             className={`w-full text-left px-3 py-3 rounded-xl transition-all text-sm ${gekozenLeerling?.id === l.id ? 'bg-green-600 text-white' : 'hover:bg-gray-100 text-gray-700'}`}
                           >
                             <div className="font-medium">👤 {l.naam}</div>
-                            {l.niveau && (
-                              <div className={`text-xs mt-0.5 ${gekozenLeerling?.id === l.id ? 'text-green-100' : 'text-gray-400'}`}>
-                                {niveauLabels[l.niveau] || ''}
-                              </div>
-                            )}
+                            <div className={`text-xs mt-0.5 ${gekozenLeerling?.id === l.id ? 'text-green-100' : 'text-gray-400'}`}>
+                              {niveauLabels[l.niveau] || ''}
+                              {leerlingStats[l.id] && (
+                                <span className="ml-1">
+                                  · 📓 {leerlingStats[l.id].logboekWeken}w · ✅ {leerlingStats[l.id].opdrachten}
+                                </span>
+                              )}
+                            </div>
                           </button>
                         ))}
                       </div>

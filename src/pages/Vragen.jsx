@@ -25,6 +25,17 @@ export default function Vragen() {
       .order('aangemaakt_op', { ascending: false })
     setVragen(data || [])
     setLaden(false)
+    // Markeer alle beantwoorde vragen als gezien
+    const beantwoord = (data || []).filter(v => v.antwoord).map(v => v.id)
+    const gezien = JSON.parse(localStorage.getItem('gezieneAntwoorden') || '[]')
+    const nieuw = [...new Set([...gezien, ...beantwoord])]
+    localStorage.setItem('gezieneAntwoorden', JSON.stringify(nieuw))
+  }
+
+  function isNieuw(vraag) {
+    if (!vraag.antwoord || !vraag.beantwoord_op) return false
+    const gezien = JSON.parse(localStorage.getItem('gezieneAntwoordenGezien') || '[]')
+    return !gezien.includes(vraag.id)
   }
 
   async function vraagVersturen(e) {
@@ -114,9 +125,14 @@ export default function Vragen() {
                       </p>
                     </div>
                     <div className="flex items-center gap-2 shrink-0">
-                      <span className={`text-xs px-3 py-1 rounded-full font-medium ${v.antwoord ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'}`}>
-                        {v.antwoord ? '✅ Beantwoord' : '⏳ Wacht op antwoord'}
-                      </span>
+                      <div className="flex items-center gap-2">
+                        {v.antwoord && v.beantwoord_op && new Date(v.beantwoord_op) > new Date(Date.now() - 48*60*60*1000) && (
+                          <span className="text-xs bg-blue-500 text-white px-2 py-0.5 rounded-full font-bold animate-pulse">Nieuw!</span>
+                        )}
+                        <span className={`text-xs px-3 py-1 rounded-full font-medium ${v.antwoord ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'}`}>
+                          {v.antwoord ? '✅ Beantwoord' : '⏳ Wacht op antwoord'}
+                        </span>
+                      </div>
                       <button
                         onClick={() => vraagVerwijderen(v.id)}
                         disabled={verwijderenId === v.id}

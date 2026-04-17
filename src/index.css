@@ -14,3 +14,10 @@ body {
 #root {
   min-height: 100vh;
 }
+
+@media print {
+  nav, .no-print { display: none !important; }
+  body { background: white !important; font-size: 12pt; }
+  .print-logboek { display: block !important; }
+  * { box-shadow: none !important; }
+}
