@@ -226,7 +226,7 @@ export default function Dashboard() {
 
         <div className="grid grid-cols-1 gap-3">
           {[
-            { pad: '/opdrachten', icon: ClipboardList, iconBg: 'bg-emerald-50', iconClr: 'text-emerald-700', border: 'hover:border-emerald-300', titel: 'Wekelijkse Opdrachten', omschrijving: 'Wekelijkse opdrachten passend bij jouw project en niveau.', badge: 'Aangepast aan jouw niveau', badgeBg: 'bg-emerald-50 text-emerald-700' },
+            { pad: '/opdrachten', icon: ClipboardList, iconBg: 'bg-emerald-50', iconClr: 'text-emerald-700', border: 'hover:border-emerald-300', titel: 'Wekelijkse Opdrachten', omschrijving: 'Wekelijkse opdrachten passend bij jouw project.', badge: 'Aangepast aan jouw niveau', badgeBg: 'bg-emerald-50 text-emerald-700' },
             { pad: '/logboek',    icon: BookOpen,      iconBg: 'bg-blue-50',    iconClr: 'text-blue-700',    border: 'hover:border-blue-300',    titel: 'Mijn Logboek',          omschrijving: 'Schrijf op wat je observeert, ontdekt en leert. Voeg foto\'s toe!', badge: 'Persoonlijk notitieboek', badgeBg: 'bg-blue-50 text-blue-700' },
             { pad: '/vragen',     icon: MessageSquare, iconBg: 'bg-violet-50',  iconClr: 'text-violet-700',  border: 'hover:border-violet-300',  titel: 'Stel een Vraag',        omschrijving: 'Heb je een vraag over het project? Stel hem aan je begeleider.', badge: 'Begeleider antwoordt snel', badgeBg: 'bg-violet-50 text-violet-700' },
             { pad: '/lessen',     icon: GraduationCap, iconBg: 'bg-amber-50',   iconClr: 'text-amber-700',   border: 'hover:border-amber-300',   titel: 'Extra Leermateriaal',   omschrijving: 'Verdiep je kennis met interactieve lessen over bodem en duurzaamheid.', badge: '3 niveaus', badgeBg: 'bg-amber-50 text-amber-700' },
