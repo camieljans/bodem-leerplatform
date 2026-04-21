@@ -3,6 +3,7 @@ import { useAuth } from '../App'
 import { useNavigate } from 'react-router-dom'
 import { supabase } from '../supabase'
 import { opdrachten } from '../data/opdrachten'
+import { ClipboardList, MessageCircle, Microscope, Wrench, PenLine, Palette, Brain, BookOpen, Lightbulb, ChevronLeft, ChevronRight } from 'lucide-react'
 
 const schoolGroepMapping = {
   'pro':      'basis',
@@ -15,12 +16,12 @@ const schoolGroepMapping = {
 }
 
 const taakConfig = {
-  bespreek:  { emoji: '💬', label: 'Bespreek',   kleur: 'bg-blue-50 border-blue-200 text-blue-800',     vink: 'bg-blue-500' },
-  onderzoek: { emoji: '🔬', label: 'Onderzoek',  kleur: 'bg-purple-50 border-purple-200 text-purple-800', vink: 'bg-purple-500' },
-  doe:       { emoji: '🛠️', label: 'Doe',         kleur: 'bg-orange-50 border-orange-200 text-orange-800', vink: 'bg-orange-500' },
-  schrijf:   { emoji: '✏️', label: 'Schrijf',    kleur: 'bg-green-50 border-green-200 text-green-800',   vink: 'bg-green-500' },
-  teken:     { emoji: '🎨', label: 'Maak/Teken', kleur: 'bg-pink-50 border-pink-200 text-pink-800',      vink: 'bg-pink-500' },
-  denk:      { emoji: '🤔', label: 'Denk na',    kleur: 'bg-amber-50 border-amber-200 text-amber-800',   vink: 'bg-amber-500' },
+  bespreek:  { icon: MessageCircle, label: 'Bespreek',   kleur: 'bg-blue-50 border-blue-200 text-blue-800',     iconClr: 'text-blue-600',   vink: 'bg-blue-500' },
+  onderzoek: { icon: Microscope,    label: 'Onderzoek',  kleur: 'bg-purple-50 border-purple-200 text-purple-800', iconClr: 'text-purple-600', vink: 'bg-purple-500' },
+  doe:       { icon: Wrench,        label: 'Doe',         kleur: 'bg-orange-50 border-orange-200 text-orange-800', iconClr: 'text-orange-600', vink: 'bg-orange-500' },
+  schrijf:   { icon: PenLine,       label: 'Schrijf',    kleur: 'bg-green-50 border-green-200 text-green-800',   iconClr: 'text-green-600',  vink: 'bg-green-500' },
+  teken:     { icon: Palette,       label: 'Maak/Teken', kleur: 'bg-pink-50 border-pink-200 text-pink-800',      iconClr: 'text-pink-600',   vink: 'bg-pink-500' },
+  denk:      { icon: Brain,         label: 'Denk na',    kleur: 'bg-amber-50 border-amber-200 text-amber-800',   iconClr: 'text-amber-600',  vink: 'bg-amber-500' },
 }
 
 const niveauLabels = {
@@ -102,7 +103,9 @@ export default function Opdrachten() {
 
         {/* Header */}
         <div className="text-center mb-8">
-          <div className="text-5xl mb-3">📋</div>
+          <div className="w-14 h-14 rounded-2xl bg-emerald-100 flex items-center justify-center mx-auto mb-4">
+            <ClipboardList className="w-7 h-7 text-emerald-700" />
+          </div>
           <h1 className="text-3xl font-bold text-gray-800 mb-2">Wekelijkse Opdrachten</h1>
           <p className="text-gray-500">Vink af wat je hebt gedaan — je voortgang wordt opgeslagen</p>
         </div>
@@ -150,7 +153,7 @@ export default function Opdrachten() {
               />
             </div>
             {voortgangPct === 100 && (
-              <p className="text-sm mt-2 font-semibold text-white/90">🎉 Alle opdrachten afgerond!</p>
+              <p className="text-sm mt-2 font-semibold text-white/90">✓ Alle opdrachten afgerond!</p>
             )}
           </div>
 
@@ -161,7 +164,7 @@ export default function Opdrachten() {
             </div>
 
             {/* Taken als checklist */}
-            <h3 className="text-lg font-bold text-gray-800 mb-4">📌 Opdrachten deze week</h3>
+            <h3 className="text-lg font-bold text-gray-800 mb-4">Opdrachten deze week</h3>
             <div className="space-y-3 mb-8">
               {huidigeWeek.taken.map((taak, i) => {
                 const config = taakConfig[taak.type] || taakConfig.doe
@@ -193,7 +196,7 @@ export default function Opdrachten() {
                       {/* Taakinhoud */}
                       <div className="flex-1">
                         <div className="flex items-center gap-2 mb-1">
-                          <span className="text-lg">{config.emoji}</span>
+                          {(() => { const Icon = config.icon; return <Icon className={`w-4 h-4 ${gedaan ? 'text-gray-400' : config.iconClr}`} /> })()}
                           <span className={`font-bold text-sm uppercase tracking-wide ${gedaan ? 'text-gray-400' : ''}`}>
                             {config.label}
                           </span>
@@ -212,14 +215,14 @@ export default function Opdrachten() {
             <div className="bg-amber-50 border border-amber-200 rounded-2xl p-5">
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-2">
-                  <span className="text-xl">💡</span>
+                  <Lightbulb className="w-5 h-5 text-amber-600" />
                   <h3 className="font-bold text-amber-800">Reflectievragen</h3>
                 </div>
                 <button
                   onClick={() => navigate('/logboek')}
                   className="flex items-center gap-1.5 bg-amber-200 hover:bg-amber-300 text-amber-900 text-sm font-semibold px-3 py-1.5 rounded-xl transition-colors"
                 >
-                  📓 Ga naar logboek →
+                  <BookOpen className="w-4 h-4" /> Ga naar logboek
                 </button>
               </div>
               <p className="text-amber-700 text-sm mb-3">Beantwoord deze vragen in je logboek van week {gekozenWeek}:</p>
@@ -238,17 +241,17 @@ export default function Opdrachten() {
               {gekozenWeek > 1 && (
                 <button
                   onClick={() => navigeerWeek(gekozenWeek - 1)}
-                  className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold py-3 rounded-xl transition-colors"
+                  className="flex-1 flex items-center justify-center gap-1.5 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold py-3 rounded-xl transition-colors"
                 >
-                  ← Week {gekozenWeek - 1}
+                  <ChevronLeft className="w-4 h-4" /> Week {gekozenWeek - 1}
                 </button>
               )}
               {gekozenWeek < totaalWeken && (
                 <button
                   onClick={() => navigeerWeek(gekozenWeek + 1)}
-                  className="flex-1 bg-green-600 hover:bg-green-700 text-white font-semibold py-3 rounded-xl transition-colors"
+                  className="flex-1 flex items-center justify-center gap-1.5 bg-green-600 hover:bg-green-700 text-white font-semibold py-3 rounded-xl transition-colors"
                 >
-                  Week {gekozenWeek + 1} →
+                  Week {gekozenWeek + 1} <ChevronRight className="w-4 h-4" />
                 </button>
               )}
             </div>

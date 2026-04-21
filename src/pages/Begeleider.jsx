@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { supabase } from '../supabase'
 import { useAuth } from '../App'
 import { useNavigate } from 'react-router-dom'
+import { GraduationCap, Users, BookOpen, MessageSquare, User, Send, Lock, Clock, CheckCircle, XCircle, School, LayoutGrid, Leaf, FlaskConical } from 'lucide-react'
 
 const scholen = [
   { value: 'olympus', label: 'Olympus College' },
@@ -23,8 +24,8 @@ const niveauLabels = {
 }
 
 const projectNaam = {
-  wormenhotel: '🪱 Wormenhotel',
-  keuringsdienst: '🪴 Keuringsdienst',
+  wormenhotel: 'Wormenhotel',
+  keuringsdienst: 'Keuringsdienst',
 }
 
 export default function Begeleider() {
@@ -220,7 +221,9 @@ export default function Begeleider() {
     return (
       <div className="min-h-screen flex items-center justify-center p-6">
         <div className="bg-white rounded-3xl shadow-xl p-10 max-w-md w-full text-center">
-          <div className="text-6xl mb-4">🏫</div>
+          <div className="w-16 h-16 rounded-2xl bg-emerald-100 flex items-center justify-center mx-auto mb-4">
+            <School className="w-8 h-8 text-emerald-700" />
+          </div>
           <h1 className="text-2xl font-bold text-gray-800 mb-2">Welkom, {profile?.naam}!</h1>
           <p className="text-gray-500 mb-6">
             Kies de school waar jij begeleider bent. Je ziet dan alleen de leerlingen van jouw school.
@@ -252,7 +255,9 @@ export default function Begeleider() {
     <div className="min-h-screen p-6">
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-8">
-          <div className="text-5xl mb-3">👩‍🏫</div>
+          <div className="w-14 h-14 rounded-2xl bg-emerald-100 flex items-center justify-center mx-auto mb-4">
+            <GraduationCap className="w-7 h-7 text-emerald-700" />
+          </div>
           <h1 className="text-3xl font-bold text-gray-800 mb-1">Begeleidersoverzicht</h1>
           <p className="text-gray-500">{schoolLabels[profile.school] || profile.school}</p>
         </div>
@@ -261,15 +266,15 @@ export default function Begeleider() {
         <div className="flex gap-2 mb-6 justify-center">
           <button
             onClick={() => setTab('leerlingen')}
-            className={`px-5 py-2 rounded-xl font-semibold text-sm transition-all ${tab === 'leerlingen' ? 'bg-green-600 text-white' : 'bg-white text-gray-600 hover:bg-gray-100'}`}
+            className={`flex items-center gap-1.5 px-5 py-2 rounded-xl font-semibold text-sm transition-all ${tab === 'leerlingen' ? 'bg-green-600 text-white' : 'bg-white text-gray-600 hover:bg-gray-100'}`}
           >
-            👥 Leerlingen
+            <Users className="w-4 h-4" /> Leerlingen
           </button>
           <button
             onClick={() => setTab('logboeken')}
-            className={`px-5 py-2 rounded-xl font-semibold text-sm transition-all flex items-center gap-2 ${tab === 'logboeken' ? 'bg-green-600 text-white' : 'bg-white text-gray-600 hover:bg-gray-100'}`}
+            className={`flex items-center gap-1.5 px-5 py-2 rounded-xl font-semibold text-sm transition-all ${tab === 'logboeken' ? 'bg-green-600 text-white' : 'bg-white text-gray-600 hover:bg-gray-100'}`}
           >
-            📓 Logboeken
+            <BookOpen className="w-4 h-4" /> Logboeken
             {goedgekeurde.length > 0 && (
               <span className={`text-xs px-2 py-0.5 rounded-full font-bold ${tab === 'logboeken' ? 'bg-white text-green-700' : 'bg-green-100 text-green-700'}`}>
                 {goedgekeurde.length}
@@ -278,9 +283,9 @@ export default function Begeleider() {
           </button>
           <button
             onClick={() => { setTab('vragen'); laadVragen() }}
-            className={`px-5 py-2 rounded-xl font-semibold text-sm transition-all flex items-center gap-2 ${tab === 'vragen' ? 'bg-green-600 text-white' : 'bg-white text-gray-600 hover:bg-gray-100'}`}
+            className={`flex items-center gap-1.5 px-5 py-2 rounded-xl font-semibold text-sm transition-all ${tab === 'vragen' ? 'bg-green-600 text-white' : 'bg-white text-gray-600 hover:bg-gray-100'}`}
           >
-            💬 Vragen
+            <MessageSquare className="w-4 h-4" /> Vragen
             {onbeantwoord > 0 && (
               <span className={`text-xs px-2 py-0.5 rounded-full font-bold ${tab === 'vragen' ? 'bg-white text-green-700' : 'bg-red-500 text-white'}`}>
                 {onbeantwoord}
@@ -296,7 +301,7 @@ export default function Begeleider() {
               <div className="text-center text-gray-400 py-12">Laden...</div>
             ) : leerlingen.length === 0 ? (
               <div className="bg-white rounded-2xl shadow p-10 text-center text-gray-400">
-                <div className="text-5xl mb-3">🎒</div>
+                <Users className="w-12 h-12 mx-auto mb-3 text-gray-200" />
                 <p>Nog geen leerlingen geregistreerd op {schoolLabels[profile.school] || profile.school}.</p>
               </div>
             ) : (
@@ -309,12 +314,17 @@ export default function Begeleider() {
                   const bezig = verzoekenBezig.has(l.id)
                   return (
                     <div key={l.id} className="bg-white rounded-2xl shadow p-5 flex items-center justify-between gap-4">
-                      <div>
-                        <div className="font-semibold text-gray-800">👤 {l.naam}</div>
+                      <div className="flex items-center gap-3">
+                        <div className="w-9 h-9 rounded-full bg-gray-100 flex items-center justify-center shrink-0">
+                          <User className="w-4 h-4 text-gray-500" />
+                        </div>
+                        <div>
+                        <div className="font-semibold text-gray-800">{l.naam}</div>
                         <div className="text-sm text-gray-400 mt-0.5">
                           {niveauLabels[l.niveau] || ''}
                           {l.niveau && l.project ? ' · ' : ''}
                           {l.project ? projectNaam[l.project] || l.project : ''}
+                        </div>
                         </div>
                       </div>
 
@@ -323,24 +333,24 @@ export default function Begeleider() {
                           <button
                             onClick={() => stuurVerzoek(l.id)}
                             disabled={bezig}
-                            className="bg-green-600 hover:bg-green-700 disabled:opacity-50 text-white text-sm font-semibold px-4 py-2 rounded-xl transition-colors"
+                            className="flex items-center gap-1.5 bg-green-600 hover:bg-green-700 disabled:opacity-50 text-white text-sm font-semibold px-4 py-2 rounded-xl transition-colors"
                           >
-                            {bezig ? 'Versturen...' : '📨 Verzoek sturen'}
+                            {bezig ? 'Versturen...' : <><Send className="w-3.5 h-3.5" /> Verzoek sturen</>}
                           </button>
                         )}
                         {status === 'wacht' && (
-                          <span className="bg-yellow-100 text-yellow-700 text-sm font-medium px-4 py-2 rounded-xl">
-                            ⏳ Wacht op goedkeuring
+                          <span className="flex items-center gap-1.5 bg-yellow-100 text-yellow-700 text-sm font-medium px-4 py-2 rounded-xl">
+                            <Clock className="w-3.5 h-3.5" /> Wacht op goedkeuring
                           </span>
                         )}
                         {status === 'goedgekeurd' && (
-                          <span className="bg-green-100 text-green-700 text-sm font-medium px-4 py-2 rounded-xl">
-                            ✅ Gekoppeld
+                          <span className="flex items-center gap-1.5 bg-green-100 text-green-700 text-sm font-medium px-4 py-2 rounded-xl">
+                            <CheckCircle className="w-3.5 h-3.5" /> Gekoppeld
                           </span>
                         )}
                         {status === 'afgewezen' && (
-                          <span className="bg-red-100 text-red-700 text-sm font-medium px-4 py-2 rounded-xl">
-                            ❌ Afgewezen
+                          <span className="flex items-center gap-1.5 bg-red-100 text-red-700 text-sm font-medium px-4 py-2 rounded-xl">
+                            <XCircle className="w-3.5 h-3.5" /> Afgewezen
                           </span>
                         )}
                       </div>
@@ -357,7 +367,7 @@ export default function Begeleider() {
           <>
             {goedgekeurde.length === 0 ? (
               <div className="bg-white rounded-2xl shadow p-10 text-center text-gray-400">
-                <div className="text-5xl mb-3">🔒</div>
+                <Lock className="w-12 h-12 mx-auto mb-3 text-gray-200" />
                 <p className="font-medium text-gray-600 mb-1">Nog geen goedgekeurde koppelingen</p>
                 <p className="text-sm">Stuur eerst een koppelingsverzoek bij het tabblad Leerlingen. Als een leerling dit goedkeurt, zie jij hier het logboek.</p>
               </div>
@@ -368,9 +378,9 @@ export default function Begeleider() {
                     <button
                       key={p}
                       onClick={() => { setGekozenProject(p); if (gekozenLeerling) laadLogboek(gekozenLeerling.id) }}
-                      className={`px-4 py-2 rounded-xl font-medium text-sm transition-all ${gekozenProject === p ? 'bg-gray-700 text-white' : 'bg-white text-gray-600 hover:bg-gray-100'}`}
+                      className={`flex items-center gap-1.5 px-4 py-2 rounded-xl font-medium text-sm transition-all ${gekozenProject === p ? 'bg-gray-700 text-white' : 'bg-white text-gray-600 hover:bg-gray-100'}`}
                     >
-                      {p === 'alle' ? '📋 Alle' : p === 'wormenhotel' ? '🪱 Wormenhotel' : '🪴 Keuringsdienst'}
+                      {p === 'alle' ? <><LayoutGrid className="w-3.5 h-3.5" /> Alle</> : p === 'wormenhotel' ? <><Leaf className="w-3.5 h-3.5" /> Wormenhotel</> : <><FlaskConical className="w-3.5 h-3.5" /> Keuringsdienst</>}
                     </button>
                   ))}
                 </div>
@@ -384,16 +394,19 @@ export default function Begeleider() {
                           <button
                             key={l.id}
                             onClick={() => kiesLeerling(l)}
-                            className={`w-full text-left px-3 py-3 rounded-xl transition-all text-sm ${gekozenLeerling?.id === l.id ? 'bg-green-600 text-white' : 'hover:bg-gray-100 text-gray-700'}`}
+                            className={`w-full text-left px-3 py-3 rounded-xl transition-all text-sm flex items-center gap-2 ${gekozenLeerling?.id === l.id ? 'bg-green-600 text-white' : 'hover:bg-gray-100 text-gray-700'}`}
                           >
-                            <div className="font-medium">👤 {l.naam}</div>
+                            <User className={`w-4 h-4 shrink-0 ${gekozenLeerling?.id === l.id ? 'text-green-100' : 'text-gray-400'}`} />
+                            <div className="flex-1 min-w-0">
+                            <div className="font-medium">{l.naam}</div>
                             <div className={`text-xs mt-0.5 ${gekozenLeerling?.id === l.id ? 'text-green-100' : 'text-gray-400'}`}>
                               {niveauLabels[l.niveau] || ''}
                               {leerlingStats[l.id] && (
                                 <span className="ml-1">
-                                  · 📓 {leerlingStats[l.id].logboekWeken}w · ✅ {leerlingStats[l.id].opdrachten}
+                                  · {leerlingStats[l.id].logboekWeken}w · {leerlingStats[l.id].opdrachten} taken
                                 </span>
                               )}
+                            </div>
                             </div>
                           </button>
                         ))}
@@ -409,7 +422,7 @@ export default function Begeleider() {
                       </div>
                     ) : (
                       <div className="bg-white rounded-2xl shadow p-6">
-                        <h2 className="text-xl font-bold text-gray-800 mb-4">📓 Logboek van {gekozenLeerling.naam}</h2>
+                        <h2 className="flex items-center gap-2 text-xl font-bold text-gray-800 mb-4"><BookOpen className="w-5 h-5 text-gray-400" /> Logboek van {gekozenLeerling.naam}</h2>
                         {logboekEntries.length === 0 ? (
                           <p className="text-gray-400 text-sm">Deze leerling heeft nog niets geschreven.</p>
                         ) : (
@@ -430,7 +443,7 @@ export default function Begeleider() {
 
                                 {/* Feedback sectie */}
                                 <div className="mt-4 border-t border-gray-100 pt-4">
-                                  <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">👩‍🏫 Jouw feedback</p>
+                                  <p className="flex items-center gap-1.5 text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2"><GraduationCap className="w-3.5 h-3.5" /> Jouw feedback</p>
                                   {entry.feedback && (
                                     <div className="bg-green-50 border border-green-200 rounded-xl p-3 mb-3 text-sm text-green-800 leading-relaxed">
                                       {entry.feedback}
@@ -474,7 +487,7 @@ export default function Begeleider() {
           <div className="space-y-4">
             {goedgekeurde.length === 0 ? (
               <div className="bg-white rounded-2xl shadow p-10 text-center text-gray-400">
-                <div className="text-5xl mb-3">🔒</div>
+                <Lock className="w-12 h-12 mx-auto mb-3 text-gray-200" />
                 <p className="font-medium text-gray-600 mb-1">Nog geen goedgekeurde koppelingen</p>
                 <p className="text-sm">Zodra een leerling jouw verzoek goedkeurt, zie je hier hun vragen.</p>
               </div>
@@ -482,7 +495,7 @@ export default function Begeleider() {
               <div className="text-center text-gray-400 py-12">Laden...</div>
             ) : vragen.length === 0 ? (
               <div className="bg-white rounded-2xl shadow p-10 text-center text-gray-400">
-                <div className="text-5xl mb-3">💬</div>
+                <MessageSquare className="w-12 h-12 mx-auto mb-3 text-gray-200" />
                 <p>Er zijn nog geen vragen gesteld door jouw leerlingen.</p>
               </div>
             ) : (
@@ -490,7 +503,9 @@ export default function Begeleider() {
                 <div key={v.id} className="bg-white rounded-2xl shadow p-5">
                   <div className="flex items-start justify-between gap-3 mb-3">
                     <div className="flex items-start gap-3">
-                      <span className="text-2xl">🙋</span>
+                      <div className="w-9 h-9 rounded-full bg-gray-100 flex items-center justify-center shrink-0">
+                        <User className="w-4 h-4 text-gray-500" />
+                      </div>
                       <div>
                         <p className="font-semibold text-gray-500 text-sm">
                           {v.leerling?.naam} · {projectNaam[v.project] || v.project}
@@ -501,14 +516,16 @@ export default function Begeleider() {
                         </p>
                       </div>
                     </div>
-                    <span className={`shrink-0 text-xs px-3 py-1 rounded-full font-medium ${v.antwoord ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'}`}>
-                      {v.antwoord ? '✅ Beantwoord' : '⏳ Wacht op antwoord'}
+                    <span className={`flex items-center gap-1 shrink-0 text-xs px-3 py-1 rounded-full font-medium ${v.antwoord ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'}`}>
+                      {v.antwoord ? <><CheckCircle className="w-3 h-3" /> Beantwoord</> : <><Clock className="w-3 h-3" /> Wacht op antwoord</>}
                     </span>
                   </div>
 
                   {v.antwoord ? (
                     <div className="bg-green-50 border border-green-200 rounded-xl p-4 flex gap-3">
-                      <span className="text-xl">👩‍🏫</span>
+                      <div className="w-7 h-7 rounded-full bg-green-200 flex items-center justify-center shrink-0">
+                        <GraduationCap className="w-3.5 h-3.5 text-green-700" />
+                      </div>
                       <p className="text-green-800 text-sm leading-relaxed">{v.antwoord}</p>
                     </div>
                   ) : (

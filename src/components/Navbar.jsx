@@ -1,17 +1,19 @@
 import { useNavigate, useLocation } from 'react-router-dom'
 import { supabase } from '../supabase'
 import { useAuth } from '../App'
+import { Home, ClipboardList, BookOpen, MessageSquare, GraduationCap, Users, LogOut, Leaf, FlaskConical } from 'lucide-react'
 
 const projectInfo = {
-  wormenhotel: { emoji: '🪱', naam: 'Wormenhotel', bg: 'bg-green-700' },
-  keuringsdienst: { emoji: '🪴', naam: 'Keuringsdienst', bg: 'bg-cyan-700' },
+  wormenhotel:    { icon: Leaf,         naam: 'Wormenhotel' },
+  keuringsdienst: { icon: FlaskConical, naam: 'Keuringsdienst' },
 }
 
 export default function Navbar() {
   const { profile, project } = useAuth()
   const navigate = useNavigate()
   const location = useLocation()
-  const info = projectInfo[project] || { emoji: '🌱', naam: 'Bodem', bg: 'bg-green-700' }
+  const info = projectInfo[project] || { icon: Leaf, naam: 'Bodem Leerplatform' }
+  const ProjectIcon = info.icon
 
   async function uitloggen() {
     await supabase.auth.signOut()
@@ -21,48 +23,57 @@ export default function Navbar() {
   const isBegeleider = profile?.rol === 'begeleider'
 
   const links = isBegeleider
-    ? [{ pad: '/begeleider', label: '📋 Overzicht' }]
+    ? [{ pad: '/begeleider', label: 'Overzicht', icon: Users }]
     : [
-        { pad: '/dashboard',   label: '🏠 Home' },
-        { pad: '/opdrachten',  label: '📋 Opdrachten' },
-        { pad: '/logboek',     label: '📓 Logboek' },
-        { pad: '/vragen',      label: '💬 Vragen' },
-        { pad: '/lessen',      label: '📚 Extra leermateriaal' },
+        { pad: '/dashboard',  label: 'Home',          icon: Home },
+        { pad: '/opdrachten', label: 'Opdrachten',    icon: ClipboardList },
+        { pad: '/logboek',    label: 'Logboek',       icon: BookOpen },
+        { pad: '/vragen',     label: 'Vragen',        icon: MessageSquare },
+        { pad: '/lessen',     label: 'Leermateriaal', icon: GraduationCap },
       ]
 
   return (
-    <nav className={`${info.bg} text-white px-4 py-3`}>
-      <div className="max-w-4xl mx-auto flex items-center justify-between gap-4">
+    <nav className="bg-slate-900 text-white px-6 py-3.5 no-print">
+      <div className="max-w-5xl mx-auto flex items-center justify-between gap-4">
         <button
           onClick={() => navigate('/dashboard')}
-          className="font-bold text-lg flex items-center gap-2 hover:opacity-80 transition-opacity"
+          className="flex items-center gap-2.5 font-semibold text-base hover:opacity-80 transition-opacity shrink-0"
         >
-          {info.emoji} {info.naam}
+          <div className="w-7 h-7 rounded-lg bg-emerald-500/20 flex items-center justify-center">
+            <ProjectIcon className="w-4 h-4 text-emerald-400" />
+          </div>
+          <span className="hidden sm:block text-white">{info.naam}</span>
         </button>
 
-        <div className="flex items-center gap-1">
-          {links.map(link => (
-            <button
-              key={link.pad}
-              onClick={() => navigate(link.pad)}
-              className={`px-3 py-2 rounded-lg text-sm font-medium transition-all ${
-                location.pathname === link.pad
-                  ? 'bg-white/20'
-                  : 'hover:bg-white/10'
-              }`}
-            >
-              {link.label}
-            </button>
-          ))}
+        <div className="flex items-center gap-0.5">
+          {links.map(link => {
+            const Icon = link.icon
+            const actief = location.pathname === link.pad
+            return (
+              <button
+                key={link.pad}
+                onClick={() => navigate(link.pad)}
+                className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-all ${
+                  actief
+                    ? 'bg-white/15 text-white'
+                    : 'text-slate-400 hover:text-white hover:bg-white/10'
+                }`}
+              >
+                <Icon className="w-4 h-4" />
+                <span className="hidden md:block">{link.label}</span>
+              </button>
+            )
+          })}
         </div>
 
-        <div className="flex items-center gap-3">
-          <span className="text-sm opacity-75 hidden sm:block">{profile?.naam}</span>
+        <div className="flex items-center gap-2 shrink-0">
+          <span className="text-sm text-slate-400 hidden lg:block">{profile?.naam}</span>
           <button
             onClick={uitloggen}
-            className="text-sm bg-white/10 hover:bg-white/20 px-3 py-2 rounded-lg transition-all"
+            className="flex items-center gap-1.5 text-sm text-slate-400 hover:text-white px-3 py-2 rounded-lg hover:bg-white/10 transition-all"
           >
-            Uitloggen
+            <LogOut className="w-4 h-4" />
+            <span className="hidden sm:block">Uitloggen</span>
           </button>
         </div>
       </div>

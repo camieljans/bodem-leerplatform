@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../App'
 import { supabase } from '../supabase'
 import { opdrachten } from '../data/opdrachten'
+import { ClipboardList, BookOpen, MessageSquare, GraduationCap, Bell, ChevronRight, Lightbulb, BarChart2, User, ArrowRight } from 'lucide-react'
 
 const schoolGroepMapping = {
   'pro': 'basis', 'vmbo-b': 'basis',
@@ -119,14 +120,16 @@ export default function Dashboard() {
     return (
       <div className="min-h-screen p-6">
         <div className="max-w-2xl mx-auto text-center mt-20">
-          <div className="text-6xl mb-4">👩‍🏫</div>
+          <div className="w-16 h-16 rounded-2xl bg-emerald-100 flex items-center justify-center mx-auto mb-5">
+            <GraduationCap className="w-8 h-8 text-emerald-700" />
+          </div>
           <h1 className="text-3xl font-bold text-gray-800 mb-3">Welkom, {profile?.naam}!</h1>
           <p className="text-gray-500 mb-8">Je bent ingelogd als begeleider.</p>
           <button
             onClick={() => navigate('/begeleider')}
-            className="bg-green-600 hover:bg-green-700 text-white font-semibold px-8 py-4 rounded-2xl text-lg transition-colors"
+            className="flex items-center gap-2 mx-auto bg-green-600 hover:bg-green-700 text-white font-semibold px-8 py-4 rounded-2xl text-lg transition-colors"
           >
-            📋 Bekijk alle logboeken →
+            <ClipboardList className="w-5 h-5" /> Bekijk alle logboeken <ArrowRight className="w-5 h-5" />
           </button>
         </div>
       </div>
@@ -137,9 +140,8 @@ export default function Dashboard() {
     <div className="min-h-screen bg-gray-50">
       <div className={`bg-gradient-to-r ${info.bg} text-white p-8`}>
         <div className="max-w-2xl mx-auto">
-          <div className="text-5xl mb-3">{info.emoji}</div>
           <h1 className="text-3xl font-bold mb-1">{info.naam}</h1>
-          <p className="opacity-90">Welkom terug, {profile?.naam || 'leerling'}! 👋</p>
+          <p className="opacity-80 text-sm">Welkom terug, {profile?.naam || 'leerling'}</p>
         </div>
       </div>
 
@@ -149,14 +151,14 @@ export default function Dashboard() {
         {verzoeken.length > 0 && (
           <div className="bg-amber-50 border border-amber-300 rounded-2xl p-5 mb-6">
             <div className="flex items-center gap-2 mb-3">
-              <span className="text-xl">🔔</span>
+              <Bell className="w-5 h-5 text-amber-600" />
               <h2 className="font-bold text-amber-800">Koppelingsverzoeken</h2>
             </div>
             <div className="space-y-3">
               {verzoeken.map(v => (
                 <div key={v.id} className="bg-white rounded-xl p-4 flex items-center justify-between gap-3">
                   <div>
-                    <p className="font-medium text-gray-800">👩‍🏫 {v.naam}</p>
+                    <p className="font-medium text-gray-800 flex items-center gap-1.5"><User className="w-4 h-4 text-gray-400" />{v.naam}</p>
                     <p className="text-sm text-gray-500">wil jouw logboek inzien</p>
                   </div>
                   <div className="flex gap-2 shrink-0">
@@ -185,7 +187,7 @@ export default function Dashboard() {
         {voortgang && voortgang.totaal > 0 && (
           <div className="bg-white rounded-2xl shadow p-5 mb-5">
             <div className="flex items-center justify-between mb-2">
-              <span className="font-semibold text-gray-700 text-sm">📊 Totale voortgang opdrachten</span>
+              <span className="font-semibold text-gray-700 text-sm flex items-center gap-1.5"><BarChart2 className="w-4 h-4 text-emerald-600" /> Totale voortgang opdrachten</span>
               <span className="text-sm font-bold text-green-700">{voortgang.gedaan}/{voortgang.totaal}</span>
             </div>
             <div className="bg-gray-100 rounded-full h-3">
@@ -202,7 +204,7 @@ export default function Dashboard() {
         {nieuweAntwoorden > 0 && (
           <div className="bg-blue-50 border border-blue-200 rounded-2xl p-4 mb-5 flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <span className="text-xl">💬</span>
+              <MessageSquare className="w-5 h-5 text-blue-500 shrink-0" />
               <p className="text-blue-800 font-medium text-sm">
                 Je hebt {nieuweAntwoorden} nieuw{nieuweAntwoorden > 1 ? 'e antwoorden' : ' antwoord'} van je begeleider!
               </p>
@@ -222,66 +224,35 @@ export default function Dashboard() {
 
         <p className="text-gray-600 mb-8 leading-relaxed">{info.beschrijving}</p>
 
-        <div className="grid grid-cols-1 gap-4">
-          <button
-            onClick={() => navigate('/opdrachten')}
-            className="bg-white rounded-2xl p-6 shadow hover:shadow-lg transition-all text-left border-2 border-transparent hover:border-green-400 flex items-center gap-5"
-          >
-            <div className="text-5xl">📋</div>
-            <div>
-              <h2 className="text-xl font-bold text-gray-800 mb-1">Wekelijkse Opdrachten</h2>
-              <p className="text-gray-500">Wekelijkse opdrachten passend bij jouw project en niveau. Start hier!</p>
-              <span className="inline-block mt-2 bg-green-100 text-green-700 text-sm px-3 py-1 rounded-full font-medium">
-                Aangepast aan jouw niveau
-              </span>
-            </div>
-          </button>
-
-          <button
-            onClick={() => navigate('/logboek')}
-            className="bg-white rounded-2xl p-6 shadow hover:shadow-lg transition-all text-left border-2 border-transparent hover:border-blue-300 flex items-center gap-5"
-          >
-            <div className="text-5xl">📓</div>
-            <div>
-              <h2 className="text-xl font-bold text-gray-800 mb-1">Mijn Logboek</h2>
-              <p className="text-gray-500">Schrijf op wat je observeert, ontdekt en leert. Voeg foto's toe van jouw experiment!</p>
-              <span className="inline-block mt-2 bg-blue-100 text-blue-700 text-sm px-3 py-1 rounded-full font-medium">
-                Jouw persoonlijk notitieboek
-              </span>
-            </div>
-          </button>
-
-          <button
-            onClick={() => navigate('/vragen')}
-            className="bg-white rounded-2xl p-6 shadow hover:shadow-lg transition-all text-left border-2 border-transparent hover:border-purple-300 flex items-center gap-5"
-          >
-            <div className="text-5xl">💬</div>
-            <div>
-              <h2 className="text-xl font-bold text-gray-800 mb-1">Stel een Vraag</h2>
-              <p className="text-gray-500">Heb je een vraag over het project? Stel hem aan je begeleider!</p>
-              <span className="inline-block mt-2 bg-purple-100 text-purple-700 text-sm px-3 py-1 rounded-full font-medium">
-                Je begeleider antwoordt zo snel mogelijk
-              </span>
-            </div>
-          </button>
-
-          <button
-            onClick={() => navigate('/lessen')}
-            className="bg-white rounded-2xl p-6 shadow hover:shadow-lg transition-all text-left border-2 border-transparent hover:border-amber-300 flex items-center gap-5"
-          >
-            <div className="text-5xl">📚</div>
-            <div>
-              <h2 className="text-xl font-bold text-gray-800 mb-1">Extra Leermateriaal</h2>
-              <p className="text-gray-500">Verdiep je kennis met interactieve lessen over bodem, circulariteit en duurzaamheid.</p>
-              <span className="inline-block mt-2 bg-amber-100 text-amber-700 text-sm px-3 py-1 rounded-full font-medium">
-                3 moeilijkheidsgraden
-              </span>
-            </div>
-          </button>
+        <div className="grid grid-cols-1 gap-3">
+          {[
+            { pad: '/opdrachten', icon: ClipboardList, iconBg: 'bg-emerald-50', iconClr: 'text-emerald-700', border: 'hover:border-emerald-300', titel: 'Wekelijkse Opdrachten', omschrijving: 'Wekelijkse opdrachten passend bij jouw project en niveau.', badge: 'Aangepast aan jouw niveau', badgeBg: 'bg-emerald-50 text-emerald-700' },
+            { pad: '/logboek',    icon: BookOpen,      iconBg: 'bg-blue-50',    iconClr: 'text-blue-700',    border: 'hover:border-blue-300',    titel: 'Mijn Logboek',          omschrijving: 'Schrijf op wat je observeert, ontdekt en leert. Voeg foto\'s toe!', badge: 'Persoonlijk notitieboek', badgeBg: 'bg-blue-50 text-blue-700' },
+            { pad: '/vragen',     icon: MessageSquare, iconBg: 'bg-violet-50',  iconClr: 'text-violet-700',  border: 'hover:border-violet-300',  titel: 'Stel een Vraag',        omschrijving: 'Heb je een vraag over het project? Stel hem aan je begeleider.', badge: 'Begeleider antwoordt snel', badgeBg: 'bg-violet-50 text-violet-700' },
+            { pad: '/lessen',     icon: GraduationCap, iconBg: 'bg-amber-50',   iconClr: 'text-amber-700',   border: 'hover:border-amber-300',   titel: 'Extra Leermateriaal',   omschrijving: 'Verdiep je kennis met interactieve lessen over bodem en duurzaamheid.', badge: '3 niveaus', badgeBg: 'bg-amber-50 text-amber-700' },
+          ].map(item => {
+            const Icon = item.icon
+            return (
+              <button
+                key={item.pad}
+                onClick={() => navigate(item.pad)}
+                className={`bg-white rounded-xl p-5 shadow-sm hover:shadow-md transition-all text-left border border-gray-100 ${item.border} flex items-center gap-4 group`}
+              >
+                <div className={`w-12 h-12 rounded-xl ${item.iconBg} flex items-center justify-center shrink-0`}>
+                  <Icon className={`w-6 h-6 ${item.iconClr}`} />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h2 className="text-base font-semibold text-gray-900 mb-0.5">{item.titel}</h2>
+                  <p className="text-gray-500 text-sm leading-snug">{item.omschrijving}</p>
+                </div>
+                <ChevronRight className="w-5 h-5 text-gray-300 group-hover:text-gray-500 shrink-0 transition-colors" />
+              </button>
+            )
+          })}
         </div>
 
         <div className={`mt-6 ${info.licht} rounded-2xl p-5`}>
-          <h3 className={`font-semibold ${info.tekst} mb-2`}>💡 Tip voor deze week</h3>
+          <h3 className={`flex items-center gap-2 font-semibold ${info.tekst} mb-2`}><Lightbulb className="w-4 h-4" /> Tip voor deze week</h3>
           {project === 'wormenhotel' ? (
             <p className={`${info.subtekst} text-sm leading-relaxed`}>
               Controleer of het wormenhotel de juiste vochtigheid heeft. Knijp een handvol bedding samen — als er een paar druppels water uitkomen, is het perfect!

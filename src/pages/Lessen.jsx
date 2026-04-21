@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useAuth } from '../App'
 import { lesinhoud } from '../data/lesinhoud'
+import { GraduationCap, BookOpen, HelpCircle, Lightbulb, Trophy, Sprout, Dumbbell, RotateCcw, ChevronLeft, ChevronRight, CheckCircle, XCircle } from 'lucide-react'
 
 // Welke lesgroep hoort bij welk schoolniveau
 const schoolGroepMapping = {
@@ -19,21 +20,21 @@ const moeilijkheidKleuren = {
     rand: 'border-green-300',
     knop: 'bg-green-500',
     badge: 'bg-green-100 text-green-800',
-    emoji: '🟢',
+    dot: 'bg-green-500',
   },
   gemiddeld: {
     bg: 'bg-yellow-50',
     rand: 'border-yellow-300',
     knop: 'bg-yellow-500',
     badge: 'bg-yellow-100 text-yellow-800',
-    emoji: '🟡',
+    dot: 'bg-yellow-400',
   },
   moeilijk: {
     bg: 'bg-red-50',
     rand: 'border-red-300',
     knop: 'bg-red-500',
     badge: 'bg-red-100 text-red-800',
-    emoji: '🔴',
+    dot: 'bg-red-500',
   },
 }
 
@@ -90,7 +91,9 @@ export default function Lessen() {
       <div className="min-h-screen p-6">
         <div className="max-w-2xl mx-auto">
           <div className="text-center mb-8">
-            <div className="text-5xl mb-3">{data.emoji}</div>
+            <div className="w-14 h-14 rounded-2xl bg-amber-100 flex items-center justify-center mx-auto mb-4">
+              <GraduationCap className="w-7 h-7 text-amber-700" />
+            </div>
             <h1 className="text-3xl font-bold text-gray-800 mb-2">Extra Leermateriaal</h1>
             <p className="text-gray-500">{data.ondertitel}</p>
           </div>
@@ -108,7 +111,7 @@ export default function Lessen() {
                   onClick={() => startMoeilijkheid(m)}
                   className={`bg-white rounded-2xl p-6 shadow hover:shadow-lg transition-all text-left border-2 ${kleur.rand} flex items-center gap-5`}
                 >
-                  <div className="text-4xl">{kleur.emoji}</div>
+                  <div className={`w-10 h-10 rounded-full ${kleur.dot} shrink-0`} />
                   <div className="flex-1">
                     <h3 className="text-xl font-bold text-gray-800 capitalize">{m}</h3>
                     <p className="text-gray-500 text-sm mt-1">
@@ -134,7 +137,14 @@ export default function Lessen() {
     return (
       <div className="min-h-screen flex items-center justify-center p-6">
         <div className="bg-white rounded-3xl shadow-xl p-10 max-w-md w-full text-center">
-          <div className="text-7xl mb-4">{percentage >= 70 ? '🏆' : percentage >= 40 ? '🌱' : '💪'}</div>
+          <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4 bg-amber-50">
+            {percentage >= 70
+              ? <Trophy className="w-10 h-10 text-amber-500" />
+              : percentage >= 40
+              ? <Sprout className="w-10 h-10 text-green-500" />
+              : <Dumbbell className="w-10 h-10 text-blue-500" />
+            }
+          </div>
           <h2 className="text-3xl font-bold text-gray-800 mb-2">
             {percentage >= 70 ? 'Geweldig!' : percentage >= 40 ? 'Goed bezig!' : 'Blijf oefenen!'}
           </h2>
@@ -146,15 +156,15 @@ export default function Lessen() {
           <div className="flex flex-col gap-3">
             <button
               onClick={() => startMoeilijkheid(gekozenMoeilijkheid)}
-              className="bg-green-600 hover:bg-green-700 text-white font-semibold py-3 rounded-xl transition-colors"
+              className="flex items-center justify-center gap-2 bg-green-600 hover:bg-green-700 text-white font-semibold py-3 rounded-xl transition-colors"
             >
-              🔄 Opnieuw proberen
+              <RotateCcw className="w-4 h-4" /> Opnieuw proberen
             </button>
             <button
               onClick={opnieuw}
-              className="bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold py-3 rounded-xl transition-colors"
+              className="flex items-center justify-center gap-2 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold py-3 rounded-xl transition-colors"
             >
-              ← Andere moeilijkheidsgraad
+              <ChevronLeft className="w-4 h-4" /> Andere moeilijkheidsgraad
             </button>
           </div>
         </div>
@@ -173,7 +183,7 @@ export default function Lessen() {
     <div className="min-h-screen p-6">
       <div className="max-w-2xl mx-auto">
         <div className="flex items-center gap-3 mb-6">
-          <button onClick={opnieuw} className="text-gray-400 hover:text-gray-600 text-sm">← Keuze</button>
+          <button onClick={opnieuw} className="flex items-center gap-1 text-gray-400 hover:text-gray-600 text-sm"><ChevronLeft className="w-4 h-4" /> Keuze</button>
           <div className="flex-1 bg-gray-200 rounded-full h-3">
             <div
               className={`${kleur.knop} h-3 rounded-full transition-all duration-500`}
@@ -185,25 +195,29 @@ export default function Lessen() {
 
         {les.type === 'info' ? (
           <div className="bg-white rounded-3xl shadow-lg p-8">
-            <div className="text-4xl mb-4">📖</div>
+            <div className="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center mb-4">
+              <BookOpen className="w-6 h-6 text-blue-600" />
+            </div>
             <h2 className="text-2xl font-bold text-gray-800 mb-4">{les.titel}</h2>
             <p className="text-gray-600 leading-relaxed text-lg mb-6">{les.tekst}</p>
             {les.feit && (
               <div className="bg-amber-50 border border-amber-200 rounded-2xl p-4 mb-6 flex gap-3">
-                <span className="text-2xl">💡</span>
+                <Lightbulb className="w-5 h-5 text-amber-500 shrink-0 mt-0.5" />
                 <p className="text-amber-800 text-sm font-medium">{les.feit}</p>
               </div>
             )}
             <button
               onClick={volgende}
-              className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-4 rounded-xl transition-colors text-lg"
+              className="w-full flex items-center justify-center gap-2 bg-green-600 hover:bg-green-700 text-white font-semibold py-4 rounded-xl transition-colors text-lg"
             >
-              Volgende →
+              Volgende <ChevronRight className="w-5 h-5" />
             </button>
           </div>
         ) : (
           <div className="bg-white rounded-3xl shadow-lg p-8">
-            <div className="text-4xl mb-4">❓</div>
+            <div className="w-12 h-12 rounded-xl bg-purple-50 flex items-center justify-center mb-4">
+              <HelpCircle className="w-6 h-6 text-purple-600" />
+            </div>
             <h2 className="text-2xl font-bold text-gray-800 mb-6">{les.vraag}</h2>
             <div className="grid grid-cols-1 gap-3 mb-6">
               {les.antwoorden.map((antwoord, i) => {
@@ -221,8 +235,8 @@ export default function Lessen() {
                   >
                     <span className="mr-2">{['A', 'B', 'C', 'D'][i]}.</span>
                     {antwoord}
-                    {gekozenAntwoord !== null && i === les.correct && <span className="float-right">✅</span>}
-                    {gekozenAntwoord !== null && i === gekozenAntwoord && i !== les.correct && <span className="float-right">❌</span>}
+                    {gekozenAntwoord !== null && i === les.correct && <CheckCircle className="float-right w-5 h-5 text-green-600" />}
+                    {gekozenAntwoord !== null && i === gekozenAntwoord && i !== les.correct && <XCircle className="float-right w-5 h-5 text-red-500" />}
                   </button>
                 )
               })}
@@ -230,8 +244,11 @@ export default function Lessen() {
 
             {gekozenAntwoord !== null && (
               <div className={`rounded-2xl p-4 mb-4 ${gekozenAntwoord === les.correct ? 'bg-green-50 border border-green-200' : 'bg-red-50 border border-red-200'}`}>
-                <p className={`text-sm font-medium ${gekozenAntwoord === les.correct ? 'text-green-800' : 'text-red-800'}`}>
-                  {gekozenAntwoord === les.correct ? '✅ Goed zo! ' : '❌ Helaas, dat was niet juist. '}
+                <p className={`flex items-start gap-2 text-sm font-medium ${gekozenAntwoord === les.correct ? 'text-green-800' : 'text-red-800'}`}>
+                  {gekozenAntwoord === les.correct
+                    ? <CheckCircle className="w-4 h-4 shrink-0 mt-0.5" />
+                    : <XCircle className="w-4 h-4 shrink-0 mt-0.5" />}
+                  {gekozenAntwoord === les.correct ? 'Goed zo! ' : 'Helaas, dat was niet juist. '}
                   {les.uitleg}
                 </p>
               </div>
@@ -240,9 +257,9 @@ export default function Lessen() {
             {gekozenAntwoord !== null && (
               <button
                 onClick={volgende}
-                className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-4 rounded-xl transition-colors text-lg"
+                className="w-full flex items-center justify-center gap-2 bg-green-600 hover:bg-green-700 text-white font-semibold py-4 rounded-xl transition-colors text-lg"
               >
-                Volgende →
+                Volgende <ChevronRight className="w-5 h-5" />
               </button>
             )}
           </div>
