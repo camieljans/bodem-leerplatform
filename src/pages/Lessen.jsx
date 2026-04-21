@@ -91,8 +91,8 @@ export default function Lessen() {
       <div className="min-h-screen p-6">
         <div className="max-w-2xl mx-auto">
           <div className="text-center mb-8">
-            <div className="w-14 h-14 rounded-2xl bg-amber-100 flex items-center justify-center mx-auto mb-4">
-              <GraduationCap className="w-7 h-7 text-amber-700" />
+            <div className="w-14 h-14 rounded-2xl bg-emerald-100 flex items-center justify-center mx-auto mb-4">
+              <GraduationCap className="w-7 h-7 text-emerald-700" />
             </div>
             <h1 className="text-3xl font-bold text-gray-800 mb-2">Extra Leermateriaal</h1>
             <p className="text-gray-500">{data.ondertitel}</p>
@@ -195,8 +195,8 @@ export default function Lessen() {
 
         {les.type === 'info' ? (
           <div className="bg-white rounded-3xl shadow-lg p-8">
-            <div className="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center mb-4">
-              <BookOpen className="w-6 h-6 text-blue-600" />
+            <div className="w-12 h-12 rounded-xl bg-emerald-50 flex items-center justify-center mb-4">
+              <BookOpen className="w-6 h-6 text-emerald-700" />
             </div>
             <h2 className="text-2xl font-bold text-gray-800 mb-4">{les.titel}</h2>
             <p className="text-gray-600 leading-relaxed text-lg mb-6">{les.tekst}</p>
@@ -215,8 +215,8 @@ export default function Lessen() {
           </div>
         ) : (
           <div className="bg-white rounded-3xl shadow-lg p-8">
-            <div className="w-12 h-12 rounded-xl bg-purple-50 flex items-center justify-center mb-4">
-              <HelpCircle className="w-6 h-6 text-purple-600" />
+            <div className="w-12 h-12 rounded-xl bg-emerald-50 flex items-center justify-center mb-4">
+              <HelpCircle className="w-6 h-6 text-emerald-700" />
             </div>
             <h2 className="text-2xl font-bold text-gray-800 mb-6">{les.vraag}</h2>
             <div className="grid grid-cols-1 gap-3 mb-6">

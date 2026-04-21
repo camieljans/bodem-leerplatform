@@ -69,8 +69,8 @@ export default function Vragen() {
     <div className="min-h-screen p-6">
       <div className="max-w-2xl mx-auto">
         <div className="text-center mb-8">
-          <div className="w-14 h-14 rounded-2xl bg-violet-100 flex items-center justify-center mx-auto mb-4">
-            <MessageSquare className="w-7 h-7 text-violet-700" />
+          <div className="w-14 h-14 rounded-2xl bg-emerald-100 flex items-center justify-center mx-auto mb-4">
+            <MessageSquare className="w-7 h-7 text-emerald-700" />
           </div>
           <h1 className="text-3xl font-bold text-gray-800 mb-1">Vragen aan de begeleider</h1>
           <p className="text-gray-500">Stel een vraag en je begeleider beantwoordt hem zo snel mogelijk</p>
@@ -85,7 +85,7 @@ export default function Vragen() {
               onChange={e => setNieuweVraag(e.target.value)}
               placeholder="Wat wil je vragen aan je begeleider? Wees zo duidelijk mogelijk!"
               rows={4}
-              className="w-full border border-gray-200 rounded-xl p-4 text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-400 resize-none"
+              className="w-full border border-gray-200 rounded-xl p-4 text-gray-700 focus:outline-none focus:ring-2 focus:ring-emerald-400 resize-none"
             />
             {fout && (
               <div className="flex items-center gap-2 bg-red-50 border border-red-200 text-red-700 rounded-xl px-4 py-3 text-sm">

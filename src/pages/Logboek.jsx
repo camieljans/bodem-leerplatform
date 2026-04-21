@@ -92,8 +92,8 @@ export default function Logboek() {
     <div className="min-h-screen p-6">
       <div className="max-w-2xl mx-auto">
         <div className="text-center mb-8">
-          <div className="w-14 h-14 rounded-2xl bg-blue-100 flex items-center justify-center mx-auto mb-4">
-            <BookOpen className="w-7 h-7 text-blue-700" />
+          <div className="w-14 h-14 rounded-2xl bg-emerald-100 flex items-center justify-center mx-auto mb-4">
+            <BookOpen className="w-7 h-7 text-emerald-700" />
           </div>
           <h1 className="text-3xl font-bold text-gray-800 mb-1">Mijn Logboek</h1>
           <p className="text-gray-500">Schrijf op wat je observeert, ontdekt en leert</p>
