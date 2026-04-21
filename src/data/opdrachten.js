@@ -541,7 +541,7 @@ export const opdrachten = {
         taken: [
           {
             type: 'doe',
-            tekst: 'Geef Pot 2 de eerste dosis kunstmest (volg de instructie op de verpakking). Maak compostthee voor Pot 3: doe een schepje compost in een pot water, laat 24 uur staan, zeef het en giet het over Pot 3. Pot 1 krijgt alleen water.',
+            tekst: 'Geef Pot 2 de eerste dosis kunstmest (volg de instructie op de verpakking). Geef Pot 3 de compostthee die je hebt gekregen van Soil Valley — giet de aanbevolen hoeveelheid over de pot. Pot 1 krijgt alleen water.',
           },
           {
             type: 'onderzoek',
@@ -553,7 +553,7 @@ export const opdrachten = {
           },
           {
             type: 'schrijf',
-            tekst: 'Beschrijf hoe compostthee eruit ziet en ruikt. Hoe verschilt het van gewoon water? Hoe denk je dat dit de grond beïnvloedt?',
+            tekst: 'Beschrijf hoe de compostthee van Soil Valley eruit ziet en ruikt. Hoe verschilt het van gewoon water? Hoe denk je dat dit de grond beïnvloedt?',
           },
         ],
         reflectie: [
@@ -706,7 +706,7 @@ export const opdrachten = {
         taken: [
           {
             type: 'doe',
-            tekst: 'Maak compostthee volgens het protocol: compost in water, 24 uur weken, zeven. Geef Pot 2 kunstmest en Pot 3 compostthee volgens de aanbevolen doseringen. Documenteer exact hoeveel je hebt toegevoegd (ml of gram).',
+            tekst: 'Geef Pot 2 kunstmest en Pot 3 de compostthee van Soil Valley volgens de aanbevolen doseringen. Documenteer exact hoeveel je hebt toegevoegd (ml of gram).',
           },
           {
             type: 'onderzoek',
@@ -890,11 +890,11 @@ export const opdrachten = {
       {
         week: 2,
         titel: 'Experiment starten: eerste toevoeging en meting',
-        intro: 'Het experiment gaat van start. Je maakt compostthee, geeft de eerste voeding aan de potten en doet je eerste nauwkeurige meting.',
+        intro: 'Het experiment gaat van start. Je geeft de eerste voeding aan de potten en doet je eerste nauwkeurige meting.',
         taken: [
           {
             type: 'doe',
-            tekst: 'Maak compostthee: doe compost in water, laat 24 uur staan en zeef het daarna. Geef pot 2 kunstmest en pot 3 compostthee volgens de aanbevolen hoeveelheden. Noteer exact hoeveel je hebt toegevoegd.',
+            tekst: 'Geef pot 2 kunstmest en pot 3 de compostthee van Soil Valley volgens de aanbevolen hoeveelheden. Noteer exact hoeveel je hebt toegevoegd.',
           },
           {
             type: 'onderzoek',
