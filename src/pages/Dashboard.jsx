@@ -25,11 +25,11 @@ const projectInfo = {
   keuringsdienst: {
     emoji: '🪴',
     naam: 'Keuringsdienst van Waarde',
-    bg: 'from-cyan-400 to-teal-500',
-    licht: 'bg-cyan-50',
-    tekst: 'text-cyan-800',
-    subtekst: 'text-cyan-600',
-    knop: 'bg-cyan-600 hover:bg-cyan-700',
+    bg: 'from-green-400 to-emerald-500',
+    licht: 'bg-green-50',
+    tekst: 'text-green-800',
+    subtekst: 'text-green-600',
+    knop: 'bg-green-600 hover:bg-green-700',
     beschrijving: 'Onderzoek het effect van compostthee op plantengroei. Vergelijk drie potten en presenteer jouw bevindingen.',
   },
 }
