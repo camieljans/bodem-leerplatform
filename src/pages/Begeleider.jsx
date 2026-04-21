@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { supabase } from '../supabase'
 import { useAuth } from '../App'
 import { useNavigate } from 'react-router-dom'
-import { GraduationCap, Users, BookOpen, MessageSquare, User, Send, Lock, Clock, CheckCircle, XCircle, School, LayoutGrid, Leaf, FlaskConical } from 'lucide-react'
+import { GraduationCap, Users, BookOpen, MessageSquare, User, Send, Lock, Clock, CheckCircle, XCircle, School, LayoutGrid, Worm, Sprout } from 'lucide-react'
 
 const scholen = [
   { value: 'olympus', label: 'Olympus College' },
@@ -380,7 +380,7 @@ export default function Begeleider() {
                       onClick={() => { setGekozenProject(p); if (gekozenLeerling) laadLogboek(gekozenLeerling.id) }}
                       className={`flex items-center gap-1.5 px-4 py-2 rounded-xl font-medium text-sm transition-all ${gekozenProject === p ? 'bg-gray-700 text-white' : 'bg-white text-gray-600 hover:bg-gray-100'}`}
                     >
-                      {p === 'alle' ? <><LayoutGrid className="w-3.5 h-3.5" /> Alle</> : p === 'wormenhotel' ? <><Leaf className="w-3.5 h-3.5" /> Wormenhotel</> : <><FlaskConical className="w-3.5 h-3.5" /> Keuringsdienst</>}
+                      {p === 'alle' ? <><LayoutGrid className="w-3.5 h-3.5" /> Alle</> : p === 'wormenhotel' ? <><Worm className="w-3.5 h-3.5" /> Wormenhotel</> : <><Sprout className="w-3.5 h-3.5" /> Keuringsdienst</>}
                     </button>
                   ))}
                 </div>

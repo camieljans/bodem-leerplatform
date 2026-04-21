@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../App'
-import { Leaf, FlaskConical, ChevronRight, Recycle, Sprout, Globe, Microscope, BarChart2, BookOpen } from 'lucide-react'
+import { Worm, Sprout, ChevronRight, Recycle, Globe, Microscope, BarChart2, BookOpen } from 'lucide-react'
 
 export default function Welkom() {
   const { selectProject, user } = useAuth()
@@ -32,7 +32,7 @@ export default function Welkom() {
           className="group bg-white rounded-2xl p-7 shadow-sm hover:shadow-md border border-gray-100 hover:border-emerald-300 text-left transition-all duration-200"
         >
           <div className="w-12 h-12 rounded-xl bg-emerald-100 flex items-center justify-center mb-5">
-            <Leaf className="w-6 h-6 text-emerald-700" />
+            <Worm className="w-6 h-6 text-emerald-700" />
           </div>
           <h2 className="text-xl font-bold text-gray-900 mb-2">Het Wormenhotel</h2>
           <p className="text-gray-500 text-sm leading-relaxed mb-5">
@@ -60,7 +60,7 @@ export default function Welkom() {
           className="group bg-white rounded-2xl p-7 shadow-sm hover:shadow-md border border-gray-100 hover:border-emerald-300 text-left transition-all duration-200"
         >
           <div className="w-12 h-12 rounded-xl bg-emerald-100 flex items-center justify-center mb-5">
-            <FlaskConical className="w-6 h-6 text-emerald-700" />
+            <Sprout className="w-6 h-6 text-emerald-700" />
           </div>
           <h2 className="text-xl font-bold text-gray-900 mb-2">Keuringsdienst van Waarde</h2>
           <p className="text-gray-500 text-sm leading-relaxed mb-5">

@@ -1,11 +1,11 @@
 import { useNavigate, useLocation } from 'react-router-dom'
 import { supabase } from '../supabase'
 import { useAuth } from '../App'
-import { Home, ClipboardList, BookOpen, MessageSquare, GraduationCap, Users, LogOut, Leaf, FlaskConical } from 'lucide-react'
+import { Home, ClipboardList, BookOpen, MessageSquare, GraduationCap, Users, LogOut, Worm, Sprout } from 'lucide-react'
 
 const projectInfo = {
-  wormenhotel:    { icon: Leaf,         naam: 'Wormenhotel' },
-  keuringsdienst: { icon: FlaskConical, naam: 'Keuringsdienst' },
+  wormenhotel:    { icon: Worm,   naam: 'Wormenhotel' },
+  keuringsdienst: { icon: Sprout, naam: 'Keuringsdienst' },
 }
 
 export default function Navbar() {

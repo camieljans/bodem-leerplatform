@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { supabase } from '../supabase'
 import { useAuth } from '../App'
-import { Leaf, FlaskConical, AlertCircle, Lightbulb, ChevronLeft, ArrowRight } from 'lucide-react'
+import { Worm, Sprout, AlertCircle, Lightbulb, ChevronLeft, ArrowRight } from 'lucide-react'
 
 const scholen = [
   { value: 'olympus', label: 'Olympus College' },
@@ -38,8 +38,8 @@ export default function Login() {
   const { project } = useAuth()
 
   const projectInfo = {
-    wormenhotel:    { icon: Leaf,         naam: 'Het Wormenhotel' },
-    keuringsdienst: { icon: FlaskConical, naam: 'Keuringsdienst van Waarde' },
+    wormenhotel:    { icon: Worm,   naam: 'Het Wormenhotel' },
+    keuringsdienst: { icon: Sprout, naam: 'Keuringsdienst van Waarde' },
   }
   const huidigProject = projectInfo[project] || { icon: Leaf, naam: 'Bodem Leerplatform' }
   const ProjectIcon = huidigProject.icon
