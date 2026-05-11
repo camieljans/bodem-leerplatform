@@ -3,7 +3,8 @@ import { useAuth } from '../App'
 import { briefing } from '../data/briefing'
 import {
   FileText, Target, Lightbulb, CheckCircle, BookOpen, Layers,
-  ChevronDown, ChevronUp, Sparkles, Clock, Users, ArrowRight, Flag
+  ChevronDown, ChevronUp, Sparkles, Clock, Users, ArrowRight, Flag,
+  FlaskConical, Leaf, Minus
 } from 'lucide-react'
 
 const faseKleuren = {
@@ -80,17 +81,22 @@ export default function Briefing() {
             </h2>
             <p className="text-gray-600 text-sm mb-4">Gewas: <strong>{data.experiment.gewas}</strong></p>
             <div className="grid grid-cols-3 gap-3 mb-4">
-              {[data.experiment.pot1, data.experiment.pot2, data.experiment.pot3].map((pot, i) => (
-                <div key={i} className={`rounded-xl p-4 text-center border-2 ${
-                  pot.kleur === 'gray' ? 'bg-gray-50 border-gray-200' :
-                  pot.kleur === 'blue' ? 'bg-blue-50 border-blue-200' :
-                  'bg-green-50 border-green-200'
-                }`}>
-                  <div className="text-2xl mb-2">{pot.emoji}</div>
-                  <div className="font-bold text-sm text-gray-800">{pot.naam}</div>
-                  <div className="text-xs text-gray-500 mt-1">{pot.label}</div>
-                </div>
-              ))}
+              {[data.experiment.pot1, data.experiment.pot2, data.experiment.pot3].map((pot, i) => {
+                const cfg = i === 0
+                  ? { bg: 'bg-gray-50',   border: 'border-gray-200',  iconBg: 'bg-gray-100',   iconClr: 'text-gray-400',   Icon: Minus }
+                  : i === 1
+                  ? { bg: 'bg-blue-50',   border: 'border-blue-200',  iconBg: 'bg-blue-100',   iconClr: 'text-blue-500',   Icon: FlaskConical }
+                  : { bg: 'bg-green-50',  border: 'border-green-200', iconBg: 'bg-green-100',  iconClr: 'text-green-600',  Icon: Leaf }
+                return (
+                  <div key={i} className={`rounded-xl p-4 text-center border-2 ${cfg.bg} ${cfg.border}`}>
+                    <div className={`w-10 h-10 rounded-full ${cfg.iconBg} flex items-center justify-center mx-auto mb-3`}>
+                      <cfg.Icon className={`w-5 h-5 ${cfg.iconClr}`} />
+                    </div>
+                    <div className="font-bold text-sm text-gray-800">{pot.naam}</div>
+                    <div className="text-xs text-gray-500 mt-1">{pot.label}</div>
+                  </div>
+                )
+              })}
             </div>
             <div className="bg-gray-50 rounded-xl p-4">
               <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Constanten (gelijk voor alle potten)</p>
