@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { supabase } from '../supabase'
 import { useAuth } from '../App'
 import { Worm, Sprout, Leaf, AlertCircle, Lightbulb, ChevronLeft, ArrowRight } from 'lucide-react'
@@ -23,7 +23,8 @@ const niveaus = [
 ]
 
 export default function Login() {
-  const [tab, setTab] = useState('login')
+  const [searchParams] = useSearchParams()
+  const [tab, setTab] = useState(searchParams.get('tab') === 'registreer' ? 'registreer' : 'login')
   const [naam, setNaam] = useState('')
   const [voornaam, setVoornaam] = useState('')
   const [achternaam, setAchternaam] = useState('')

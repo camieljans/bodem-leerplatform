@@ -32,13 +32,13 @@ export default function Welkom() {
         {/* Knoppen */}
         <div className="flex flex-col gap-3">
           <button
-            onClick={() => navigate('/login')}
+            onClick={() => navigate('/login?tab=registreer')}
             className="w-full flex items-center justify-center gap-2 bg-emerald-800 hover:bg-emerald-900 text-white font-semibold py-4 px-6 rounded-2xl transition-colors shadow-sm text-base"
           >
             Registreer en doe mee <ChevronRight className="w-5 h-5" />
           </button>
           <button
-            onClick={() => navigate('/login')}
+            onClick={() => navigate('/login?tab=login')}
             className="w-full flex items-center justify-center gap-2 bg-white/80 hover:bg-white text-stone-700 font-semibold py-4 px-6 rounded-2xl border border-white transition-colors text-base"
           >
             <LogIn className="w-5 h-5" /> Ik heb al een account
