@@ -120,7 +120,7 @@ export default function Login() {
 
         {/* Header */}
         <div className="text-center mb-8">
-          <div className="mx-auto mb-4 w-14 h-14">
+          <div className="flex justify-center mb-4">
             <CirkulairLogo className="w-14 h-14" />
           </div>
           <h1 className="text-2xl font-bold text-gray-900">Circulair Leerplatform</h1>

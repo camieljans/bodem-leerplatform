@@ -17,7 +17,7 @@ export default function Welkom() {
       <div className="max-w-md w-full text-center cinematic-panel rounded-[2rem] p-8">
 
         {/* Logo */}
-        <div className="mx-auto mb-8">
+        <div className="flex justify-center mb-8">
           <CirkulairLogo className="w-20 h-20" />
         </div>
 
