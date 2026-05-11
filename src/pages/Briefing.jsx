@@ -56,7 +56,6 @@ export default function Briefing() {
               <p className="text-white/80 text-base">{data.ondertitel}</p>
               <div className="flex items-center gap-4 mt-4 text-sm text-white/70">
                 <span className="flex items-center gap-1.5"><Clock className="w-4 h-4" />{data.duur}</span>
-                <span className="flex items-center gap-1.5"><Users className="w-4 h-4" />{data.doelgroep}</span>
               </div>
             </div>
           </div>
@@ -139,10 +138,6 @@ export default function Briefing() {
                     <div className="bg-white rounded-xl p-3">
                       <p className="text-xs text-gray-400">Duur</p>
                       <p className="font-semibold text-gray-800">{data.duur}</p>
-                    </div>
-                    <div className="bg-white rounded-xl p-3">
-                      <p className="text-xs text-gray-400">Doelgroep</p>
-                      <p className="font-semibold text-gray-800">{data.doelgroep}</p>
                     </div>
                     <div className="bg-white rounded-xl p-3">
                       <p className="text-xs text-gray-400">Thema's</p>

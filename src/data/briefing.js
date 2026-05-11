@@ -10,7 +10,6 @@ export const briefing = {
     alternatieve_vraag: 'Hoe kunnen wij alle schoolplanten voorzien van voeding zonder kunstmest te gebruiken?',
     beschrijving: 'In dit project bouwen en onderhouden jullie een eigen wormenhotel. Jullie leren hoe wormen organisch afval omzetten in compost — een waardevolle voedingsstof voor planten. Zo ervaren jullie de kringloop in de natuur en wat circulaire economie in de praktijk betekent.',
     duur: '6 weken',
-    doelgroep: '12–14 jaar (onderbouw VO)',
     themas: ['Circulariteit', 'Klimaat', 'Duurzaamheid', 'Bodemleven'],
     kleur: 'emerald',
 
@@ -163,8 +162,7 @@ export const briefing = {
     centrale_vraag: 'Wat doet compostthee met bodem en plantengroei vergeleken met kunstmest en geen toevoeging?',
     alternatieve_vraag: null,
     beschrijving: 'In dit project worden jullie onderzoekers voor de Keuringsdienst van Waarde. Jullie voeren een echt experiment uit: drie potten met radijs krijgen elk een andere behandeling. Jullie meten wekelijks de groei en presenteren aan het einde jullie bevindingen in een echte aflevering.',
-    duur: '6–8 weken',
-    doelgroep: '12–14 jaar (onderbouw Agora / VO)',
+    duur: '6 weken',
     themas: ['Bodemkwaliteit', 'Circulaire landbouw', 'Duurzame voedselproductie', 'Onderzoekend leren'],
     kleur: 'blue',
 
@@ -330,8 +328,7 @@ export const briefing = {
     centrale_vraag: 'Hoe kunnen wij met natuurlijke materialen iets bouwen dat bijdraagt aan biodiversiteit?',
     alternatieve_vraag: null,
     beschrijving: 'In dit project ga je écht buiten aan de slag in het voedselbos. Je leert hoe je met verse wilgentakken kunt vlechten en bouwen — een eeuwenoude techniek die ook vandaag nog nuttig is voor de natuur. Daarna observeer je welke dieren en insecten gebruikmaken van wat jullie hebben gebouwd.',
-    duur: '1 week',
-    doelgroep: 'Groep 7-8 en Praktijkonderwijs',
+    duur: '5 weken',
     themas: ['Biodiversiteit', 'Voedselbos', 'Duurzaamheid', 'Natuur'],
     kleur: 'lime',
 
