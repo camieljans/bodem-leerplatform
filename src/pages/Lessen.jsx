@@ -3,16 +3,7 @@ import { useAuth } from '../App'
 import { lesinhoud } from '../data/lesinhoud'
 import { GraduationCap, BookOpen, HelpCircle, Lightbulb, Trophy, Sprout, Dumbbell, RotateCcw, ChevronLeft, ChevronRight, CheckCircle, XCircle } from 'lucide-react'
 
-// Welke lesgroep hoort bij welk schoolniveau
-const schoolGroepMapping = {
-  'pro':      'basis',
-  'vmbo-b':   'basis',
-  'vmbo-k':   'midden',
-  'vmbo-tl':  'midden',
-  'havo':     'havo',
-  'vwo':      'havo',
-  'anders':   'midden',
-}
+import { bepaalNiveau } from '../utils/bepaalNiveau'
 
 const moeilijkheidKleuren = {
   makkelijk: {
@@ -49,8 +40,12 @@ export default function Lessen() {
   const data = lesinhoud[project]
   if (!data) return <div className="p-8 text-center text-gray-500">Geen project geselecteerd.</div>
 
-  const schoolGroep = schoolGroepMapping[profile?.niveau] || 'midden'
+  const schoolGroep = bepaalNiveau(profile?.niveau, profile?.leeftijd)
+  // Fallback: als het berekende niveau niet in dit project bestaat, pak het eerste beschikbare
   const niveauData = data.niveaus[schoolGroep]
+    ?? data.niveaus['basis']
+    ?? data.niveaus['midden']
+    ?? Object.values(data.niveaus)[0]
 
   function startMoeilijkheid(m) {
     setGekozenMoeilijkheid(m)

@@ -1,181 +1,406 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { supabase } from '../supabase'
 import { useAuth } from '../App'
-import { MessageSquare, PenLine, Send, ClipboardList, User, CheckCircle, Clock, Trash2, GraduationCap, AlertCircle } from 'lucide-react'
+import {
+  Send, Bot, GraduationCap, User, Clock, Sparkles, MessageSquare, Loader2, AlertCircle
+} from 'lucide-react'
 
-export default function Vragen() {
-  const { user, project } = useAuth()
-  const [vragen, setVragen] = useState([])
-  const [nieuweVraag, setNieuweVraag] = useState('')
+// ─── helpers ──────────────────────────────────────────────────────────────────
+
+function tijdLabel(iso) {
+  if (!iso) return ''
+  const d = new Date(iso)
+  return d.toLocaleTimeString('nl-NL', { hour: '2-digit', minute: '2-digit' })
+}
+
+function datumLabel(iso) {
+  if (!iso) return ''
+  const d = new Date(iso)
+  return d.toLocaleDateString('nl-NL', { day: 'numeric', month: 'long' })
+}
+
+// ─── AI-chat ──────────────────────────────────────────────────────────────────
+
+const AI_WELKOM = {
+  rol: 'assistant',
+  inhoud: 'Hé, ik ben jouw biologieassistent! 🌱 Ik ben specialist in bodem, wormen, planten, insecten en voedselbossen. Stel me gerust een vraag over jouw project of over de natuur!',
+  tijd: new Date().toISOString(),
+}
+
+function AiChat({ userId, project }) {
+  const STORAGE_KEY = `ai_chat_${userId}_${project}`
+
+  const [berichten, setBerichten] = useState(() => {
+    try {
+      const opgeslagen = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]')
+      return opgeslagen.length ? opgeslagen : [AI_WELKOM]
+    } catch {
+      return [AI_WELKOM]
+    }
+  })
+  const [invoer, setInvoer] = useState('')
   const [laden, setLaden] = useState(false)
-  const [versturen, setVersturen] = useState(false)
-  const [verwijderenId, setVerwijderenId] = useState(null)
   const [fout, setFout] = useState('')
+  const onderRef = useRef(null)
+  const inputRef = useRef(null)
+
+  useEffect(() => {
+    onderRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }, [berichten, laden])
+
+  useEffect(() => {
+    if (berichten.length > 1) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(berichten.slice(-40)))
+    }
+  }, [berichten])
+
+  async function stuurBericht(e) {
+    e.preventDefault()
+    const tekst = invoer.trim()
+    if (!tekst || laden) return
+
+    const nieuwBericht = { rol: 'user', inhoud: tekst, tijd: new Date().toISOString() }
+    const bijgewerkt = [...berichten, nieuwBericht]
+    setBerichten(bijgewerkt)
+    setInvoer('')
+    setLaden(true)
+    setFout('')
+
+    // Bouw context op voor de API (max 20 laatste berichten, zonder welkomstbericht)
+    const context = bijgewerkt
+      .filter(b => b !== AI_WELKOM)
+      .slice(-20)
+      .map(b => ({ rol: b.rol, inhoud: b.inhoud }))
+
+    try {
+      const resp = await fetch('/api/ai-chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ berichten: context, project }),
+      })
+
+      let json
+      try {
+        json = await resp.json()
+      } catch {
+        throw new Error(`HTTP ${resp.status}: geen geldige JSON (is de API-route actief?)`)
+      }
+
+      if (json.antwoord) {
+        setBerichten(prev => [
+          ...prev,
+          { rol: 'assistant', inhoud: json.antwoord, tijd: new Date().toISOString() },
+        ])
+      } else {
+        setFout(json.fout || 'Onbekende fout van de AI.')
+      }
+    } catch (err) {
+      setFout(err.message?.includes('JSON')
+        ? 'De AI-route is niet bereikbaar. Neem contact op met de beheerder.'
+        : 'Geen verbinding. Controleer je internet en probeer opnieuw.')
+    } finally {
+      setLaden(false)
+      inputRef.current?.focus()
+    }
+  }
+
+  function nieuwGesprek() {
+    setBerichten([{ ...AI_WELKOM, tijd: new Date().toISOString() }])
+    localStorage.removeItem(STORAGE_KEY)
+  }
+
+  return (
+    <div className="flex flex-col h-full">
+      {/* Berichten */}
+      <div className="flex-1 overflow-y-auto p-4 space-y-3">
+        {berichten.map((b, i) => (
+          <div key={i} className={`flex gap-2 ${b.rol === 'user' ? 'flex-row-reverse' : 'flex-row'}`}>
+            {/* Avatar */}
+            <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 self-end ${
+              b.rol === 'user' ? 'bg-emerald-100' : 'bg-violet-100'
+            }`}>
+              {b.rol === 'user'
+                ? <User className="w-4 h-4 text-emerald-700" />
+                : <Bot className="w-4 h-4 text-violet-600" />}
+            </div>
+
+            {/* Bubble */}
+            <div className={`max-w-[78%] ${b.rol === 'user' ? 'items-end' : 'items-start'} flex flex-col gap-1`}>
+              <div className={`px-4 py-2.5 rounded-2xl text-sm leading-relaxed whitespace-pre-wrap ${
+                b.rol === 'user'
+                  ? 'bg-emerald-600 text-white rounded-br-sm'
+                  : 'bg-white border border-gray-100 text-gray-800 rounded-bl-sm shadow-sm'
+              }`}>
+                {b.inhoud}
+              </div>
+              <span className="text-xs text-gray-400 px-1">{tijdLabel(b.tijd)}</span>
+            </div>
+          </div>
+        ))}
+
+        {/* Laad-indicator */}
+        {laden && (
+          <div className="flex gap-2 flex-row">
+            <div className="w-8 h-8 rounded-full bg-violet-100 flex items-center justify-center shrink-0 self-end">
+              <Bot className="w-4 h-4 text-violet-600" />
+            </div>
+            <div className="bg-white border border-gray-100 rounded-2xl rounded-bl-sm px-4 py-3 shadow-sm">
+              <div className="flex gap-1 items-center h-4">
+                <span className="w-2 h-2 bg-violet-300 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+                <span className="w-2 h-2 bg-violet-300 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+                <span className="w-2 h-2 bg-violet-300 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+              </div>
+            </div>
+          </div>
+        )}
+
+        {fout && (
+          <div className="flex items-center gap-2 bg-red-50 border border-red-200 text-red-700 rounded-xl px-4 py-3 text-sm">
+            <AlertCircle className="w-4 h-4 shrink-0" /> {fout}
+          </div>
+        )}
+
+        <div ref={onderRef} />
+      </div>
+
+      {/* Gesprek wissen */}
+      {berichten.length > 2 && (
+        <div className="px-4 pb-1 text-right">
+          <button onClick={nieuwGesprek} className="text-xs text-gray-400 hover:text-gray-600 transition-colors">
+            Nieuw gesprek starten
+          </button>
+        </div>
+      )}
+
+      {/* Invoer */}
+      <form onSubmit={stuurBericht} className="p-4 border-t border-gray-100 bg-white flex gap-2">
+        <input
+          ref={inputRef}
+          type="text"
+          value={invoer}
+          onChange={e => setInvoer(e.target.value)}
+          placeholder="Stel een vraag aan de biologieassistent..."
+          disabled={laden}
+          className="flex-1 border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-violet-400 disabled:opacity-60"
+        />
+        <button
+          type="submit"
+          disabled={!invoer.trim() || laden}
+          className="bg-violet-600 hover:bg-violet-700 disabled:opacity-40 text-white rounded-xl px-4 py-2.5 transition-colors flex items-center gap-1.5"
+        >
+          {laden ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
+        </button>
+      </form>
+    </div>
+  )
+}
+
+// ─── Begeleider-chat ───────────────────────────────────────────────────────────
+
+function BegeleiderChat({ userId, project }) {
+  const [vragen, setVragen] = useState([])
+  const [invoer, setInvoer] = useState('')
+  const [versturen, setVersturen] = useState(false)
+  const [laden, setLaden] = useState(true)
+  const [fout, setFout] = useState('')
+  const onderRef = useRef(null)
 
   useEffect(() => {
     laadVragen()
+    // Poll elke 15 seconden voor nieuwe antwoorden
+    const interval = setInterval(laadVragen, 15000)
+    return () => clearInterval(interval)
   }, [project])
 
+  useEffect(() => {
+    onderRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }, [vragen])
+
   async function laadVragen() {
-    setLaden(true)
     const { data } = await supabase
       .from('vragen')
       .select('*')
-      .eq('leerling_id', user.id)
+      .eq('leerling_id', userId)
       .eq('project', project)
-      .order('aangemaakt_op', { ascending: false })
+      .order('aangemaakt_op', { ascending: true })
     setVragen(data || [])
     setLaden(false)
-    // Markeer alle beantwoorde vragen als gezien
-    const beantwoord = (data || []).filter(v => v.antwoord).map(v => v.id)
-    const gezien = JSON.parse(localStorage.getItem('gezieneAntwoorden') || '[]')
-    const nieuw = [...new Set([...gezien, ...beantwoord])]
-    localStorage.setItem('gezieneAntwoorden', JSON.stringify(nieuw))
   }
 
-  function isNieuw(vraag) {
-    if (!vraag.antwoord || !vraag.beantwoord_op) return false
-    const gezien = JSON.parse(localStorage.getItem('gezieneAntwoordenGezien') || '[]')
-    return !gezien.includes(vraag.id)
-  }
-
-  async function vraagVersturen(e) {
+  async function stuurBericht(e) {
     e.preventDefault()
-    if (!nieuweVraag.trim()) return
+    const tekst = invoer.trim()
+    if (!tekst || versturen) return
     setVersturen(true)
     setFout('')
     const { error } = await supabase.from('vragen').insert({
-      leerling_id: user.id,
+      leerling_id: userId,
       project,
-      vraag: nieuweVraag.trim(),
+      vraag: tekst,
     })
     if (error) {
-      setFout('Vraag kon niet worden verstuurd. Probeer het opnieuw.')
+      setFout('Bericht kon niet worden verstuurd. Probeer het opnieuw.')
     } else {
-      setNieuweVraag('')
+      setInvoer('')
       laadVragen()
     }
     setVersturen(false)
   }
 
-  async function vraagVerwijderen(id) {
-    setVerwijderenId(id)
-    await supabase.from('vragen').delete().eq('id', id)
-    setVerwijderenId(null)
-    laadVragen()
+  return (
+    <div className="flex flex-col h-full">
+      {/* Berichten */}
+      <div className="flex-1 overflow-y-auto p-4 space-y-3">
+        {laden ? (
+          <div className="text-center text-gray-400 py-10 text-sm">Laden...</div>
+        ) : vragen.length === 0 ? (
+          <div className="text-center text-gray-400 py-10">
+            <MessageSquare className="w-10 h-10 mx-auto mb-3 text-gray-200" />
+            <p className="text-sm">Nog geen berichten. Stel je begeleider een vraag!</p>
+          </div>
+        ) : (
+          vragen.map((v, i) => {
+            const vorigeDatum = i > 0 ? datumLabel(vragen[i - 1].aangemaakt_op) : null
+            const huidigeDatum = datumLabel(v.aangemaakt_op)
+            const toonDatum = huidigeDatum !== vorigeDatum
+
+            return (
+              <div key={v.id}>
+                {/* Datumscheidingslijn */}
+                {toonDatum && (
+                  <div className="flex items-center gap-3 my-4">
+                    <div className="flex-1 h-px bg-gray-100" />
+                    <span className="text-xs text-gray-400 shrink-0">{huidigeDatum}</span>
+                    <div className="flex-1 h-px bg-gray-100" />
+                  </div>
+                )}
+
+                {/* Vraag van leerling — rechts */}
+                <div className="flex gap-2 flex-row-reverse">
+                  <div className="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center shrink-0 self-end">
+                    <User className="w-4 h-4 text-emerald-700" />
+                  </div>
+                  <div className="max-w-[78%] flex flex-col items-end gap-1">
+                    <div className="px-4 py-2.5 rounded-2xl rounded-br-sm bg-emerald-600 text-white text-sm leading-relaxed">
+                      {v.vraag}
+                    </div>
+                    <span className="text-xs text-gray-400 px-1">{tijdLabel(v.aangemaakt_op)}</span>
+                  </div>
+                </div>
+
+                {/* Antwoord van begeleider — links */}
+                {v.antwoord ? (
+                  <div className="flex gap-2 flex-row mt-2">
+                    <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center shrink-0 self-end">
+                      <GraduationCap className="w-4 h-4 text-blue-700" />
+                    </div>
+                    <div className="max-w-[78%] flex flex-col items-start gap-1">
+                      <div className="px-4 py-2.5 rounded-2xl rounded-bl-sm bg-white border border-gray-100 shadow-sm text-gray-800 text-sm leading-relaxed">
+                        {v.antwoord}
+                      </div>
+                      <span className="text-xs text-gray-400 px-1">
+                        Begeleider · {tijdLabel(v.beantwoord_op)}
+                      </span>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="flex gap-2 mt-1.5 ml-10">
+                    <span className="flex items-center gap-1 text-xs text-gray-400 italic">
+                      <Clock className="w-3 h-3" /> Je begeleider is dit aan het lezen...
+                    </span>
+                  </div>
+                )}
+              </div>
+            )
+          })
+        )}
+
+        {fout && (
+          <div className="flex items-center gap-2 bg-red-50 border border-red-200 text-red-700 rounded-xl px-4 py-3 text-sm">
+            <AlertCircle className="w-4 h-4 shrink-0" /> {fout}
+          </div>
+        )}
+
+        <div ref={onderRef} />
+      </div>
+
+      {/* Invoer */}
+      <form onSubmit={stuurBericht} className="p-4 border-t border-gray-100 bg-white flex gap-2">
+        <input
+          type="text"
+          value={invoer}
+          onChange={e => setInvoer(e.target.value)}
+          placeholder="Schrijf een bericht aan je begeleider..."
+          disabled={versturen}
+          className="flex-1 border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 disabled:opacity-60"
+        />
+        <button
+          type="submit"
+          disabled={!invoer.trim() || versturen}
+          className="bg-blue-600 hover:bg-blue-700 disabled:opacity-40 text-white rounded-xl px-4 py-2.5 transition-colors flex items-center gap-1.5"
+        >
+          {versturen ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
+        </button>
+      </form>
+    </div>
+  )
+}
+
+// ─── Hoofdpagina ───────────────────────────────────────────────────────────────
+
+export default function Vragen() {
+  const { user, project } = useAuth()
+  const [actieveTab, setActieveTab] = useState('ai')
+
+  const tabs = [
+    { id: 'ai',         label: 'AI Assistent',  icon: Sparkles,     kleur: 'violet' },
+    { id: 'begeleider', label: 'Begeleider',     icon: GraduationCap, kleur: 'blue'  },
+  ]
+
+  const kleurMap = {
+    violet: { actief: 'bg-violet-600 text-white', inactief: 'text-gray-500 hover:text-violet-600 hover:bg-violet-50' },
+    blue:   { actief: 'bg-blue-600 text-white',   inactief: 'text-gray-500 hover:text-blue-600 hover:bg-blue-50'   },
   }
 
   return (
-    <div className="min-h-screen p-6">
-      <div className="max-w-2xl mx-auto">
-        <div className="text-center mb-8">
-          <div className="w-14 h-14 rounded-2xl bg-emerald-100 flex items-center justify-center mx-auto mb-4">
-            <MessageSquare className="w-7 h-7 text-emerald-700" />
+    <div className="min-h-screen bg-gray-50 flex flex-col">
+      {/* Header */}
+      <div className="bg-white border-b border-gray-100 px-4 py-4">
+        <div className="max-w-2xl mx-auto">
+          <h1 className="text-xl font-bold text-gray-800 mb-3">Chat</h1>
+
+          {/* Tabs */}
+          <div className="flex gap-2">
+            {tabs.map(tab => {
+              const Icon = tab.icon
+              const actief = actieveTab === tab.id
+              return (
+                <button
+                  key={tab.id}
+                  onClick={() => setActieveTab(tab.id)}
+                  className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold transition-all ${
+                    actief ? kleurMap[tab.kleur].actief : kleurMap[tab.kleur].inactief
+                  }`}
+                >
+                  <Icon className="w-4 h-4" />
+                  {tab.label}
+                  {actief && tab.id === 'ai' && (
+                    <span className="text-xs bg-white/20 px-1.5 py-0.5 rounded-full">Beta</span>
+                  )}
+                </button>
+              )
+            })}
           </div>
-          <h1 className="text-3xl font-bold text-gray-800 mb-1">Vragen aan de begeleider</h1>
-          <p className="text-gray-500">Stel een vraag en je begeleider beantwoordt hem zo snel mogelijk</p>
         </div>
+      </div>
 
-        {/* Nieuwe vraag */}
-        <div className="bg-white rounded-2xl shadow p-6 mb-6">
-          <h2 className="flex items-center gap-2 font-bold text-gray-700 mb-4"><PenLine className="w-4 h-4 text-gray-400" /> Nieuwe vraag stellen</h2>
-          <form onSubmit={vraagVersturen} className="space-y-4">
-            <textarea
-              value={nieuweVraag}
-              onChange={e => setNieuweVraag(e.target.value)}
-              placeholder="Wat wil je vragen aan je begeleider? Wees zo duidelijk mogelijk!"
-              rows={4}
-              className="w-full border border-gray-200 rounded-xl p-4 text-gray-700 focus:outline-none focus:ring-2 focus:ring-emerald-400 resize-none"
-            />
-            {fout && (
-              <div className="flex items-center gap-2 bg-red-50 border border-red-200 text-red-700 rounded-xl px-4 py-3 text-sm">
-                <AlertCircle className="w-4 h-4 shrink-0" /> {fout}
-              </div>
-            )}
-            <button
-              type="submit"
-              disabled={versturen || !nieuweVraag.trim()}
-              className="w-full flex items-center justify-center gap-2 bg-green-600 hover:bg-green-700 disabled:opacity-50 text-white font-semibold py-3 rounded-xl transition-colors"
-            >
-              {versturen ? 'Versturen...' : <><Send className="w-4 h-4" /> Vraag versturen</>}
-            </button>
-          </form>
-        </div>
-
-        {/* Vragenlijst */}
-        <div>
-          <h2 className="flex items-center gap-2 font-bold text-gray-700 mb-4"><ClipboardList className="w-4 h-4 text-gray-400" /> Jouw vragen</h2>
-          {laden ? (
-            <div className="text-center text-gray-400 py-8">Laden...</div>
-          ) : vragen.length === 0 ? (
-            <div className="bg-white rounded-2xl shadow p-8 text-center text-gray-400">
-              <MessageSquare className="w-12 h-12 mx-auto mb-3 text-gray-200" />
-              <p>Je hebt nog geen vragen gesteld.</p>
-              <p className="text-sm mt-1">Gebruik het formulier hierboven om een vraag te stellen!</p>
-            </div>
-          ) : (
-            <div className="space-y-4">
-              {vragen.map(v => (
-                <div key={v.id} className="bg-white rounded-2xl shadow p-5">
-                  <div className="flex items-start gap-3 mb-3">
-                    <div className="w-9 h-9 rounded-full bg-gray-100 flex items-center justify-center shrink-0 mt-0.5">
-                      <User className="w-4 h-4 text-gray-500" />
-                    </div>
-                    <div className="flex-1">
-                      <p className="text-gray-800 font-medium">{v.vraag}</p>
-                      <p className="text-xs text-gray-400 mt-1">
-                        {new Date(v.aangemaakt_op).toLocaleDateString('nl-NL', {
-                          day: 'numeric', month: 'long', year: 'numeric'
-                        })}
-                      </p>
-                    </div>
-                    <div className="flex items-center gap-2 shrink-0">
-                      <div className="flex items-center gap-2">
-                        {v.antwoord && v.beantwoord_op && new Date(v.beantwoord_op) > new Date(Date.now() - 48*60*60*1000) && (
-                          <span className="text-xs bg-blue-500 text-white px-2 py-0.5 rounded-full font-bold animate-pulse">Nieuw!</span>
-                        )}
-                        <span className={`flex items-center gap-1 text-xs px-3 py-1 rounded-full font-medium ${v.antwoord ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'}`}>
-                          {v.antwoord ? <><CheckCircle className="w-3 h-3" /> Beantwoord</> : <><Clock className="w-3 h-3" /> In behandeling</>}
-                        </span>
-                      </div>
-                      <button
-                        onClick={() => vraagVerwijderen(v.id)}
-                        disabled={verwijderenId === v.id}
-                        title="Vraag intrekken"
-                        className="text-gray-300 hover:text-red-400 transition-colors disabled:opacity-50"
-                      >
-                        {verwijderenId === v.id ? '...' : <Trash2 className="w-4 h-4" />}
-                      </button>
-                    </div>
-                  </div>
-
-                  {v.antwoord && (
-                    <div className="bg-green-50 border border-green-200 rounded-xl p-4 mt-3 flex gap-3">
-                      <div className="w-8 h-8 rounded-full bg-green-200 flex items-center justify-center shrink-0">
-                        <GraduationCap className="w-4 h-4 text-green-700" />
-                      </div>
-                      <div>
-                        <p className="text-sm font-semibold text-green-800 mb-1">Antwoord van je begeleider:</p>
-                        <p className="text-green-700 text-sm leading-relaxed">{v.antwoord}</p>
-                        {v.beantwoord_op && (
-                          <p className="text-xs text-green-400 mt-2">
-                            {new Date(v.beantwoord_op).toLocaleDateString('nl-NL', { day: 'numeric', month: 'long' })}
-                          </p>
-                        )}
-                      </div>
-                    </div>
-                  )}
-
-                  {!v.antwoord && (
-                    <p className="text-xs text-gray-400 italic mt-1 ml-9">
-                      Je kunt deze vraag intrekken zolang er nog geen antwoord is.
-                    </p>
-                  )}
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
+      {/* Chat venster */}
+      <div className="flex-1 max-w-2xl w-full mx-auto flex flex-col" style={{ height: 'calc(100vh - 130px)' }}>
+        {actieveTab === 'ai' ? (
+          <AiChat userId={user.id} project={project} />
+        ) : (
+          <BegeleiderChat userId={user.id} project={project} />
+        )}
       </div>
     </div>
   )

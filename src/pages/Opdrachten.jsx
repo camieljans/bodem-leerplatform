@@ -3,16 +3,101 @@ import { useAuth } from '../App'
 import { useNavigate } from 'react-router-dom'
 import { supabase } from '../supabase'
 import { opdrachten } from '../data/opdrachten'
-import { ClipboardList, MessageCircle, Microscope, Wrench, PenLine, Palette, Brain, BookOpen, Lightbulb, ChevronLeft, ChevronRight } from 'lucide-react'
+import { ClipboardList, MessageCircle, Microscope, Wrench, PenLine, Palette, Brain, BookOpen, Lightbulb, ChevronLeft, ChevronRight, CheckCircle2, XCircle } from 'lucide-react'
+import { bepaalNiveau } from '../utils/bepaalNiveau'
 
-const schoolGroepMapping = {
-  'pro':      'basis',
-  'vmbo-b':   'basis',
-  'vmbo-k':   'midden',
-  'vmbo-tl':  'midden',
-  'havo':     'havo',
-  'vwo':      'havo',
-  'anders':   'midden',
+// ─── Kennischeck component ────────────────────────────────────────────────────
+
+function Kennischeck({ vragen, userId, project, week }) {
+  const STORAGE_KEY = `kc_${userId}_${project}_w${week}`
+
+  const [antwoorden, setAntwoorden] = useState(() => {
+    try {
+      const opgeslagen = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null')
+      return Array.isArray(opgeslagen) && opgeslagen.length === vragen.length
+        ? opgeslagen
+        : new Array(vragen.length).fill(-1)
+    } catch {
+      return new Array(vragen.length).fill(-1)
+    }
+  })
+
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(antwoorden))
+  }, [antwoorden])
+
+  function kiesAntwoord(qi, oi) {
+    if (antwoorden[qi] !== -1) return
+    setAntwoorden(prev => { const n = [...prev]; n[qi] = oi; return n })
+  }
+
+  const totaalBeantwoord = antwoorden.filter(a => a !== -1).length
+  const totaalCorrect    = antwoorden.filter((a, i) => a !== -1 && a === vragen[i].correct).length
+  const allesBeantwoord  = totaalBeantwoord === vragen.length
+
+  return (
+    <div className="mb-8">
+      <div className="flex items-center gap-2 mb-4">
+        <Brain className="w-5 h-5 text-violet-600" />
+        <h3 className="font-bold text-gray-800">Kennischeck</h3>
+        {allesBeantwoord && (
+          <span className={`ml-auto text-sm font-semibold px-3 py-1 rounded-full ${
+            totaalCorrect === vragen.length
+              ? 'bg-emerald-100 text-emerald-800'
+              : 'bg-violet-100 text-violet-800'
+          }`}>
+            {totaalCorrect}/{vragen.length} goed
+          </span>
+        )}
+      </div>
+
+      <div className="space-y-4">
+        {vragen.map((v, qi) => {
+          const gekozen     = antwoorden[qi]
+          const beantwoord  = gekozen !== -1
+
+          return (
+            <div key={qi} className="bg-violet-50 border border-violet-200 rounded-2xl p-5">
+              <p className="font-semibold text-gray-800 mb-3 text-sm">
+                {qi + 1}. {v.vraag}
+              </p>
+              <div className="space-y-2">
+                {v.opties.map((optie, oi) => {
+                  const isGekozen  = gekozen === oi
+                  const isCorrect  = v.correct === oi
+
+                  let cls = 'w-full text-left px-4 py-2.5 rounded-xl border text-sm transition-all flex items-center gap-2 '
+                  if (!beantwoord) {
+                    cls += 'bg-white border-gray-200 hover:border-violet-400 hover:bg-white text-gray-700 cursor-pointer'
+                  } else if (isCorrect) {
+                    cls += 'bg-emerald-100 border-emerald-400 text-emerald-800 font-semibold'
+                  } else if (isGekozen) {
+                    cls += 'bg-red-100 border-red-300 text-red-700'
+                  } else {
+                    cls += 'bg-white border-gray-100 text-gray-400 cursor-default'
+                  }
+
+                  return (
+                    <button key={oi} onClick={() => kiesAntwoord(qi, oi)} disabled={beantwoord} className={cls}>
+                      <span className="font-bold w-5 shrink-0">{String.fromCharCode(65 + oi)}.</span>
+                      <span className="flex-1">{optie}</span>
+                      {beantwoord && isCorrect  && <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />}
+                      {beantwoord && isGekozen && !isCorrect && <XCircle className="w-4 h-4 text-red-500 shrink-0" />}
+                    </button>
+                  )
+                })}
+              </div>
+              {beantwoord && (
+                <p className="text-xs text-gray-600 mt-3 bg-white rounded-xl px-4 py-2.5 border border-gray-100 leading-relaxed">
+                  💡 {v.uitleg}
+                </p>
+              )}
+            </div>
+          )
+        })}
+      </div>
+    </div>
+  )
 }
 
 const taakConfig = {
@@ -25,7 +110,8 @@ const taakConfig = {
 }
 
 const niveauLabels = {
-  basis:  { label: 'PRO & VMBO Basis',     kleur: 'bg-green-100 text-green-800' },
+  pro:    { label: 'Praktijkonderwijs',     kleur: 'bg-orange-100 text-orange-800' },
+  basis:  { label: 'VMBO Basis',            kleur: 'bg-green-100 text-green-800' },
   midden: { label: 'VMBO Kader & VMBO-TL', kleur: 'bg-blue-100 text-blue-800' },
   havo:   { label: 'HAVO & VWO',           kleur: 'bg-purple-100 text-purple-800' },
 }
@@ -38,8 +124,8 @@ export default function Opdrachten() {
   const [bezig, setBezig] = useState(false)
 
   const data = opdrachten[project]
-  const schoolGroep = schoolGroepMapping[profile?.niveau] || 'midden'
-  const weekenData = data?.[schoolGroep] || []
+  const schoolGroep = bepaalNiveau(profile?.niveau, profile?.leeftijd)
+  const weekenData = data?.[schoolGroep] || data?.['midden'] || data?.['basis'] || Object.values(data || {})[0] || []
   const totaalWeken = weekenData.length
   const huidigeWeek = weekenData.find(w => w.week === gekozenWeek) || weekenData[0]
   const niveauInfo = niveauLabels[schoolGroep]
@@ -210,6 +296,17 @@ export default function Opdrachten() {
                 )
               })}
             </div>
+
+            {/* Kennischeck (alleen tonen als er vragen zijn) */}
+            {huidigeWeek.vragen?.length > 0 && (
+              <Kennischeck
+                key={`${project}-${schoolGroep}-${gekozenWeek}`}
+                vragen={huidigeWeek.vragen}
+                userId={user.id}
+                project={project}
+                week={gekozenWeek}
+              />
+            )}
 
             {/* Reflectievragen */}
             <div className="bg-amber-50 border border-amber-200 rounded-2xl p-5">

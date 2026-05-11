@@ -1,5 +1,5 @@
 // ─── Opdrachten per project per niveau ────────────────────────────────────────
-// Niveaugroepen: basis (PRO/VMBO-B) | midden (VMBO-K/VMBO-TL) | havo (HAVO/VWO)
+// Niveaugroepen: pro | basis (VMBO-B) | midden (VMBO-K/VMBO-TL) | havo (HAVO/VWO)
 // Taaktypen: bespreek | onderzoek | doe | schrijf | teken | denk
 
 export const opdrachten = {
@@ -34,6 +34,20 @@ export const opdrachten = {
           'Wat vind jij het meest verrassende aan regenwormen?',
           'Waarom denk je dat het goed is om afval opnieuw te gebruiken?',
         ],
+        vragen: [
+          {
+            vraag: 'Wat heb je deze week buiten gedaan met regenwormen?',
+            opties: ['We hebben ze opgegeten', 'We hebben ze gezocht en bekeken', 'We hebben ze gekleurd', 'We hebben ze naar huis meegenomen'],
+            correct: 1,
+            uitleg: 'Deze week ben je buiten gaan zoeken naar regenwormen en heb je gekeken hoe ze bewegen.',
+          },
+          {
+            vraag: 'Welk afval van deze lijst komt van een plant?',
+            opties: ['Een plastic fles', 'Een appelschil', 'Een stuk glas', 'Een blikje'],
+            correct: 1,
+            uitleg: 'Een appelschil komt van een appel — dat is een plant. Plastic, glas en blikjes niet.',
+          },
+        ],
       },
       {
         week: 2,
@@ -60,6 +74,20 @@ export const opdrachten = {
         reflectie: [
           'Wat zou er gebeuren als je vlees in een wormenhotel gooit?',
           'Hoe weet je dat je wormenhotel goed werkt?',
+        ],
+        vragen: [
+          {
+            vraag: 'Wat mag je NIET in een wormenhotel gooien?',
+            opties: ['Appelschillen', 'Broodkorst', 'Vlees', 'Koffiedik'],
+            correct: 2,
+            uitleg: 'Vlees lusten wormen niet. Je hebt twee lijsten gemaakt: wat kan wel en wat kan niet.',
+          },
+          {
+            vraag: 'Welke drie lagen heeft een wormenhotel van binnen?',
+            opties: ['Zand, klei en stenen', 'Drainage, bedding en voedsel', 'Water, lucht en vuur', 'Bodem, midden en dak'],
+            correct: 1,
+            uitleg: 'Je hebt de lagen getekend: drainage onderaan, dan bedding, dan het voedsel.',
+          },
         ],
       },
       {
@@ -88,6 +116,20 @@ export const opdrachten = {
           'Wat was het moeilijkste aan het bouwen?',
           'Waar moet je op letten bij het verzorgen van de wormen?',
         ],
+        vragen: [
+          {
+            vraag: 'Waarvoor dienen de gaten onderaan het wormenhotel?',
+            opties: ['Zodat de wormen kunnen ontsnappen', 'Zodat overtollig water weg kan lopen', 'Zodat er meer zaden in passen', 'Zodat de wormen sneller eten'],
+            correct: 1,
+            uitleg: 'De gaten zijn de drainagelaag: water dat er teveel is kan eruit lopen.',
+          },
+          {
+            vraag: 'Wat heb je als groep gemaakt om de zorg te verdelen?',
+            opties: ['Een prijslijst', 'Een verzorgingsrooster', 'Een plattegrond van de klas', 'Een foto van de wormen'],
+            correct: 1,
+            uitleg: 'Jullie hebben een verzorgingsrooster gemaakt zodat iedereen weet wanneer hij of zij voedt.',
+          },
+        ],
       },
       {
         week: 4,
@@ -114,6 +156,20 @@ export const opdrachten = {
         reflectie: [
           'Wat valt je op aan de wormen vergeleken met vorige week?',
           'Wat heb je moeten aanpassen aan de verzorging?',
+        ],
+        vragen: [
+          {
+            vraag: 'Hoe moet de grond in het wormenhotel voelen?',
+            opties: ['Droog als zand', 'Vochtig maar niet drijfnat', 'Zo nat als een plas water', 'Het maakt niet uit'],
+            correct: 1,
+            uitleg: 'Wormen hebben vocht nodig, maar als het te nat is gaan ze dood.',
+          },
+          {
+            vraag: 'Wat heb je deze week bijgehouden in je logboek?',
+            opties: ['De kleur van je rugzak', 'Wat je zag aan de wormen en de grond', 'Hoeveel lessen je had', 'De temperatuur buiten'],
+            correct: 1,
+            uitleg: 'In je logboek schreef je op wat je zag: hoe de wormen bewegen, hoe het ruikt en hoe de grond er uitziet.',
+          },
         ],
       },
       {
@@ -142,6 +198,20 @@ export const opdrachten = {
           'Wat is het verschil tussen compost en gewone aarde?',
           'Waarom is composteren goed voor het milieu?',
         ],
+        vragen: [
+          {
+            vraag: 'Wat haal je uit de onderste laag van het wormenhotel als je oogst?',
+            opties: ['Nieuwe wormen', 'Compost', 'Plastiek', 'Zaad'],
+            correct: 1,
+            uitleg: 'In de onderste laag zit de afgewerkte compost — dat is wat de wormen van het afval hebben gemaakt.',
+          },
+          {
+            vraag: 'Wat is de volgende stap na compost in de kringloop: groenteschillen → wormen → compost → ?',
+            opties: ['Plastic', 'Vuur', 'Plant', 'Steen'],
+            correct: 2,
+            uitleg: 'Compost voedt planten, en planten leveren nieuwe groenteschillen. De cirkel is rond.',
+          },
+        ],
       },
       {
         week: 6,
@@ -169,692 +239,506 @@ export const opdrachten = {
           'Waarom denk jij dat composteren belangrijk is voor de aarde?',
           'Wat ga je thuis anders doen na dit project?',
         ],
+        vragen: [
+          {
+            vraag: 'Wat maak je deze week om het project te presenteren?',
+            opties: ['Een poster, tekening of video', 'Een recept voor wormensoep', 'Een PowerPoint van 50 dia\'s', 'Een wiskundesom'],
+            correct: 0,
+            uitleg: 'Je maakt een poster, tekening of korte video zodat andere leerlingen zien hoe een wormenhotel werkt.',
+          },
+          {
+            vraag: 'Wat is de grootste les van dit wormenhotel-project?',
+            opties: ['Afval is altijd nutteloos', 'Afval kan opnieuw voedsel worden voor planten', 'Wormen zijn gevaarlijk', 'Composteren duurt te lang'],
+            correct: 1,
+            uitleg: 'Door te composteren maak je van afval compost — en compost helpt planten groeien.',
+          },
+        ],
       },
     ],
 
     midden: [
       {
         week: 1,
-        titel: 'Introductie: kringlopen en circulariteit',
-        intro: 'Dit project draait om één grote vraag: hoe kunnen wij ons eigen afval omzetten in iets waardevols voor de natuur? Je onderzoekt de kringloop van organisch materiaal en wat circulariteit betekent.',
+        titel: 'Kennismaken: afval en kringlopen',
+        intro: 'Deze week start het project. Je ontdekt dat afval niet zomaar "weg" is — in de natuur wordt alles hergebruikt. Wormen spelen daarin een grote rol!',
         taken: [
           {
-            type: 'denk',
-            tekst: 'Wat is het verschil tussen een lineaire en een circulaire economie? Geef een eigen voorbeeld van elk. Bespreek met je groep: welk systeem gebruikt jullie school of thuis?',
-          },
-          {
-            type: 'onderzoek',
-            tekst: 'Onderzoek welk afval er op jullie school wordt weggegooid. Vraag bij de keuken of conciërge. Schat hoeveel GFT-afval er per week is. Reken uit: als dat allemaal gecomposteerd wordt, hoeveel compost levert dat op?',
+            type: 'bespreek',
+            tekst: 'Praat met je groep: wat gooi jij thuis weg? Maak een lijstje van minstens 6 soorten afval. Welke komen van planten of dieren, en welke niet? Wat denk je dat er met elk soort afval gebeurt?',
           },
           {
             type: 'doe',
-            tekst: 'Ga buiten en zoek drie plekken waar je ziet dat de natuur zelf "composteert" (dode bladeren, rottend hout, schimmels op stronken). Fotografeer en beschrijf wat je ziet.',
+            tekst: 'Ga buiten zoeken naar plekken waar de natuur zelf "composteert": dode bladeren, rottend hout of schimmels op boomstronken. Zoek minimaal twee plekken en schrijf op wat je ziet.',
+          },
+          {
+            type: 'teken',
+            tekst: 'Teken een kringloop: begin bij een appel aan een boom → appel valt → schimmels/wormen → compost → nieuwe plant → nieuwe appel. Maak de cirkel compleet met pijlen en labels.',
           },
           {
             type: 'schrijf',
-            tekst: 'Formuleer een persoonlijke onderzoeksvraag die jij wilt beantwoorden tijdens dit project. Begin met "Ik wil weten..." of "Hoe komt het dat...". Noteer ook je verwachtingen (hypothese).',
+            tekst: 'Schrijf in je logboek: wat weet je al over wormen en composteren? Wat vind je interessant of wil je graag leren tijdens dit project?',
           },
         ],
         reflectie: [
-          'Hoe sluit een wormenhotel aan op het idee van een circulaire economie?',
-          'Welke voordelen zie jij van lokale compostering ten opzichte van industriële afvalverwerking?',
+          'Wat is het verschil tussen afval "weggooien" en afval "composteren"?',
+          'Waarom is het goed als afval opnieuw gebruikt wordt door de natuur?',
+        ],
+        vragen: [
+          {
+            vraag: 'Wat betekent het dat de natuur "composteert"?',
+            opties: ['De natuur gooit alles in de prullenbak', 'De natuur breekt dood materiaal af en maakt er voeding van', 'De natuur verbrandt bladeren en hout', 'De natuur slaat afval op in de grond'],
+            correct: 1,
+            uitleg: 'In de natuur wordt dood materiaal zoals bladeren en hout afgebroken door schimmels en wormen — dat is composteren.',
+          },
+          {
+            vraag: 'Wat tekende je als kringloop deze week?',
+            opties: ['Een appel die in de vuilnisbak belandt', 'Een appel die via wormen en compost een nieuwe plant wordt', 'Een worm die een boom opeet', 'Een boom die water drinkt'],
+            correct: 1,
+            uitleg: 'De kringloop laat zien hoe een appel via wormen en compost weer voeding wordt voor een nieuwe plant.',
+          },
         ],
       },
       {
         week: 2,
-        titel: 'Onderzoek: bodem en bodemleven',
-        intro: 'Voor je het wormenhotel bouwt, verdiep je je in de wetenschap achter compostering: wat zijn micro-organismen, hoe werken zij samen met wormen, en wat maakt compost zo waardevol?',
+        titel: 'Onderzoeken: wat eten wormen?',
+        intro: 'Voor je het wormenhotel bouwt, wil je weten wat wormen lekker vinden — en wat beslist niet. Deze week doe je onderzoek en teken je hoe een wormenhotel er van binnen uitziet.',
         taken: [
           {
             type: 'onderzoek',
-            tekst: 'Onderzoek de rol van bacteriën en schimmels bij compostering. Wat is het verschil tussen aerobe (met zuurstof) en anaerobe (zonder zuurstof) afbraak? Welke ruikt naar rotte eieren en waarom?',
+            tekst: 'Zoek op (of vraag je begeleider): wat eten wormen WEL en wat eten ze NIET? Maak twee lijsten. Schrijf ook op waarom wormen bepaald voedsel niet lusten (bijv. vlees, citrus, gekookt eten).',
           },
           {
             type: 'doe',
-            tekst: 'Verzamel vier materialen (bijv. appelschil, karton, koffiedik, droog blad). Leg ze in een vochtig doosje. Observeer elke dag wat er verandert. Welk materiaal breekt het snelst af? Noteer dit nauwkeurig.',
+            tekst: 'Test het zelf! Verzamel 4 soorten materiaal: bijv. appelschil, theezakje, broodkorst en droog blad. Leg ze in een vochtig bakje. Bekijk elke dag wat er verandert. Welk materiaal vergaat het snelst?',
           },
           {
-            type: 'denk',
-            tekst: 'Maak een vergelijkingstabel: Kunstmest vs. Compost. Vergelijk op: werkingssnelheid, effect op bodemleven, milieuvriendelijkheid, kosten, lang termijn effect op bodemstructuur.',
+            type: 'teken',
+            tekst: 'Teken hoe een wormenhotel er van binnen uitziet. Teken de lagen: drainage (bodem met gaatjes), bedding (vochtige grond) en voedsel bovenop. Schrijf bij elke laag wat die laag doet.',
           },
           {
             type: 'schrijf',
-            tekst: 'Schrijf een korte samenvatting (max. 150 woorden): waarom is composteren beter dan organisch afval verbranden of storten? Gebruik de begrippen: voedingsstoffen, koolstofkringloop, bodemleven.',
+            tekst: 'Noteer in je logboek: wat mag er in jullie wormenhotel en wat niet? Schrijf ook op welk materiaal jullie nodig hebben om het te bouwen.',
           },
         ],
         reflectie: [
-          'Welke rol spelen micro-organismen die je niet kunt zien bij de afbraak van organisch materiaal?',
-          'Waarom heeft bodem met veel organisch materiaal een betere structuur?',
+          'Wat zou er gebeuren als je vlees of gekookt eten in het wormenhotel gooit?',
+          'Welk materiaal vergaande het snelst in je experiment, en waarom denk je dat?',
+        ],
+        vragen: [
+          {
+            vraag: 'Wat mag je NIET in een wormenhotel gooien?',
+            opties: ['Appelschillen', 'Koffiedik', 'Vlees en vis', 'Theezakjes'],
+            correct: 2,
+            uitleg: 'Wormen lusten geen vlees of vis. Dat trekt ook vliegen aan en gaat stinken.',
+          },
+          {
+            vraag: 'Welke drie lagen heeft een wormenhotel?',
+            opties: ['Zand, klei en grind', 'Drainage, bedding en voedsel', 'Water, lucht en aarde', 'Bodem, midden en dak'],
+            correct: 1,
+            uitleg: 'Onderaan drainage (gaten voor overtollig water), dan bedding (vochtige grond voor de wormen), dan voedsel bovenop.',
+          },
         ],
       },
       {
         week: 3,
-        titel: 'Ontwerpen en bouwen',
-        intro: 'Met de kennis die je hebt opgedaan, ga je nu het wormenhotel ontwerpen en bouwen. Let op: elk onderdeel heeft een functie die je moet kunnen uitleggen.',
+        titel: 'Bouwen: het wormenhotel',
+        intro: 'Deze week bouwen jullie jullie eigen wormenhotel! Zorg dat iedereen een taak heeft en dat jullie weten waarom elk onderdeel er is.',
         taken: [
           {
-            type: 'denk',
-            tekst: 'Ontwerp jullie wormenhotel op papier voordat je begint. Teken alle lagen en schrijf erbij: welke functie heeft elke laag? Waarom heb je gaatjes nodig aan de onderkant en de zijkant?',
-          },
-          {
             type: 'doe',
-            tekst: 'Bouw het wormenhotel volgens jullie ontwerp. Verdeel de rollen bewust: wie is "wormenambassadeur" (eindverantwoordelijke voor de zorg)? Maak een verzorgingsrooster.',
+            tekst: 'Bouw het wormenhotel stap voor stap. Verdeel de taken: wie maakt de gaten (drainage), wie legt de bedding, wie voegt de wormen toe, wie doet het eerste voedsel erin? Werkt iedereen mee?',
           },
           {
-            type: 'onderzoek',
-            tekst: 'Zoek op: wat is de ideale temperatuur en vochtigheid voor compostwormen? Hoe kun je dit meten en bijhouden? Maak een plan om dit wekelijks te monitoren.',
+            type: 'teken',
+            tekst: 'Maak een foto of tekening van jullie afgewerkte wormenhotel. Schrijf erbij welke laag wat doet en waarom jullie bepaalde keuzes hebben gemaakt.',
           },
           {
             type: 'schrijf',
-            tekst: 'Stel een "werkingsprotocol" op voor jullie wormenhotel: wat gooi je er in, hoe vaak, hoeveel, wat doe je als het gaat stinken? Dit protocol gebruik je de komende weken.',
+            tekst: 'Maak een verzorgingsrooster: wie voedt de wormen op welke dag? Wat gaan jullie erin gooien? Hang dit schema naast het wormenhotel zodat iedereen het weet.',
+          },
+          {
+            type: 'bespreek',
+            tekst: 'Overleg met je groep: hoe weten jullie dat de wormen het goed hebben? Maak een lijstje van tekenen dat het goed gaat, zoals: goede geur, actieve wormen, vochtige grond.',
           },
         ],
         reflectie: [
-          'Welke keuzes hebben jullie gemaakt bij het ontwerp en waarom?',
-          'Hoe ga je omgaan met problemen die jullie nog niet voorzien hebben?',
+          'Wat was het moeilijkste aan het bouwen, en hoe hebben jullie dat opgelost?',
+          'Waarom is het belangrijk dat iedereen weet wanneer hij of zij de wormen moet voeren?',
+        ],
+        vragen: [
+          {
+            vraag: 'Waarvoor dienen de gaatjes onderaan het wormenhotel?',
+            opties: ['Zodat de wormen kunnen ontsnappen', 'Zodat overtollig water weg kan lopen', 'Zodat er meer zaden in passen', 'Zodat de wormen sneller eten'],
+            correct: 1,
+            uitleg: 'De gaatjes zorgen dat water weg kan lopen — wormen hebben vocht nodig, maar mogen niet verdrinken.',
+          },
+          {
+            vraag: 'Wat heb je gemaakt zodat iedereen weet wanneer hij de wormen moet voeren?',
+            opties: ['Een rekenmachine', 'Een verzorgingsrooster', 'Een plattegrond van de klas', 'Een tekening van de wormen'],
+            correct: 1,
+            uitleg: 'Met een verzorgingsrooster weet iedereen wanneer hij aan de beurt is om te voeren.',
+          },
         ],
       },
       {
         week: 4,
-        titel: 'Monitoring: observeren en bijhouden',
-        intro: 'Het wormenhotel staat en de wormen werken. Jij bent nu de wetenschapper die bijhoudt wat er gebeurt. Goede observaties zijn de basis van goed onderzoek.',
+        titel: 'Verzorgen: wormen in de gaten houden',
+        intro: 'Het wormenhotel staat! Nu begint het echte werk: goed zorgen voor de wormen en bijhouden wat er elke dag verandert.',
         taken: [
           {
             type: 'doe',
-            tekst: 'Voer de wormen en controleer het hotel dagelijks. Let op: vochtigheid, geur, activiteit van de wormen, hoeveel voedsel er nog over is. Noteer alles met datum.',
+            tekst: 'Voer de wormen elke schooldag: gooi een handje groente- en fruitresten in het hotel. Controleer of de grond vochtig genoeg is (hij moet aanvoelen als een uitgeknepen spons — niet te nat, niet te droog).',
           },
           {
             type: 'onderzoek',
-            tekst: 'Onderzoek dit: wat verandert er aan het voedsel naarmate de weken vorderen? Hoe ziet het verschil eruit tussen week 1-materiaal en week 3-materiaal? Beschrijf de stadia van afbraak.',
+            tekst: 'Controleer het wormenhotel en schrijf op: ruikt het naar bosgrond of naar iets naars? Zie je de wormen bewegen? Hoeveel voedsel is er nog over? Doe dit minstens drie keer deze week.',
           },
           {
             type: 'schrijf',
-            tekst: 'Schrijf in je logboek een uitgebreide observatie: geur (schaal 1-5 van bosgrond tot stinkend), kleur van de compost, activiteit wormen, eventuele problemen en jouw verklaring daarvoor.',
+            tekst: 'Schrijf in je logboek: wat heb je deze week gezien in het wormenhotel? Hoe gaat het met de wormen? Is er iets veranderd ten opzichte van vorige week?',
           },
           {
-            type: 'denk',
-            tekst: 'Vergelijk jouw wormenhotel met dat van een andere groep. Zijn er verschillen? Hoe zou dat komen? Welke variabelen zijn anders? Schrijf een korte vergelijking.',
+            type: 'teken',
+            tekst: 'Teken een tijdlijn: wat gebeurt er stap voor stap met een groenteschil in het wormenhotel? Dag 1, dag 7, dag 14 — wat zie je veranderen?',
           },
         ],
         reflectie: [
-          'Wat heb je geleerd van het systematisch bijhouden van observaties?',
-          'Welke onverwachte dingen zijn er gebeurd en hoe verklaar je die?',
+          'Wat valt je op aan de wormen of de grond vergeleken met vorige week?',
+          'Wat heb je moeten aanpassen in de verzorging, en waarom?',
+        ],
+        vragen: [
+          {
+            vraag: 'Hoe moet de grond in het wormenhotel voelen?',
+            opties: ['Kurkdroog, zoals woestijnzand', 'Vochtig, zoals een uitgeknepen spons', 'Zo nat als een plas water', 'Het maakt helemaal niet uit'],
+            correct: 1,
+            uitleg: 'Wormen hebben vocht nodig om te kunnen ademen door hun huid. Te nat of te droog is allebei slecht.',
+          },
+          {
+            vraag: 'Wat heb je minstens drie keer gecontroleerd en opgeschreven deze week?',
+            opties: ['De prijs van het voedsel', 'Geur, wormenactiviteit en hoeveel voedsel er nog is', 'Hoe laat je naar school gaat', 'Het weer buiten'],
+            correct: 1,
+            uitleg: 'Door steeds dezelfde dingen te controleren zie je goed hoe het wormenhotel verandert.',
+          },
         ],
       },
       {
         week: 5,
-        titel: 'Oogsten en vergelijken',
-        intro: 'De compost is klaar. Nu onderzoek je wat compost doet met plantengroei — en vergelijk je dit met gewone potgrond.',
+        titel: 'Oogsten: compost bekijken en gebruiken',
+        intro: 'De wormen hebben weken gewerkt. Nu is het tijd om te oogsten! Je haalt de compost eruit en kijkt wat het verschil is met gewone aarde.',
         taken: [
           {
             type: 'doe',
-            tekst: 'Oogst de compost en vergellijk hem met gewone tuinaarde. Let op: kleur, geur, textuur (kruimelig/klonterig), eventuele wormen. Meet ook de pH als je een teststrip hebt.',
+            tekst: 'Oogst de compost: haal voorzichtig de onderste laag uit het wormenhotel. Bekijk hem goed: hoe ziet hij eruit? Hoe ruikt hij? Vergelijk hem naast gewone potgrond of tuinaarde.',
           },
           {
             type: 'onderzoek',
-            tekst: 'Zet een vergelijkingsexperiment op: twee identieke plantjes in dezelfde omstandigheden. Eén krijgt jullie compost, één gewone potgrond. Meet elke dag of om de dag de hoogte. Noteer in een tabel.',
+            tekst: 'Maak een eenvoudig experiment: neem twee kleine plantjes of zaden van hetzelfde soort. Geef één jullie compost en de ander gewone potgrond. Kijk na een week: zie je al verschil?',
+          },
+          {
+            type: 'teken',
+            tekst: 'Teken de volledige kringloop opnieuw — maar nu met wat je écht hebt meegemaakt: groenteschillen → wormenhotel → compost → plant. Voeg je eigen observaties toe als details.',
           },
           {
             type: 'schrijf',
-            tekst: 'Schrijf op basis van je observaties: wat is het effect van compost op plantengroei? Wat verwacht je nog te zien? Hoe verklaar je eventuele verschillen vanuit wat je weet over voedingsstoffen?',
-          },
-          {
-            type: 'denk',
-            tekst: 'Bereken: jullie school gooit per week X kilo GFT-afval weg. Als dat wordt gecomposteerd en gebruikt, hoeveel plantjes kunnen dan gevoed worden? Maak een schatting met motivatie.',
+            tekst: 'Schrijf in je logboek: hoe ziet de compost eruit vergeleken met gewone aarde? Wat ga je ermee doen? Wat heb je geleerd over wat wormen kunnen?',
           },
         ],
         reflectie: [
-          'Wat zegt dit experiment over de waarde van composteren op schoolniveau?',
-          'Hoe zou je dit project opschalen naar de hele school of wijk?',
+          'Wat is het verschil tussen jullie compost en gewone potgrond?',
+          'Waarom is composteren goed voor de natuur én voor ons?',
+        ],
+        vragen: [
+          {
+            vraag: 'Wat zit er in de onderste laag van het wormenhotel als je oogst?',
+            opties: ['Nieuwe wormen die je kunt verkopen', 'Compost — de verwerkte resten', 'Plastic afval', 'Zand en grind'],
+            correct: 1,
+            uitleg: 'De wormen hebben de resten omgezet in compost — dat is een voedingsrijke grondstof voor planten.',
+          },
+          {
+            vraag: 'Wat heb je met twee plantjes getest?',
+            opties: ['Of ze van muziek houden', 'Of compost beter is dan gewone potgrond', 'Of ze meer water nodig hebben', 'Of ze in het donker groeien'],
+            correct: 1,
+            uitleg: 'Door twee plantjes te vergelijken — één met compost, één zonder — zie je of compost een verschil maakt voor de groei.',
+          },
         ],
       },
       {
         week: 6,
-        titel: 'Presenteren en verbinden aan grote thema\'s',
-        intro: 'Je sluit het project af door je bevindingen te presenteren én te koppelen aan grotere thema\'s zoals klimaatverandering, voedselverspilling en de circulaire economie.',
+        titel: 'Afsluiten: wat heb je geleerd?',
+        intro: 'Dit is de laatste week. Je kijkt terug op alles wat je gedaan en geleerd hebt en laat het zien aan anderen.',
         taken: [
           {
-            type: 'denk',
-            tekst: 'Verbind jullie wormenhotel aan drie grote thema\'s: (1) klimaatverandering, (2) voedselverspilling, (3) circulaire economie. Hoe draagt jullie project bij aan elk van deze thema\'s? Maak per thema één concrete zin.',
+            type: 'bespreek',
+            tekst: 'Praat met je groep: wat zijn de drie belangrijkste dingen die jullie hebben geleerd over wormen, afval en kringlopen? Schrijf ze op.',
           },
           {
-            type: 'onderzoek',
-            tekst: 'Bereken de CO₂-besparing van jullie project: hoeveel organisch afval hebben jullie verwerkt? Als dat verbrand of gestort was, hoeveel CO₂ zou dat hebben opgeleverd? (1 kg organisch afval ≈ 0,5 kg CO₂ bij verbranding)',
-          },
-          {
-            type: 'doe',
-            tekst: 'Maak een eindpresentatie (pitch, poster of video) van 3-5 minuten. Vertel: jullie onderzoeksvraag, aanpak, wat jullie hebben gemeten, wat jullie hebben geleerd, en wat jullie aanbevelen aan anderen.',
+            type: 'teken',
+            tekst: 'Maak een poster, een tekening of een korte video die laat zien hoe een wormenhotel werkt. Zorg dat andere leerlingen het kunnen begrijpen — gebruik plaatjes en korte zinnen.',
           },
           {
             type: 'schrijf',
-            tekst: 'Schrijf je eindreflectie: wat was het meest waardevolle inzicht? Wat zou je anders aanpakken? Hoe ga jij persoonlijk anders omgaan met afval na dit project?',
+            tekst: 'Schrijf je eindreflectie in je logboek: Wat ging goed? Wat was moeilijk? Wat zou je een volgende keer anders doen? Wat ga je thuis misschien anders doen met afval?',
+          },
+          {
+            type: 'doe',
+            tekst: 'Presenteer jullie wormenhotel aan de klas. Laat zien: het hotel zelf, de compost die jullie hebben gemaakt, en het belangrijkste dat jullie hebben geleerd.',
           },
         ],
         reflectie: [
-          'Hoe verandert dit project jouw kijk op afval en de natuur?',
-          'Welk onderdeel van de circulaire economie zie je het liefst breder ingevoerd worden, en waarom?',
+          'Waarom denk jij dat composteren goed is voor de aarde?',
+          'Wat ga je thuis anders doen na dit project?',
+        ],
+        vragen: [
+          {
+            vraag: 'Wat laat je zien bij de eindpresentatie?',
+            opties: ['Alleen een tekening van een worm', 'Het wormenhotel, de compost en wat je hebt geleerd', 'Een PowerPoint van 50 dia\'s', 'Niets — de docent doet het'],
+            correct: 1,
+            uitleg: 'Bij de presentatie laat je het hotel zien, de compost die jullie hebben gemaakt en het belangrijkste dat je hebt geleerd.',
+          },
+          {
+            vraag: 'Wat is de grootste les van dit project?',
+            opties: ['Afval is altijd nutteloos en gevaarlijk', 'Organisch afval kan via wormen voeding worden voor planten', 'Wormen zijn eng en moeten vermeden worden', 'Composteren duurt te lang om nuttig te zijn'],
+            correct: 1,
+            uitleg: 'Door te composteren maak je van keukenafval iets waardevols: compost die planten helpt groeien.',
+          },
         ],
       },
     ],
 
-    havo: [
-      {
-        week: 1,
-        titel: 'Introductie: kringlopen en een onderzoeksvraag',
-        intro: 'Dit project gaat over de vraag: hoe zet je afval om in iets waardevols? Je kijkt naar de kringloop van de natuur en bedenkt wat jij wil onderzoeken.',
-        taken: [
-          {
-            type: 'denk',
-            tekst: 'Wat is het verschil tussen een lineaire economie (maak → gebruik → gooi weg) en een circulaire economie (niets gaat verloren)? Teken een diagram van beide. Waar past een wormenhotel in?',
-          },
-          {
-            type: 'onderzoek',
-            tekst: 'Onderzoek welk afval er op jullie school of thuis wordt weggegooid. Schat hoeveel GFT-afval er per week is. Wat zou je daarmee kunnen doen in een wormenhotel?',
-          },
-          {
-            type: 'doe',
-            tekst: 'Zoek buiten drie plekken waar je ziet dat de natuur zelf composteert (dode bladeren, schimmels op een boomstronk, rottend hout). Maak foto\'s en beschrijf wat je ziet.',
-          },
-          {
-            type: 'schrijf',
-            tekst: 'Schrijf een persoonlijke onderzoeksvraag: wat wil jij echt weten tijdens dit project? Schrijf ook op wat je denkt dat het antwoord is (dit is je hypothese).',
-          },
-        ],
-        reflectie: [
-          'Hoe draagt een wormenhotel bij aan de circulaire economie?',
-          'Wat is het verschil tussen afval composteren en afval verbranden voor het milieu?',
-        ],
-      },
-      {
-        week: 2,
-        titel: 'Onderzoek: hoe werkt composteren?',
-        intro: 'Voordat je bouwt, verdiep je je in de wetenschap. Waarom werkt composteren? Welke rol spelen bacteriën, schimmels en wormen?',
-        taken: [
-          {
-            type: 'onderzoek',
-            tekst: 'Zoek op: welke micro-organismen (bacteriën en schimmels) breken organisch materiaal af? Wat is het verschil tussen afbraak met zuurstof en zonder zuurstof? Welke geeft een nare geur en waarom?',
-          },
-          {
-            type: 'doe',
-            tekst: 'Mini-experiment: leg vier materialen buiten (bijv. appelschil, karton, koffiedik, een blad). Observeer elke dag wat verandert. Welk materiaal breekt het snelst af? Noteer je observaties met datum.',
-          },
-          {
-            type: 'denk',
-            tekst: 'Maak een vergelijkingstabel: Kunstmest vs. Compost. Vergelijk op: hoe snel het werkt, wat het doet met bodemleven, milieuvriendelijkheid, en effect op de lange termijn.',
-          },
-          {
-            type: 'schrijf',
-            tekst: 'Schrijf in maximaal 100 woorden: waarom is composteren beter dan organisch afval verbranden? Gebruik de woorden: voedingsstoffen, koolstof, bodemleven.',
-          },
-        ],
-        reflectie: [
-          'Welke rol spelen bacteriën die je niet kunt zien bij het afbreken van organisch materiaal?',
-          'Waarom heeft bodem met veel organisch materiaal een betere structuur voor planten?',
-        ],
-      },
-      {
-        week: 3,
-        titel: 'Ontwerpen en bouwen',
-        intro: 'Met je kennis ontwerp en bouw je het wormenhotel. Elk onderdeel heeft een functie — en jij moet die kunnen uitleggen.',
-        taken: [
-          {
-            type: 'denk',
-            tekst: 'Teken het ontwerp van jullie wormenhotel op papier. Schrijf bij elke laag: wat doet deze laag? Waarom heb je gaatjes nodig? Welke omstandigheden hebben de wormen nodig om goed te leven (temperatuur, vocht, licht)?',
-          },
-          {
-            type: 'doe',
-            tekst: 'Bouw het wormenhotel. Verdeel de taken bewust. Maak ook een verzorgingsrooster: wie voedt de wormen op welke dag, en hoeveel?',
-          },
-          {
-            type: 'onderzoek',
-            tekst: 'Wat is de ideale temperatuur en vochtigheid voor compostwormen? Maak een plan om dit bij te houden. Hoe kun je ingrijpen als het te droog of te nat is?',
-          },
-          {
-            type: 'schrijf',
-            tekst: 'Schrijf een verzorgingsprotocol voor jullie wormenhotel: wat gooi je erin, hoe vaak, hoeveel, en wat doe je als het stinkt of als de wormen zich niet goed gedragen?',
-          },
-        ],
-        reflectie: [
-          'Welke keuzes maakten jullie bij het ontwerp en waarom?',
-          'Hoe ga je om met problemen die je van tevoren niet had verwacht?',
-        ],
-      },
-      {
-        week: 4,
-        titel: 'Monitoren: meten en bijhouden',
-        intro: 'Het wormenhotel staat en werkt. Jij houdt bij wat er gebeurt. Goede observaties zijn de basis van goede conclusies.',
-        taken: [
-          {
-            type: 'doe',
-            tekst: 'Houd het wormenhotel dagelijks bij: controleer vochtigheid, geur, en hoe actief de wormen zijn. Noteer alles met datum. Gebruik een schaal voor geur (1 = bosgrond, 5 = stinkend) en activiteit (1 = nauwelijks beweging, 5 = heel actief).',
-          },
-          {
-            type: 'onderzoek',
-            tekst: 'Vergelijk jouw wormenhotel met dat van een andere groep. Zijn er verschillen? Waardoor zouden die kunnen komen? Schrijf een korte vergelijking van twee of drie zin.',
-          },
-          {
-            type: 'teken',
-            tekst: 'Maak een lijndiagram van de "gezondheid" van het wormenhotel over de weken. Gebruik de geur- en activiteitsschaal als meetpunt. Wat zie je aan het verloop?',
-          },
-          {
-            type: 'schrijf',
-            tekst: 'Schrijf een observatieverslag van deze week: hoe gaat het? Wat verandert er aan het voedsel? Zijn er problemen? Wat denk jij dat er in de komende weken gaat gebeuren?',
-          },
-        ],
-        reflectie: [
-          'Wat heb je geleerd van het systematisch bijhouden van je observaties?',
-          'Welk onverwacht iets is er al gebeurd, en hoe verklaar je dat?',
-        ],
-      },
-      {
-        week: 5,
-        titel: 'Oogsten en vergelijken',
-        intro: 'De compost is klaar! Je oogst, vergelijkt hem met gewone potgrond, en kijkt wat het effect is op plantengroei.',
-        taken: [
-          {
-            type: 'doe',
-            tekst: 'Oogst de compost en vergelijk hem met gewone tuinaarde. Kijk naar: kleur, geur, textuur (kruimelig of klonterig). Zet een vergelijkingsexperiment op: twee identieke plantjes — één in jullie compost, één in gewone potgrond. Meet elke dag de hoogte.',
-          },
-          {
-            type: 'teken',
-            tekst: 'Maak een grafiek van de plantengroei per dag. Zet de twee planten in dezelfde grafiek met twee kleuren. Wat zie je?',
-          },
-          {
-            type: 'denk',
-            tekst: 'Bereken: hoeveel GFT-afval hebben jullie verwerkt? Als dat verbrand was, wat zou de milieu-impact zijn? (1 kg GFT verbrand ≈ 0,5 kg CO₂). Wat betekent dit voor jullie project?',
-          },
-          {
-            type: 'schrijf',
-            tekst: 'Schrijf een analyse van je plantexperiment: welke plant groeit beter? Hoe verklaar je het verschil vanuit wat je weet over voedingsstoffen en bodemleven?',
-          },
-        ],
-        reflectie: [
-          'Wat zegt dit experiment over de waarde van composteren?',
-          'Hoe zou je dit project kunnen opschalen naar de hele school?',
-        ],
-      },
-      {
-        week: 6,
-        titel: 'Presenteren: wat heb je geleerd en ontdekt?',
-        intro: 'Je sluit af door je bevindingen te presenteren en te verbinden aan grotere thema\'s zoals klimaatverandering en voedselverspilling.',
-        taken: [
-          {
-            type: 'denk',
-            tekst: 'Verbind jullie wormenhotel aan drie grote thema\'s: (1) klimaatverandering, (2) voedselverspilling, (3) circulaire economie. Schrijf per thema één concrete zin over hoe jullie project daarmee te maken heeft.',
-          },
-          {
-            type: 'doe',
-            tekst: 'Maak een eindpresentatie van 3-5 minuten (poster, video of pitch). Vertel: wat was de vraag, wat hebben jullie gedaan, wat hebben jullie gevonden, en wat beveel je anderen aan.',
-          },
-          {
-            type: 'schrijf',
-            tekst: 'Schrijf een conclusie van maximaal 150 woorden: beantwoord jullie onderzoeksvraag, noem de belangrijkste bevinding en één ding dat je zou verbeteren.',
-          },
-          {
-            type: 'bespreek',
-            tekst: 'Bespreek met je groep: wat is het meest waardevolle dat jullie hebben geleerd? En welke vraag wil je nog steeds beantwoord zien?',
-          },
-        ],
-        reflectie: [
-          'Hoe heeft dit project jouw kijk op afval en de natuur veranderd?',
-          'Wat zou jij anders doen thuis of op school na dit project?',
-        ],
-      },
-    ],
   },
 
   // ════════════════════════════════════════════════════════════════════════════
   keuringsdienst: {
 
-    basis: [
+    midden: [
       {
         week: 1,
-        titel: 'Introductie: Planten en bodem',
-        intro: 'In dit project doe je een echt experiment! Je kijkt wat compostthee doet met de groei van radijsjes, vergeleken met kunstmest en niets. Deze week maak je kennis met het experiment.',
+        titel: 'Introductie: het experiment opzetten',
+        intro: 'Jullie gaan onderzoeken of compostthee beter is voor planten dan kunstmest — of helemaal niets. Deze week zet je het experiment op en bedenk je wat je verwacht.',
         taken: [
           {
             type: 'bespreek',
-            tekst: 'Praat met je groep: wat denk je dat er gebeurt als je kunstmest aan de grond toevoegt? En compostthee? Schrijf ieders voorspelling op.',
+            tekst: 'Bespreek met je groep: wat denken jullie dat er met planten gebeurt als je kunstmest geeft? En als je compostthee geeft? En als je niets geeft? Schrijf jullie verwachting op.',
+          },
+          {
+            type: 'onderzoek',
+            tekst: 'Zoek op (of vraag je begeleider): wat zit er in kunstmest en wat is compostthee? Schrijf in eigen woorden op wat het verschil is tussen de twee.',
           },
           {
             type: 'doe',
-            tekst: 'Zet de drie potten klaar: label ze duidelijk (Pot 1: niets, Pot 2: kunstmest, Pot 3: compostthee). Vul ze met dezelfde hoeveelheid potgrond. Zaai in elke pot evenveel radijszaadjes op dezelfde diepte.',
+            tekst: 'Zet het experiment op: zorg voor drie potten met dezelfde potgrond en hetzelfde aantal zaden. Zet ze op dezelfde plek. Pot 1 = niets, pot 2 = kunstmest, pot 3 = compostthee. Schrijf op de potten welke welke is.',
           },
           {
-            type: 'teken',
-            tekst: 'Teken de drie potten zoals ze er nu uitzien. Schrijf erbij wat er in elke pot zit. Dit is je "startmeting" — vergelijk dit later met hoe de potten er na weken uitzien!',
-          },
-          {
-            type: 'schrijf',
-            tekst: 'Schrijf in je logboek: wat verwacht je dat er zal groeien? Welke pot verwacht je dat het beste groeit en waarom? Schrijf dit op voordat je iets hebt gezien!',
+            type: 'doe',
+            tekst: 'Geef meteen de eerste voeding: pot 2 krijgt kunstmest, pot 3 compostthee. Noteer hoeveel je hebt toegevoegd. Pot 1 krijgt alleen water.',
           },
         ],
         reflectie: [
           'Waarom is het belangrijk dat alle drie de potten dezelfde hoeveelheid water en licht krijgen?',
-          'Wat is het doel van de pot zonder toevoeging (pot 1)?',
+          'Wat is het doel van de pot zonder toevoeging?',
+        ],
+        vragen: [
+          {
+            vraag: 'Waarom krijgt pot 1 niets toegevoegd?',
+            opties: ['Omdat pot 1 kapot is', 'Zodat je kunt vergelijken wat er zonder toevoeging gebeurt', 'Omdat kunstmest te duur is', 'Zodat pot 1 sneller groeit'],
+            correct: 1,
+            uitleg: 'Pot 1 is de controlepot. Die laat zien wat er normaal zou gebeuren — zo kun je het effect van kunstmest en compostthee vergelijken.',
+          },
+          {
+            vraag: 'Wat is compostthee?',
+            opties: ['Een thee gemaakt van theeblaadjes uit de tuin', 'Een vloeibare voeding gemaakt van gerijpte compost', 'Gewoon water met suiker', 'Een mengsel van kunstmest en water'],
+            correct: 1,
+            uitleg: 'Compostthee wordt gemaakt door compost in water te weken. Het bevat bacteriën en voedingsstoffen die van nature in de bodem zitten.',
+          },
         ],
       },
       {
         week: 2,
-        titel: 'Starten: zaaien en eerste toevoegingen',
-        intro: 'De potten zijn klaar. Nu start het experiment echt. Je geeft de eerste voeding en doet je eerste observaties.',
+        titel: 'Eerste observaties: kiemen de zaden al?',
+        intro: 'Je experiment staat! Nu begint het bijhouden. Kijk elke dag goed naar de potten en schrijf op wat je ziet.',
         taken: [
           {
-            type: 'doe',
-            tekst: 'Geef Pot 2 de eerste dosis kunstmest (volg de instructie op de verpakking). Geef Pot 3 de compostthee die je hebt gekregen van Soil Valley — giet de aanbevolen hoeveelheid over de pot. Pot 1 krijgt alleen water.',
-          },
-          {
             type: 'onderzoek',
-            tekst: 'Kijk elke dag of er al zaadjes ontkiemen. Schrijf op: welke pot ontkiemt als eerste? Hoeveel zaadjes komen op in elke pot? Noteer datum en pot.',
-          },
-          {
-            type: 'teken',
-            tekst: 'Maak een simpele tabel met drie kolommen (Pot 1, Pot 2, Pot 3) en rijen voor elke dag. Schrijf elke dag kort op wat je ziet.',
+            tekst: 'Kijk elke dag naar de drie potten: kiemen er al zaden? Welke pot kiemt het eerst? Schrijf dit elke dag op met de datum erbij.',
           },
           {
             type: 'schrijf',
-            tekst: 'Beschrijf hoe de compostthee van Soil Valley eruit ziet en ruikt. Hoe verschilt het van gewoon water? Hoe denk je dat dit de grond beïnvloedt?',
+            tekst: 'Maak een eenvoudig meetformulier dat je elke week gebruikt: datum, pot (1/2/3), hoogte in cm, bladkleur (lichtgroen/donkergroen/geel), hoe de plant er uitziet. Gebruik dit formulier de rest van het project.',
+          },
+          {
+            type: 'bespreek',
+            tekst: 'Bespreek met je groep: wat verwachten jullie te zien in de komende weken? Gaat er een pot beter of slechter groeien? Waarom?',
           },
         ],
         reflectie: [
-          'Wat valt je al op in de eerste week? Zijn er al verschillen?',
-          'Wat kan er misgaan in dit experiment als je niet elke dag dezelfde hoeveelheid water geeft?',
+          'Wat zou er misgaan als je de ene pot meer water geeft dan de andere?',
+          'Hoe zorg je ervoor dat je elke week op dezelfde manier meet?',
+        ],
+        vragen: [
+          {
+            vraag: 'Waarom schrijf je bij elke meting de datum op?',
+            opties: ['Voor de zekerheid', 'Zodat je later kunt zien hoeveel dagen er tussen metingen zitten', 'De leraar vraagt er om', 'Het maakt niet uit'],
+            correct: 1,
+            uitleg: 'Met data erbij kun je achteraf precies zien wanneer iets veranderde — dat maakt je onderzoek betrouwbaarder.',
+          },
+          {
+            vraag: 'Wat noteer je bij elke wekelijkse meting?',
+            opties: ['Alleen de hoogte', 'Datum, hoogte, bladkleur en hoe de plant eruitziet', 'Alleen de kleur', 'Alleen of de plant nog leeft'],
+            correct: 1,
+            uitleg: 'Door steeds dezelfde dingen te noteren kun je goed vergelijken wat er van week tot week verandert.',
+          },
         ],
       },
       {
         week: 3,
-        titel: 'Meten: hoe groot zijn de planten?',
-        intro: 'De radijsjes groeien! Nu ga je elke week nauwkeurig meten hoe groot ze zijn. Meten is de basis van goed onderzoek.',
+        titel: 'Meten: hoe groeien de planten?',
+        intro: 'Tijd voor de echte metingen! Je meet alle planten op dezelfde manier en schrijft alles nauwkeurig op.',
         taken: [
           {
             type: 'doe',
-            tekst: 'Meet elke plant met een liniaal: hoe hoog is de stengel (in cm)? Hoe groen zijn de blaadjes (licht/donkergroen/geel)? Hoeveel blaadjes heeft elke plant? Schrijf alles op in je tabel.',
+            tekst: 'Meet alle planten met je meetformulier. Meet de hoogte altijd vanaf de grond tot het hoogste blad. Schrijf ook de bladkleur op en hoe de plant er in het algemeen uitziet.',
           },
           {
             type: 'teken',
-            tekst: 'Teken of fotografeer elke pot. Noteer de datum. Zo kun je later zien hoe de plant veranderd is.',
-          },
-          {
-            type: 'onderzoek',
-            tekst: 'Vergelijk je drie potten: welke plant is het hoogst? Welke heeft de groenste blaadjes? Welke ziet er het gezondst uit? Maak een rangschikking van 1 (beste) tot 3 (minste).',
+            tekst: 'Maak een lijndiagram: zet de weken op de x-as (horizontaal) en de hoogte in cm op de y-as (verticaal). Teken een lijn voor elk van de drie potten. Gebruik verschillende kleuren.',
           },
           {
             type: 'schrijf',
-            tekst: 'Schrijf in je logboek: welke pot groeit het beste tot nu toe? Is dit wat je verwacht had? Wat valt je op wat je niet had verwacht?',
+            tekst: 'Beschrijf wat je tot nu toe ziet in je logboek: welke pot groeit het snelst? Zijn er al duidelijke kleurverschillen? Wat valt je op?',
           },
         ],
         reflectie: [
-          'Wat betekent "nauwkeurig meten" in dit experiment?',
-          'Welke pot groeit het beste en hoe verklaar je dat?',
+          'Wat is het verschil tussen zeggen "de plant ziet er goed uit" en "de plant is 8 cm hoog"?',
+          'Welke van de twee is nuttiger voor je onderzoek, en waarom?',
+        ],
+        vragen: [
+          {
+            vraag: 'Waarom meet je de hoogte altijd op dezelfde manier?',
+            opties: ['Dat is makkelijker', 'Zodat de metingen eerlijk te vergelijken zijn', 'De leraar zegt het', 'Maakt niet uit'],
+            correct: 1,
+            uitleg: 'Als je elke keer anders meet, kloppen de vergelijkingen niet meer. Consistentie is de basis van goed meten.',
+          },
+          {
+            vraag: 'Wat teken je in je lijndiagram?',
+            opties: ['Alleen de hoogste plant', 'De groei van alle drie de potten over de weken heen', 'Hoe de potten eruitzien', 'De hoeveelheid water die je hebt gegeven'],
+            correct: 1,
+            uitleg: 'Met een lijndiagram zie je in één oogopslag hoe elk van de drie potten door de tijd heen groeide.',
+          },
         ],
       },
       {
         week: 4,
-        titel: 'Bijhouden: week 4 observaties',
-        intro: 'Halverwege het experiment! Je meet opnieuw en kijkt of er een duidelijk patroon zichtbaar is.',
+        titel: 'Verdieping: wat doet de bodem?',
+        intro: 'Je experiment loopt goed. Deze week kijk je verder dan alleen de groei — je onderzoekt wat er in de bodem en de wortels gebeurt.',
         taken: [
           {
+            type: 'onderzoek',
+            tekst: 'Zoek op: hoe nemen plantenwortels voedingsstoffen op? Wat doen bacteriën in de bodem? Schrijf in eigen woorden op wat je hebt gevonden.',
+          },
+          {
             type: 'doe',
-            tekst: 'Herhaal de meting van week 3: hoogte, kleur, aantal blaadjes. Voeg ook toe: hoe stevig is de stengel (slappe vs. stevige stengel)? En kun je al de radijsbol zien groeien onder de grond?',
-          },
-          {
-            type: 'teken',
-            tekst: 'Maak een simpel staafdiagram: zet de drie potten op de x-as en de hoogte (in cm) op de y-as. Kleur de staven per pot in een andere kleur.',
-          },
-          {
-            type: 'bespreek',
-            tekst: 'Bespreek met je groep: welke pot doet het beste? Waarom denken jullie dat? Is het kunstmest of de compostthee? Of maakt het niet uit?',
+            tekst: 'Voer de wekelijkse meting uit. Als je voorzichtig één plantje kunt losmaken, bekijk dan de wortels: zijn ze wit en fijn, of bruin en dun? Leg ze daarna terug.',
           },
           {
             type: 'schrijf',
-            tekst: 'Schrijf je bijgewerkte voorspelling: wat denk je nu dat er aan het einde zal blijken? Is je mening veranderd ten opzichte van week 1?',
+            tekst: 'Schrijf op: als kunstmest sneller werkt, betekent dat dan ook dat het beter is? Wat denk jij, en waarom? Denk ook aan wat er op lange termijn met de bodem kan gebeuren.',
           },
         ],
         reflectie: [
-          'Wat is er tot nu toe veranderd wat je niet had verwacht?',
-          'Hoe zou je het experiment nog nauwkeuriger kunnen maken?',
+          'Welke effecten van kunstmest zie je niet in jullie kleine pottenexperiment?',
+          'Wat zou je anders doen als je meer tijd had voor dit onderzoek?',
+        ],
+        vragen: [
+          {
+            vraag: 'Wat kunnen bacteriën in de bodem doen voor planten?',
+            opties: ['Ze eten de wortels op', 'Ze helpen voedingsstoffen beschikbaar te maken voor de plant', 'Ze maken de grond harder', 'Ze hebben geen effect'],
+            correct: 1,
+            uitleg: 'Bacteriën breken organisch materiaal af en zetten dat om in stoffen die planten kunnen opnemen via hun wortels.',
+          },
+          {
+            vraag: 'Wat schrijf je op als je de wortels van een plant bekijkt?',
+            opties: ['Niets, wortels zijn niet belangrijk', 'Hoe ze eruitzien: kleur, dikte, hoeveelheid', 'Alleen hoeveel wortels er zijn', 'Of ze lekker ruiken'],
+            correct: 1,
+            uitleg: 'Wortels vertellen je veel over de gezondheid van een plant: witte, fijne wortels zijn een goed teken.',
+          },
         ],
       },
       {
         week: 5,
-        titel: 'Oogsten: de radijsjes uit de grond',
-        intro: 'Het is zover: de radijsjes mogen geoogst worden! Je vergelijkt de drie potten en trekt je eerste conclusies.',
+        titel: 'Oogsten en vergelijken',
+        intro: 'De radijsjes zijn klaar om geoogst te worden! Je meet, weegt en vergelijkt de resultaten van de drie potten.',
         taken: [
           {
             type: 'doe',
-            tekst: 'Oogst de radijsjes voorzichtig uit elke pot. Meet per pot: grootte van de bol (diameter in cm), gewicht als je een weegschaal hebt, kleur en stevigheid. Leg ze naast elkaar en maak een foto.',
+            tekst: 'Oogst alle radijsjes. Meet per plant de lengte van het loof (groen gedeelte) en de diameter van de bol. Schrijf alles op per pot.',
+          },
+          {
+            type: 'doe',
+            tekst: 'Doe een smaaktest: proeven de radijsjes uit de drie potten anders? Beschrijf het verschil (pittig, mild, zacht, hard). Dit is ook een echte observatie!',
           },
           {
             type: 'teken',
-            tekst: 'Teken de drie radijsjes op ware grootte naast elkaar. Label welke welk is. Schrijf de maten erbij.',
-          },
-          {
-            type: 'onderzoek',
-            tekst: 'Vergelijk nu alle meetpunten van week 1 t/m 5. Welke pot groeide het snelst? Welke radijs is het grootst? Zijn er verrassende uitkomsten?',
+            tekst: 'Maak een eenvoudig staafdiagram: zet de drie potten naast elkaar en toon de gemiddelde bol-diameter per pot. Geef de staven een andere kleur per pot.',
           },
           {
             type: 'schrijf',
-            tekst: 'Schrijf je eerste conclusie: welke toevoeging werkte het beste voor de radijsgroei? Is dit wat je verwacht had? Wat zou een verklaring zijn?',
+            tekst: 'Schrijf op: welke pot leverde de grootste of mooiste radijsjes? Klopt dit met wat je in week 1 had verwacht? Wat verraste je?',
           },
         ],
         reflectie: [
-          'Wat vertelt de grootte van de radijsbol je over de kwaliteit van de bodemtoevoeging?',
-          'Wat zou er veranderen als je dit experiment vaker herhaalt?',
+          'Welke pot groeide het beste? Hoe weet je dat?',
+          'Betekent "het snelst groeien" ook hetzelfde als "het beste resultaat"? Waarom wel of niet?',
+        ],
+        vragen: [
+          {
+            vraag: 'Wat doe je bij een smaaktest in dit experiment?',
+            opties: ['Je proeft welke compostthee het lekkerst is', 'Je vergelijkt de smaak van de radijsjes uit de drie potten', 'Je proeft de potgrond', 'Je controleert of het water schoon is'],
+            correct: 1,
+            uitleg: 'Smaak is ook een meetbare eigenschap. Door de radijsjes uit de drie potten te proeven, zie je of de voeding ook effect heeft op de smaak.',
+          },
+          {
+            vraag: 'Wat laat een staafdiagram zien?',
+            opties: ['Hoe de plant er uitziet', 'Een vergelijking tussen de drie potten op één meetmoment', 'Hoe de plant door de tijd heen groeit', 'Hoeveel water je hebt gebruikt'],
+            correct: 1,
+            uitleg: 'Een staafdiagram is handig om waarden naast elkaar te vergelijken — in dit geval de drie potten op het moment van oogsten.',
+          },
         ],
       },
       {
         week: 6,
-        titel: 'Conclusie: wat heb je geleerd?',
-        intro: 'Je sluit het experiment af. Je presenteert wat je hebt gevonden en denkt na over wat dit betekent.',
+        titel: 'Conclusie en presentatie',
+        intro: 'Jullie experiment is klaar. Nu trek je conclusies en presenteer je jullie bevindingen.',
         taken: [
-          {
-            type: 'bespreek',
-            tekst: 'Bespreek met je groep: wat is jullie antwoord op de vraag "Wat doet compostthee met plantengroei?" Zijn jullie het eens? Noteer jullie gezamenlijk antwoord.',
-          },
-          {
-            type: 'teken',
-            tekst: 'Maak een overzichtsposter: titel, drie potten met foto\'s, jullie metingen, jullie conclusie. Gebruik tekeningen en kleuren zodat anderen het makkelijk begrijpen.',
-          },
-          {
-            type: 'doe',
-            tekst: 'Presenteer jullie poster of resultaten aan de klas. Vertel wat je gedaan hebt, wat je gevonden hebt en wat je verraste.',
-          },
           {
             type: 'schrijf',
-            tekst: 'Schrijf je eindreflectie: Wat was het leukste? Wat was het moeilijkste? Wat zou je een volgende keer anders doen?',
-          },
-        ],
-        reflectie: [
-          'Denk je nu anders over kunstmest en compost dan voor het project? Waarom?',
-          'Wat zou er met de aarde gebeuren als alle boeren compostthee gebruiken in plaats van kunstmest?',
-        ],
-      },
-    ],
-
-    midden: [
-      {
-        week: 1,
-        titel: 'Introductie: onderzoeksvraag en hypothese',
-        intro: 'Jullie onderzoeken wat compostthee doet met plantengroei. Maar goed onderzoek begint met een goede vraag. Deze week stel je hypothesen op en bereid je het experiment voor.',
-        taken: [
-          {
-            type: 'denk',
-            tekst: 'Bestudeer het verschil tussen kunstmest en compostthee. Wat zit erin? Hoe werken ze? Op welke manier verwacht je dat ze de plantengroei beïnvloeden? Noteer je verwachtingen per groeifactor (hoogte, bladkleur, wortelgroei, grootte bol).',
-          },
-          {
-            type: 'onderzoek',
-            tekst: 'Wat is de wetenschappelijke methode? Identificeer in jullie experiment: onafhankelijke variabele, afhankelijke variabelen, gecontroleerde variabelen. Maak een overzichtstabel. Welke variabelen zijn moeilijk te controleren?',
+            tekst: 'Schrijf jullie conclusie op: herhaal de vraag ("Wat doet compostthee met plantengroei?"), geef het antwoord op basis van jullie metingen, en vergelijk het met jullie verwachting van week 1. Klopt het?',
           },
           {
             type: 'doe',
-            tekst: 'Zet het experiment op: drie identieke potten, zelfde hoeveelheid potgrond, zelfde aantal zaden, zelfde positie in de ruimte. Documenteer alles (foto\'s, gewicht grond, aantal zaden per pot).',
-          },
-          {
-            type: 'schrijf',
-            tekst: 'Schrijf een formele hypothese: "Als pot X toevoeging Y krijgt, dan verwacht ik dat Z gebeurt, omdat…" Schrijf er ook bij welke meting je gebruikt om dit te toetsen.',
-          },
-        ],
-        reflectie: [
-          'Wat is het nut van een controlepot (pot zonder toevoeging) in dit experiment?',
-          'Welke gecontroleerde variabele is volgens jou het moeilijkst gelijk te houden, en waarom?',
-        ],
-      },
-      {
-        week: 2,
-        titel: 'Experiment starten: eerste toevoegingen en startmeting',
-        intro: 'Het experiment gaat van start. Je voegt de eerste voeding toe en doet een nauwkeurige startmeting die als referentie dient voor alle latere metingen.',
-        taken: [
-          {
-            type: 'doe',
-            tekst: 'Geef Pot 2 kunstmest en Pot 3 de compostthee van Soil Valley volgens de aanbevolen doseringen. Documenteer exact hoeveel je hebt toegevoegd (ml of gram).',
-          },
-          {
-            type: 'onderzoek',
-            tekst: 'Observeer de bodem direct na toevoeging: verandert de kleur, geur of textuur van de bodem? Noteer dit zorgvuldig. Hoe verklaar je eventuele onmiddellijke veranderingen?',
-          },
-          {
-            type: 'schrijf',
-            tekst: 'Maak een gestandaardiseerd observatieformulier dat je elke week gebruikt: datum, pot, hoogte (cm), bladkleur (schaal), aantal blaadjes, overige observaties. Gebruik dit formulier vanaf nu elke observatiemoment.',
-          },
-          {
-            type: 'denk',
-            tekst: 'Bedenk: welke rol spelen micro-organismen in compostthee? Hoe zouden ze de bodem kunnen beïnvloeden anders dan alleen voedingsstoffen? Schrijf drie mogelijke mechanismen op.',
-          },
-        ],
-        reflectie: [
-          'Wat zijn de risico\'s van een te grote of te kleine dosis meststof? Hoe heb je dit in jullie experiment gecontroleerd?',
-          'Hoe zorgen jullie voor consistentie tussen de wekelijkse observaties?',
-        ],
-      },
-      {
-        week: 3,
-        titel: 'Monitoring: systematisch waarnemen',
-        intro: 'Goede wetenschap vereist nauwkeurige, herhaalbare observaties. Deze week leer je hoe je data verzamelt die echt wat zegt.',
-        taken: [
-          {
-            type: 'doe',
-            tekst: 'Voer de wekelijkse meting uit met je gestandaardiseerde formulier. Gebruik altijd dezelfde meetmethode (bijv. altijd meten van de bodem af, niet van de pot). Voeg ook toe: tijdstip van meting, wie heeft gemeten.',
-          },
-          {
-            type: 'onderzoek',
-            tekst: 'Vergelijk jullie metingen met die van een andere groep die hetzelfde experiment uitvoert. Zijn er verschillen? Hoe verklaar je die? Welke variabelen waren bij hen anders?',
-          },
-          {
-            type: 'teken',
-            tekst: 'Maak een lijndiagram van de groei van week 1 t/m nu. Zet de weken op de x-as en de gemiddelde hoogte per pot op de y-as. Gebruik drie kleuren voor de drie potten.',
-          },
-          {
-            type: 'schrijf',
-            tekst: 'Schrijf een tussentijdse analyse: zijn er al duidelijke verschillen? Klopt dit met je hypothese? Zo niet, wat zou een alternatieve verklaring zijn?',
-          },
-        ],
-        reflectie: [
-          'Wat is het verschil tussen een kwalitatieve observatie ("de plant ziet er goed uit") en een kwantitatieve meting? Welke heeft meer wetenschappelijke waarde?',
-          'Hoe beïnvloedt de frequentie van je metingen de betrouwbaarheid van je conclusie?',
-        ],
-      },
-      {
-        week: 4,
-        titel: 'Verdieping: micro-organismen en wortelwerking',
-        intro: 'Terwijl de planten groeien, verdiep je je in de wetenschappelijke achtergrond. Wat gebeurt er precies in de bodem bij kunstmest en compostthee?',
-        taken: [
-          {
-            type: 'onderzoek',
-            tekst: 'Onderzoek hoe plantenwortels voedingsstoffen opnemen (osmose, wortelharen, oplossingen). Waarom werkt compostthee als vloeibare voeding efficiënt? Zoek ook op: wat zijn PGPR-bacteriën (plant growth promoting rhizobacteria) en welke rol spelen ze?',
-          },
-          {
-            type: 'doe',
-            tekst: 'Maak een wekelijkse meting. Kijk ook naar de wortels door voorzichtig één radijsje uit elke pot te nemen (als er meerdere zijn). Hoe zien de wortels eruit bij elke conditie? Vergelijk kleur, dikte, vertakking.',
-          },
-          {
-            type: 'denk',
-            tekst: 'Bedenk: welke effecten van compostthee zou je kunnen zien in de bodem, niet alleen in de plant? Hoe zou je die effecten kunnen meten? Formuleer een vervolgexperiment.',
-          },
-          {
-            type: 'schrijf',
-            tekst: 'Schrijf een korte verhandeling (150-200 woorden): waarom is compostthee op lange termijn mogelijk beter voor de bodemgezondheid dan kunstmest, ook als de korte-termijn plantengroei vergelijkbaar is?',
-          },
-        ],
-        reflectie: [
-          'Stel dat kunstmest meer groei geeft dan compostthee in jullie experiment. Betekent dat dan dat kunstmest "beter" is? Leg uit.',
-          'Welke ecologische effecten van kunstmest zou je niet zien in jullie kleine pottenexperiment?',
-        ],
-      },
-      {
-        week: 5,
-        titel: 'Oogsten en analyseren',
-        intro: 'De radijsjes worden geoogst. Je verzamelt einddata, vergelijkt alle metingen en begint een onderbouwde conclusie te trekken.',
-        taken: [
-          {
-            type: 'doe',
-            tekst: 'Oogst alle radijsjes. Meet per plant: lengte loof (cm), gewicht bol (gram), diameter bol (cm), kleur bol, conditie wortels. Voer ook een smaaktest in: smaken de radijsjes anders?',
-          },
-          {
-            type: 'onderzoek',
-            tekst: 'Bereken het gemiddelde per conditie voor alle meetpunten. Vergelijk de drie condities. Welke conditie scoort het hoogst op welke maatstaf? Is er een conditie die overal beter scoort, of verschilt het per maatstaf?',
-          },
-          {
-            type: 'teken',
-            tekst: 'Maak een visueel overzicht: foto\'s van de drie geoogste radijsjes naast elkaar, met labels. Maak ook een eindstaafdiagram van het eindgewicht per conditie.',
-          },
-          {
-            type: 'schrijf',
-            tekst: 'Schrijf een eerste conceptconclusie: beantwoord de onderzoeksvraag aan de hand van je data. Noem ook de beperkingen van jullie onderzoek (kleine steekproef, niet-gecontroleerde variabelen, etc.).',
-          },
-        ],
-        reflectie: [
-          'In hoeverre mag je op basis van drie potten een algemene uitspraak doen over compostthee en kunstmest?',
-          'Welke aanvullende meting had je willen doen als je meer tijd had gehad?',
-        ],
-      },
-      {
-        week: 6,
-        titel: 'Verklaringen zoeken en verbanden leggen',
-        intro: 'Data hebben betekent nog geen begrip. Deze week zoek je verklaringen voor wat je hebt gevonden en verbindt je het aan bredere thema\'s.',
-        taken: [
-          {
-            type: 'denk',
-            tekst: 'Analyseer de mogelijke verklaringen voor eventuele groeiverschillen. Formuleer voor elk verschil dat je hebt gevonden minstens twee alternatieve verklaringen (bijv. meer voedingsstoffen, betere bodemstructuur, micro-organismen).',
-          },
-          {
-            type: 'onderzoek',
-            tekst: 'Verbind jullie bevindingen aan bredere thema\'s: stikstofvervuiling, eutrofiëring, duurzame landbouw, circulaire economie. Welk thema sluit het meest aan bij wat jullie hebben gevonden?',
-          },
-          {
-            type: 'schrijf',
-            tekst: 'Schrijf een volledige wetenschappelijke conclusie: herhaal de onderzoeksvraag, beschrijf je methode in één zin, geef de resultaten, verbind ze aan theorie, noem beperkingen, doe een aanbeveling voor vervolgonderzoek.',
-          },
-          {
-            type: 'doe',
-            tekst: 'Bereid jullie presentatie voor in de stijl van Keuringsdienst van Waarde: onderzoeksvraag, aanpak, bewijs (metingen), conclusie, verklaring. Oefen de presentatie in de groep.',
-          },
-        ],
-        reflectie: [
-          'Hoe zou je dit experiment anders opzetten als je het opnieuw kon doen?',
-          'Wat betekenen jullie bevindingen voor de praktijk van een boer of tuinier die wil overstappen op duurzamere methoden?',
-        ],
-      },
-      {
-        week: 7,
-        titel: 'Presenteren: Keuringsdienst van Waarde aflevering',
-        intro: 'Jullie maken een aflevering in de stijl van Keuringsdienst van Waarde. Jullie laten zien wat jullie onderzocht hebben, wat jullie gevonden hebben en hoe jullie dat verklaren.',
-        taken: [
-          {
-            type: 'doe',
-            tekst: 'Maak de definitieve aflevering: video, reportage of live-presentatie. Verwerk: onderzoeksvraag, drie potten, metingen over de weken, eindresultaten, verklaringen, conclusie. Houd het helder en onderbouwd.',
+            tekst: 'Maak een presentatie: video, poster of live. Laat zien: de onderzoeksvraag, hoe jullie hebben gemeten, de belangrijkste resultaten (gebruik je diagram) en de conclusie.',
           },
           {
             type: 'bespreek',
-            tekst: 'Geef feedback op de presentatie van een andere groep. Wat vinden jullie sterk? Wat ontbreekt? Is de conclusie goed onderbouwd door de data?',
-          },
-          {
-            type: 'schrijf',
-            tekst: 'Schrijf je persoonlijke eindreflectie: wat heb je geleerd over wetenschappelijk onderzoek? Wat vond je het meest verrassend? Wat zou je verder willen onderzoeken?',
+            tekst: 'Bekijk de presentatie van een andere groep. Geef twee reacties: wat vinden jullie sterk aan hun onderzoek, en wat hadden zij (of jullie zelf) anders kunnen doen?',
           },
         ],
         reflectie: [
-          'Wat is het verschil tussen een mening en een wetenschappelijk onderbouwde conclusie?',
-          'Hoe heeft dit project jouw kijk op voedsel, landbouw en bodemkwaliteit veranderd?',
+          'Wat leer je van dit experiment over hoe wetenschappers onderzoek doen?',
+          'Wat ga jij persoonlijk anders doen met afval of plantenvoeding na dit project?',
+        ],
+        vragen: [
+          {
+            vraag: 'Wat zit er altijd in een goede conclusie?',
+            opties: ['Alleen wat je hebt gemeten', 'De onderzoeksvraag, het antwoord op basis van data, en een vergelijking met de verwachting', 'Een mooie tekening', 'Een lijst van materialen'],
+            correct: 1,
+            uitleg: 'Een conclusie beantwoordt de vraag waarmee je begon, onderbouwt dat met wat je hebt gemeten en kijkt terug op je beginverwachting.',
+          },
+          {
+            vraag: 'Wat laat je zien in je presentatie?',
+            opties: ['Alleen de grafiek', 'Onderzoeksvraag, metingen, diagram en conclusie', 'Alleen de conclusie', 'Een foto van de planten'],
+            correct: 1,
+            uitleg: 'Een goede presentatie neemt de kijker mee van vraag tot conclusie — met de data als bewijs daartussenin.',
+          },
         ],
       },
     ],
@@ -863,7 +747,7 @@ export const opdrachten = {
       {
         week: 1,
         titel: 'Introductie: onderzoeksvraag en hypothese opstellen',
-        intro: 'Jullie gaan een echt wetenschappelijk experiment uitvoeren. Maar goed onderzoek begint met een goede vraag en een duidelijke verwachting. Die stel je deze week op.',
+        intro: 'Jullie gaan een echt wetenschappelijk experiment uitvoeren. Maar goed onderzoek begint met een goede vraag en een duidelijke verwachting. Die stel je deze week op — en je geeft meteen de eerste voeding aan de potten.',
         taken: [
           {
             type: 'denk',
@@ -881,21 +765,35 @@ export const opdrachten = {
             type: 'schrijf',
             tekst: 'Schrijf je hypothese op voor elke pot: "Ik verwacht dat pot X ... groeit, omdat..." Schrijf er ook bij hoe je dit gaat meten (bijv. hoogte in cm elke week).',
           },
+          {
+            type: 'doe',
+            tekst: 'Geef nu meteen de eerste voeding: geef pot 2 kunstmest en pot 3 compostthee volgens de aanbevolen hoeveelheden. Noteer precies hoeveel je hebt toegevoegd. Pot 1 krijgt niets — dat is de controlepot.',
+          },
         ],
         reflectie: [
           'Waarom is het belangrijk dat alle drie de potten dezelfde hoeveelheid water en licht krijgen?',
           'Wat is het doel van de pot zonder toevoeging (de controlepot)?',
         ],
+        vragen: [
+          {
+            vraag: 'Wat heb je deze week als eerste opgeschreven voor het experiment?',
+            opties: ['De eindresultaten', 'Deelvragen en je hypothese per pot', 'De naam van het zaad', 'Hoeveel water de potten krijgen'],
+            correct: 1,
+            uitleg: 'Je hebt deelvragen bedacht bij de centrale onderzoeksvraag en een hypothese opgeschreven voor elke pot.',
+          },
+          {
+            vraag: 'Waarom krijgen alle drie de potten dezelfde hoeveelheid water en licht?',
+            opties: ['Om te besparen op water', 'Zodat water en licht geen invloed hebben op het verschil', 'Omdat de leraar dat zegt', 'Om de planten sneller te laten groeien'],
+            correct: 1,
+            uitleg: 'Door water en licht gelijk te houden, zie je alleen het effect van de toevoeging — niet van iets anders.',
+          },
+        ],
       },
       {
         week: 2,
-        titel: 'Experiment starten: eerste toevoeging en meting',
-        intro: 'Het experiment gaat van start. Je geeft de eerste voeding aan de potten en doet je eerste nauwkeurige meting.',
+        titel: 'Eerste metingen en observaties',
+        intro: 'Het experiment loopt! Tijd voor je eerste nauwkeurige metingen. Goede data begint bij een vaste methode die je elke week herhaalt.',
         taken: [
-          {
-            type: 'doe',
-            tekst: 'Geef pot 2 kunstmest en pot 3 de compostthee van Soil Valley volgens de aanbevolen hoeveelheden. Noteer exact hoeveel je hebt toegevoegd.',
-          },
           {
             type: 'onderzoek',
             tekst: 'Kijk elke dag of er zaadjes ontkiemen. Schrijf op: welke pot ontkiemt als eerste? Hoeveel zaadjes groeien er op in elke pot? Noteer datum en pot.',
@@ -906,12 +804,26 @@ export const opdrachten = {
           },
           {
             type: 'denk',
-            tekst: 'Bedenk: welke rol spelen de bacteriën in compostthee? Op welke manier kunnen ze de plant helpen, naast het geven van voedingsstoffen? Schrijf twee mogelijkheden op.',
+            tekst: 'Bedenk: welke rol spelen bacteriën in compostthee? Op welke manier kunnen ze de plant helpen, naast het geven van voedingsstoffen? Schrijf twee mogelijkheden op.',
           },
         ],
         reflectie: [
           'Wat zou er misgaan als je de ene pot meer water geeft dan de andere?',
           'Hoe zorg je ervoor dat je elke week op dezelfde manier meet?',
+        ],
+        vragen: [
+          {
+            vraag: 'Welke pot heeft vorige week compostthee gekregen?',
+            opties: ['Pot 1', 'Pot 2', 'Pot 3', 'Alle potten'],
+            correct: 2,
+            uitleg: 'Pot 2 krijgt kunstmest en pot 3 de compostthee. Pot 1 blijft controlepot.',
+          },
+          {
+            vraag: 'Wat heb je elke dag bijgehouden over de zaden?',
+            opties: ['De kleur van de pot', 'Welke pot als eerste ontkiemde en hoeveel zaden opgingen', 'De temperatuur van de kamer', 'Het aantal dagen dat het heeft geregend'],
+            correct: 1,
+            uitleg: 'Door datum en pot te noteren bij elke ontkieming kun je later vergelijken welke conditie het snelst kiemde.',
+          },
         ],
       },
       {
@@ -921,7 +833,7 @@ export const opdrachten = {
         taken: [
           {
             type: 'doe',
-            tekst: 'Meet elke plant met je observatieformulier. Gebruik altijd dezelfde meetmethode: meet altijd vanaf de bodem van de pot omhoog. Noteer ook het tijdstip van meten.',
+            tekst: 'Meet elke plant met je observatieformulier. Gebruik altijd dezelfde meetmethode: meet altijd vanaf de bodem van de pot omhoog. Noteer ook het tijdstip van meten. Tip: als je meerdere zaden per pot hebt geplant, kun je in week 4 voorzichtig één radijsje uitrekken zonder het experiment te verstoren.',
           },
           {
             type: 'teken',
@@ -940,6 +852,20 @@ export const opdrachten = {
           'Wat is het verschil tussen zeggen "de plant ziet er goed uit" en "de plant is 8,4 cm hoog"? Welke is nuttiger voor een onderzoek?',
           'Hoe vaak zou je moeten meten voor de betrouwbaarste resultaten?',
         ],
+        vragen: [
+          {
+            vraag: 'Waarom meet je altijd vanaf de bodem van de pot omhoog?',
+            opties: ['Dat is makkelijker te onthouden', 'Zodat alle metingen hetzelfde startpunt hebben', 'Omdat de pot altijd even groot is', 'Dat heeft geen reden'],
+            correct: 1,
+            uitleg: 'Hetzelfde startpunt zorgt dat metingen van week tot week eerlijk te vergelijken zijn.',
+          },
+          {
+            vraag: 'Wat heb je gedaan nadat je alle metingen in een diagram had gezet?',
+            opties: ['Het experiment gestopt', 'Een tussentijdse analyse geschreven en vergeleken met je hypothese', 'De potten omgewisseld', 'Extra water gegeven aan alle potten'],
+            correct: 1,
+            uitleg: 'Je hebt een analyse geschreven: kloppen de metingen met je hypothese en wat is een alternatieve verklaring als dat niet zo is.',
+          },
+        ],
       },
       {
         week: 4,
@@ -948,7 +874,7 @@ export const opdrachten = {
         taken: [
           {
             type: 'onderzoek',
-            tekst: 'Zoek op hoe plantenwortels voedingsstoffen opnemen. Wat zijn wortelharen? Waarom moeten voedingsstoffen opgelost zijn in water? Hoe helpt dit verklaren waarom compostthee (vloeibaar) snel werkt?',
+            tekst: 'Zoek op hoe plantenwortels voedingsstoffen opnemen. Wat zijn wortelharen? Waarom moeten voedingsstoffen opgelost zijn in water? Hoe helpt dit verklaren waarom compostthee (vloeibaar) snel werkt? Welke rol spelen bacteriën in compostthee? Op welke manier kunnen ze de plant helpen naast het geven van voedingsstoffen?',
           },
           {
             type: 'doe',
@@ -967,6 +893,20 @@ export const opdrachten = {
           'Welke effecten van kunstmest zou je niet zien in jullie kleine pottenexperiment, maar wel in een echt veld?',
           'Hoe zou je kunnen meten of de bodem zelf gezonder is geworden, niet alleen de plant?',
         ],
+        vragen: [
+          {
+            vraag: 'Wat heb je deze week bekeken aan de wortels van een radijsje?',
+            opties: ['De kleur van het blad', 'Hoe de wortels eruitzien bij elk van de drie condities', 'Het gewicht van de pot', 'De temperatuur van de grond'],
+            correct: 1,
+            uitleg: 'Je hebt voorzichtig een radijsje uitgetrokken en de wortels vergeleken op dikte en vertakking per conditie.',
+          },
+          {
+            vraag: 'Wat heb je geschreven over kunstmest als het meer groei gaf dan compostthee?',
+            opties: ['Dat kunstmest altijd beter is', 'Dat snellere groei niet meteen betekent dat kunstmest "beter" is', 'Dat compostthee niet werkt', 'Dat je het experiment opnieuw moet doen'],
+            correct: 1,
+            uitleg: 'Je hebt twee redenen bedacht waarom meer groei niet automatisch "beter" betekent, bijvoorbeeld door effecten op de bodem.',
+          },
+        ],
       },
       {
         week: 5,
@@ -976,6 +916,10 @@ export const opdrachten = {
           {
             type: 'doe',
             tekst: 'Oogst alle radijsjes. Meet per plant: lengte loof (cm), diameter bol (cm), gewicht bol (gram als je een weegschaal hebt). Leg de drie radijsjes naast elkaar en maak een foto.',
+          },
+          {
+            type: 'doe',
+            tekst: 'Doe een smaaktest: proeven de radijsjes uit de drie potten anders? Beschrijf het verschil in smaak, stevigheid en grootte.',
           },
           {
             type: 'teken',
@@ -994,19 +938,29 @@ export const opdrachten = {
           'Je hebt drie potten gebruikt. Mag je op basis daarvan een algemene uitspraak doen over compostthee? Waarom wel of niet?',
           'Welke meting had je nog willen doen als je meer tijd had?',
         ],
+        vragen: [
+          {
+            vraag: 'Wat meet je bij elk radijsje tijdens de oogst?',
+            opties: ['Alleen de kleur van de bol', 'Lengte loof, diameter bol, gewicht bol en hoe de wortels eruitzien', 'Alleen het gewicht', 'De geur van de potgrond'],
+            correct: 1,
+            uitleg: 'Meerdere meetpunten geven een volledig en vergelijkbaar beeld van het effect van elke toevoeging.',
+          },
+          {
+            vraag: 'Welke pot had de grootste radijs? Hoe kom je daarachter?',
+            opties: ['Door te raden', 'Door je staafdiagram van het eindgewicht te bekijken', 'Door alle radijsjes te proeven', 'Dat kun je niet weten'],
+            correct: 1,
+            uitleg: 'Je hebt een staafdiagram gemaakt van het gemiddeld gewicht per conditie — daarin zie je direct welke pot het hoogst scoorde.',
+          },
+        ],
       },
       {
         week: 6,
-        titel: 'Verklaringen zoeken',
-        intro: 'Data hebben betekent nog niet dat je het begrijpt. Deze week zoek je verklaringen voor wat je hebt gevonden.',
+        titel: 'Conclusie, verklaringen & presenteren',
+        intro: 'De laatste week: je brengt alles samen. Je formuleert verklaringen voor je data, schrijft een onderbouwde conclusie en presenteert jullie bevindingen in de stijl van Keuringsdienst van Waarde.',
         taken: [
           {
             type: 'denk',
-            tekst: 'Bedenk voor elk verschil dat je hebt gevonden minstens twee mogelijke verklaringen. Welke verklaring past het beste bij wat je weet over voedingsstoffen, bodemleven en wortelwerking?',
-          },
-          {
-            type: 'onderzoek',
-            tekst: 'Verbind je bevindingen aan een groter thema: stikstofvervuiling door kunstmest, eutrofiëring van sloten, of circulaire landbouw. Zoek één concreet voorbeeld uit de echte wereld dat past bij wat jullie hebben onderzocht.',
+            tekst: 'Bedenk voor elk verschil dat je hebt gevonden minstens twee mogelijke verklaringen. Welke past het beste bij wat je weet over voedingsstoffen, bodemleven en wortelwerking? Verbind je bevindingen ook aan een groter thema (bijv. stikstofvervuiling, circulaire landbouw) met één concreet voorbeeld uit de echte wereld.',
           },
           {
             type: 'schrijf',
@@ -1014,37 +968,323 @@ export const opdrachten = {
           },
           {
             type: 'doe',
-            tekst: 'Bereid de presentatie voor: maak een duidelijk overzicht van jullie onderzoeksvraag, de drie potten, de metingen en jullie conclusie. Oefen dit in de groep.',
-          },
-        ],
-        reflectie: [
-          'Hoe zou je dit experiment verbeteren als je het opnieuw kon doen?',
-          'Wat zeggen jullie resultaten voor een boer of tuinier die wil overstappen op natuurlijkere methoden?',
-        ],
-      },
-      {
-        week: 7,
-        titel: 'Presenteren: Keuringsdienst van Waarde',
-        intro: 'Jullie maken een aflevering in de stijl van Keuringsdienst van Waarde. Jullie laten zien wat jullie onderzocht hebben, wat jullie gevonden hebben en hoe jullie dat verklaren.',
-        taken: [
-          {
-            type: 'doe',
             tekst: 'Maak de definitieve presentatie: video, reportage of live. Verwerk hierin: jullie onderzoeksvraag, hoe het experiment werkte, de metingen, de eindresultaten en jullie conclusie. Zorg dat het duidelijk is voor iemand die er niets van weet.',
           },
           {
             type: 'bespreek',
-            tekst: 'Bekijk de presentatie van een andere groep. Geef twee dingen terug: wat vinden jullie sterk? En één vraag die je nog hebt over hun conclusie of aanpak.',
-          },
-          {
-            type: 'schrijf',
-            tekst: 'Schrijf je persoonlijke eindreflectie: wat heb je geleerd over onderzoek doen? Wat vond je het meest verrassende resultaat? Wat zou je verder willen onderzoeken?',
+            tekst: 'Bekijk de presentatie van een andere groep. Geef twee reacties: wat vinden jullie sterk, en één vraag over hun conclusie of aanpak. Schrijf daarna je persoonlijke eindreflectie: wat leerde je over onderzoek doen?',
           },
         ],
         reflectie: [
           'Wat is het verschil tussen een mening en een conclusie die je kunt onderbouwen met data?',
           'Hoe heeft dit project jouw kijk op voedsel, landbouw en bodemkwaliteit veranderd?',
         ],
+        vragen: [
+          {
+            vraag: 'Wat heb je in je conclusie als eerste herhaald?',
+            opties: ['De naam van jullie groep', 'De onderzoeksvraag', 'De hoeveelheid water per pot', 'De datum van de oogst'],
+            correct: 1,
+            uitleg: 'Een goede conclusie begint met de onderzoeksvraag, gevolgd door resultaten, verklaring en wat je anders zou doen.',
+          },
+          {
+            vraag: 'Wat was het doel van de eindpresentatie in de stijl van Keuringsdienst van Waarde?',
+            opties: ['Zo lang mogelijk praten', 'Jullie onderzoeksvraag, aanpak, resultaten en conclusie helder uitleggen', 'Alleen de grafiek laten zien', 'Vertellen dat compostthee beter is'],
+            correct: 1,
+            uitleg: 'De presentatie laat zien wat jullie hebben onderzocht, hoe het werkte en wat jullie hebben ontdekt — begrijpelijk voor iemand die er niets van weet.',
+          },
+        ],
       },
     ],
+  },
+
+  // ════════════════════════════════════════════════════════════════════════════
+  wilgenvlechten: {
+
+    basis: [
+      {
+        week: 1,
+        titel: 'Kennismaken met het voedselbos',
+        intro: 'Welkom bij dit project! We gaan buiten werken in het voedselbos. Een voedselbos is een tuin vol bomen, struiken en planten die eetbare dingen groeien. Heel gaaf!',
+        taken: [
+          { type: 'bespreek', tekst: 'Praat met je groep: wat denk je dat een voedselbos is? Welke planten en bomen groeien er misschien in? Noem er vijf.' },
+          { type: 'doe',      tekst: 'Ga naar buiten! Zoek een wilgenboom of wilgentak. Kijk goed: hoe lang zijn de bladeren? Hoe voelen de takken aan? Zijn de takken buigzaam of breekbaar?' },
+          { type: 'teken',    tekst: 'Teken de wilgenboom of een tak die je hebt gevonden. Schrijf erbij: hoe groot is de boom? Welke kleur hebben de bladeren?' },
+        ],
+        reflectie: [
+          'Wat vond jij het leukste van buiten zijn vandaag?',
+          'Wat wil je meer leren over het voedselbos?',
+        ],
+        vragen: [
+          {
+            vraag: 'Wat is een voedselbos?',
+            opties: ['Een winkel voor biologisch eten', 'Een tuin vol bomen en planten met eetbare opbrengst', 'Een bos waar je niet mag komen', 'Een kas met alleen groenten'],
+            correct: 1,
+            uitleg: 'In een voedselbos groeien bomen, struiken en planten die eetbare dingen leveren.',
+          },
+          {
+            vraag: 'Hoe voelen wilgentakken aan?',
+            opties: ['Hard en breekbaar', 'Zacht en buigzaam', 'Droog en korrelig', 'Glad als plastic'],
+            correct: 1,
+            uitleg: 'Wilgentakken zijn buigzaam, daarom zijn ze goed te gebruiken voor vlechten.',
+          },
+        ],
+      },
+      {
+        week: 2,
+        titel: 'Wilgen en de natuur',
+        intro: 'De wilg is een bijzondere boom. Insecten, vogels en andere dieren houden van de wilg. Deze week ontdek je waarom wilgen zo belangrijk zijn voor de natuur.',
+        taken: [
+          { type: 'onderzoek', tekst: 'Ga naar de wilgenboom. Kijk goed: welke insecten zie je op of bij de boom? Tel ze en schrijf op welke soorten je ziet. Kijk ook onder de bladeren!' },
+          { type: 'teken',     tekst: 'Maak een insectenposter. Teken minstens drie insecten die je bij de wilg hebt gezien. Schrijf bij elk insect de naam en wat het doet bij de wilg.' },
+          { type: 'bespreek',  tekst: 'Praat met je groep: waarom zijn bijen belangrijk voor planten en mensen? Wat zou er gebeuren als er geen bijen meer waren?' },
+        ],
+        reflectie: [
+          'Welk insect vond jij het interessantst? Waarom?',
+          'Waarom is de wilg goed voor dieren en insecten?',
+        ],
+        vragen: [
+          {
+            vraag: 'Waarom zijn bijen belangrijk voor planten?',
+            opties: ['Ze eten de bladeren op', 'Ze zorgen voor bestuiving zodat planten vruchten maken', 'Ze graven wortels los', 'Ze drinken water uit de bloemen'],
+            correct: 1,
+            uitleg: 'Bijen verplaatsen stuifmeel en zorgen zo dat bloemen vruchten kunnen vormen.',
+          },
+          {
+            vraag: 'Waar kun je de meeste insecten vinden bij een wilgenboom?',
+            opties: ['In de stam van de boom', 'Op en onder de bladeren', 'In de grond naast de boom', 'Alleen in de lucht erboven'],
+            correct: 1,
+            uitleg: 'Veel insecten zitten op en onder de bladeren waar ze voedsel en schuilplaatsen vinden.',
+          },
+        ],
+      },
+      {
+        week: 3,
+        titel: 'Ontwerpen en plannen',
+        intro: 'We gaan iets bouwen van wilgentakken! Dat heet wilgenvlechten. Je kunt een hekwerk maken, een insectenwand of een steun voor planten. Deze week bedenk je wat jij wil maken.',
+        taken: [
+          { type: 'denk',    tekst: 'Bedenk wat je wil maken van wilgentakken. Kies uit: een hekwerk, een insectenwand of een plantensteun. Welke past het beste in het voedselbos?' },
+          { type: 'teken',   tekst: 'Maak een ontwerp van wat je gaat bouwen. Teken hoe het eruit ziet. Hoe groot wordt het? Hoeveel takken heb je nodig?' },
+          { type: 'bespreek', tekst: 'Praat met je groep: voor wie of wat is jouw bouwsel? Helpt het insecten? Helpt het planten groeien? Of beschermt het iets?' },
+        ],
+        reflectie: [
+          'Wat ga je bouwen? Vertel in twee zinnen.',
+          'Hoe draagt jouw bouwsel bij aan de natuur?',
+        ],
+        vragen: [
+          {
+            vraag: 'Wat betekent vlechten?',
+            opties: ['Takken aan elkaar lijmen', 'Takken over en onder elkaar weven', 'Takken naast elkaar leggen', 'Takken in de grond steken'],
+            correct: 1,
+            uitleg: 'Bij vlechten weef je dunne takken afwisselend over en onder de steunen.',
+          },
+          {
+            vraag: 'Welk bouwsel past het beste bij het helpen van insecten?',
+            opties: ['Een hekwerk van plastic', 'Een insectenwand van wilgentakken', 'Een speelplek van rubber', 'Een basketbalmand'],
+            correct: 1,
+            uitleg: 'Een insectenwand van wilgentakken biedt schuilplaatsen en nestgelegenheid voor insecten.',
+          },
+        ],
+      },
+      {
+        week: 4,
+        titel: 'Bouwen: wilgenvlechten',
+        intro: 'Vandaag gaan we echt bouwen! Pak de wilgentakken en ga aan de slag. Vlechten betekent: takken over en onder elkaar weven. Het is even oefenen, maar dan lukt het!',
+        taken: [
+          { type: 'doe',    tekst: 'Vlecht je ontwerp met wilgentakken. Begin met de dikste takken als steun. Weef de dunnere takken er tussenin. Vraag om hulp als iets niet lukt.' },
+          { type: 'doe',    tekst: 'Help je groepje. Houdt iemand een tak vast terwijl jij vlecht? Wissel taken af. Zorg dat iedereen meedoet.' },
+          { type: 'schrijf', tekst: 'Schrijf in je logboek: hoe ging het bouwen? Wat was moeilijk? Wat ging goed? Ben je tevreden met het resultaat?' },
+        ],
+        reflectie: [
+          'Wat was het moeilijkste aan het vlechten?',
+          'Wat zou je de volgende keer anders doen?',
+        ],
+        vragen: [
+          {
+            vraag: 'Welke takken gebruik je als stevige steun bij het vlechten?',
+            opties: ['De dunste takjes', 'De dikste takken', 'Droge, gebroken takken', 'Takken van een andere boom'],
+            correct: 1,
+            uitleg: 'Dikke takken zijn sterk genoeg om als basissteun te dienen.',
+          },
+          {
+            vraag: 'Hoe werk je goed samen tijdens het bouwen?',
+            opties: ['Eén persoon doet alles', 'Taken afwisselen zodat iedereen meedoet', 'Alleen kijken en niet aanraken', 'Wachten tot de leraar het doet'],
+            correct: 1,
+            uitleg: 'Door taken te wisselen draagt iedereen bij en leer je van elkaar.',
+          },
+        ],
+      },
+      {
+        week: 5,
+        titel: 'Observeren en presenteren',
+        intro: 'Je bouwsel staat in het voedselbos. Nu kijken we wat er gebeurt! Komen er al dieren op af? Deze week observeer je en vertel je aan de klas wat je hebt gemaakt.',
+        taken: [
+          { type: 'doe',     tekst: 'Ga naar je bouwsel. Observeer tien minuten: welke insecten of vogels komen erop af? Schrijf op wat je ziet. Kom je elke dag kijken voor betere resultaten!' },
+          { type: 'teken',   tekst: 'Teken wat je ziet bij je bouwsel. Zijn er insecten, vogels of planten die het gebruiken? Maak een mooie tekening.' },
+          { type: 'bespreek', tekst: 'Presenteer aan de klas: wat heb je gebouwd, hoe heb je het gedaan en wat heb je geobserveerd? Vertel ook: hoe helpt jouw bouwsel de natuur?' },
+        ],
+        reflectie: [
+          'Wat heb je geleerd van dit hele project?',
+          'Hoe kun jij thuis ook iets doen voor de natuur?',
+        ],
+        vragen: [
+          {
+            vraag: 'Hoe observeer je goed welke dieren je bouwsel gebruiken?',
+            opties: ['Snel rondlopen en dan weggaan', 'Tien minuten stilzitten en rustig kijken en noteren', "Foto's nemen zonder te kijken", 'Alleen in de ochtend gaan kijken'],
+            correct: 1,
+            uitleg: 'Rustig observeren en noteren geeft de betrouwbaarste waarnemingen.',
+          },
+          {
+            vraag: 'Hoe helpt jouw wilgenvlechtwerk de natuur in het voedselbos?',
+            opties: ['Het maakt het bos kleiner', 'Het biedt schuilplaats en nestplek voor dieren en insecten', 'Het houdt dieren weg', 'Het heeft geen effect op de natuur'],
+            correct: 1,
+            uitleg: 'Wilgenvlechtwerk biedt structuur die insecten en vogels als schuilplaats en nestplek gebruiken.',
+          },
+        ],
+      },
+    ],
+
+    pro: [
+      {
+        week: 1,
+        titel: 'Kennismaken met het voedselbos',
+        intro: 'We gaan buiten werken! In een voedselbos groeien bomen en planten met eten. Heel gaaf om te ontdekken.',
+        taken: [
+          { type: 'bespreek', tekst: 'Wat is een voedselbos? Noem samen vijf planten of bomen die er in kunnen groeien.' },
+          { type: 'doe',      tekst: 'Ga naar buiten. Zoek een wilg. Voel de takken: zijn ze buigzaam?' },
+          { type: 'teken',    tekst: 'Teken de wilg of een tak. Schrijf erbij: hoe groot en welke kleur?' },
+        ],
+        reflectie: [
+          'Wat vond je leuk aan buiten zijn?',
+          'Wat wil je leren over het voedselbos?',
+        ],
+        vragen: [
+          {
+            vraag: 'Wat groeit er in een voedselbos?',
+            opties: ['Alleen gras', 'Bomen en planten met eetbare opbrengst', 'Alleen bloemen', 'Stenen en mos'],
+            correct: 1,
+            uitleg: 'Een voedselbos heeft bomen, struiken en planten die eten leveren.',
+          },
+          {
+            vraag: 'Zijn wilgentakken buigzaam of hard?',
+            opties: ['Hard en breekbaar', 'Buigzaam en soepel', 'Zo stijf als ijzer', 'Ze breken meteen'],
+            correct: 1,
+            uitleg: 'Wilgentakken zijn buigzaam, dat maakt ze perfect om mee te vlechten.',
+          },
+        ],
+      },
+      {
+        week: 2,
+        titel: 'Wilgen en de natuur',
+        intro: 'Insecten en vogels houden van wilgen. Ontdek deze week waarom.',
+        taken: [
+          { type: 'onderzoek', tekst: 'Ga naar de wilg. Kijk welke insecten je ziet. Schrijf drie soorten op.' },
+          { type: 'teken',     tekst: 'Teken twee insecten die je hebt gezien. Schrijf bij elk wat het doet.' },
+          { type: 'bespreek',  tekst: 'Waarom zijn bijen belangrijk? Praat met je groep.' },
+        ],
+        reflectie: [
+          'Welk insect vond je het interessantst?',
+          'Waarom is de wilg goed voor dieren?',
+        ],
+        vragen: [
+          {
+            vraag: 'Wat doen bijen bij bloemen?',
+            opties: ['Ze eten de bloemblaadjes op', 'Ze verzamelen nectar en verspreiden stuifmeel', 'Ze graven gaten in de stengel', 'Ze drinken alleen water'],
+            correct: 1,
+            uitleg: 'Bijen nemen stuifmeel mee van bloem naar bloem en zorgen zo voor bestuiving.',
+          },
+          {
+            vraag: 'Waarom is de wilg goed voor insecten?',
+            opties: ['De wilg heeft giftige bladeren', 'De wilg biedt voedsel en schuilplaats', 'Insecten houden niet van wilgen', 'De wilg maakt het te donker'],
+            correct: 1,
+            uitleg: 'Wilgen bieden nectar, bladeren als voedsel en takken als schuilplaats voor insecten.',
+          },
+        ],
+      },
+      {
+        week: 3,
+        titel: 'Ontwerpen en plannen',
+        intro: 'We gaan iets bouwen van wilgentakken. Wat ga jij maken?',
+        taken: [
+          { type: 'denk',     tekst: 'Kies wat je maakt: een hekwerk, insectenwand of plantensteun.' },
+          { type: 'teken',    tekst: 'Teken je ontwerp. Hoe groot? Hoeveel takken?' },
+          { type: 'bespreek', tekst: 'Vertel je groep: waarvoor is jouw bouwsel goed?' },
+        ],
+        reflectie: [
+          'Wat ga je bouwen?',
+          'Hoe helpt je bouwsel de natuur?',
+        ],
+        vragen: [
+          {
+            vraag: 'Wat ga jij maken van wilgentakken?',
+            opties: ['Een vogelkooi van metaal', 'Een hekwerk, insectenwand of plantensteun', 'Een tafel en stoel', 'Een vogelbad'],
+            correct: 1,
+            uitleg: 'Van wilgentakken maak je dingen die goed passen in het voedselbos.',
+          },
+          {
+            vraag: 'Waarvoor is een plantensteun van wilgentakken handig?',
+            opties: ['Om planten te laten klimmen en rechtop te groeien', 'Om planten meer water te geven', 'Om planten mooier te laten zien', 'Om onkruid te verwijderen'],
+            correct: 0,
+            uitleg: 'Een plantensteun helpt klimplanten omhoog groeien in de goede richting.',
+          },
+        ],
+      },
+      {
+        week: 4,
+        titel: 'Bouwen: wilgenvlechten',
+        intro: 'Vandaag bouwen we! Takken over en onder elkaar weven: dat is vlechten.',
+        taken: [
+          { type: 'doe',     tekst: 'Vlecht je ontwerp. Dikke takken als steun, dunne takken ertussen weven.' },
+          { type: 'doe',     tekst: 'Help je groepje. Wissel taken af.' },
+          { type: 'schrijf', tekst: 'Schrijf op: wat was moeilijk? Wat ging goed?' },
+        ],
+        reflectie: [
+          'Wat was het moeilijkste?',
+          'Wat doe je anders de volgende keer?',
+        ],
+        vragen: [
+          {
+            vraag: 'Wat doe je eerst als je begint met vlechten?',
+            opties: ['Dunne takjes als eerste erin weven', 'Dikke takken neerzetten als steun', 'Alles tegelijk vastzetten', 'De takken in het water leggen'],
+            correct: 1,
+            uitleg: 'Eerst de stevige steuntakken plaatsen geeft een goede basis om op te vlechten.',
+          },
+          {
+            vraag: 'Hoe help je je groepje goed?',
+            opties: ['Zelf alles doen zodat het snel klaar is', 'Een tak vasthouden terwijl een ander vlecht', 'Niets doen en kijken', 'Alleen opdrachten geven'],
+            correct: 1,
+            uitleg: 'Samenwerken maakt het werk makkelijker en leuker voor iedereen.',
+          },
+        ],
+      },
+      {
+        week: 5,
+        titel: 'Observeren en presenteren',
+        intro: 'Je bouwsel staat in het voedselbos. Komen er al dieren op af? Ga kijken!',
+        taken: [
+          { type: 'doe',     tekst: 'Ga naar je bouwsel. Kijk tien minuten. Schrijf op wat je ziet.' },
+          { type: 'teken',   tekst: 'Teken een dier of insect dat je bij je bouwsel zag.' },
+          { type: 'bespreek', tekst: 'Vertel de klas: wat heb je gemaakt en wat heb je gezien?' },
+        ],
+        reflectie: [
+          'Wat heb je geleerd van dit project?',
+          'Wat kun jij thuis doen voor de natuur?',
+        ],
+        vragen: [
+          {
+            vraag: 'Hoe observeer je goed wat er bij je bouwsel gebeurt?',
+            opties: ['Snel kijken en dan weggaan', 'Tien minuten stilzitten en rustig kijken', 'Alleen in de avond kijken', 'Alles fotograferen zonder te kijken'],
+            correct: 1,
+            uitleg: 'Rustig en geduldig kijken geeft de beste kans om dieren te zien.',
+          },
+          {
+            vraag: 'Wat vertel je de klas bij je presentatie?',
+            opties: ['Alleen hoe lang het duurde', 'Wat je hebt gemaakt, hoe je het deed en wat je hebt gezien', 'Alleen de naam van je bouwsel', 'Niets, je laat alleen een foto zien'],
+            correct: 1,
+            uitleg: 'Een goede presentatie vertelt wat, hoe én wat je hebt geobserveerd.',
+          },
+        ],
+      },
+    ],
+
   },
 }

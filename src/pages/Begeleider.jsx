@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { supabase } from '../supabase'
 import { useAuth } from '../App'
 import { useNavigate } from 'react-router-dom'
-import { GraduationCap, Users, BookOpen, MessageSquare, User, Send, Lock, Clock, CheckCircle, XCircle, School, LayoutGrid, Worm, Sprout } from 'lucide-react'
+import { GraduationCap, Users, BookOpen, MessageSquare, User, Send, Lock, Clock, CheckCircle, XCircle, School, LayoutGrid, Worm, Sprout, BarChart2, Map, ArrowRight, TrendingUp, AlertCircle } from 'lucide-react'
 
 const scholen = [
   { value: 'olympus', label: 'Olympus College' },
@@ -24,8 +24,9 @@ const niveauLabels = {
 }
 
 const projectNaam = {
-  wormenhotel: 'Wormenhotel',
+  wormenhotel:    'Wormenhotel',
   keuringsdienst: 'Keuringsdienst',
+  wilgenvlechten: 'Wilgenvlechten',
 }
 
 export default function Begeleider() {
@@ -33,6 +34,7 @@ export default function Begeleider() {
   const navigate = useNavigate()
 
   const [tab, setTab] = useState('leerlingen')
+  const [klasStats, setKlasStats] = useState(null)
   const [leerlingen, setLeerlingen] = useState([])
   const [koppelingen, setKoppelingen] = useState({}) // leerlingId → status
   const [gekozenLeerling, setGekozenLeerling] = useState(null)
@@ -80,8 +82,37 @@ export default function Begeleider() {
         .filter(([, status]) => status === 'goedgekeurd')
         .map(([id]) => id)
       laadLeerlingStats(goedgekeurdeIds)
+      laadKlasStats(goedgekeurdeIds)
     }
   }, [koppelingen])
+
+  async function laadKlasStats(goedgekeurdeIds) {
+    if (goedgekeurdeIds.length === 0) { setKlasStats(null); return }
+    const [{ data: logboekData }, { data: opdrachtData }, { data: vragenData }, { data: observatieData }] = await Promise.all([
+      supabase.from('logboek').select('leerling_id, aangemaakt_op').in('leerling_id', goedgekeurdeIds),
+      supabase.from('opdracht_voortgang').select('leerling_id, week').in('leerling_id', goedgekeurdeIds),
+      supabase.from('vragen').select('leerling_id, antwoord').in('leerling_id', goedgekeurdeIds),
+      supabase.from('observaties').select('leerling_id, week').in('leerling_id', goedgekeurdeIds),
+    ])
+    const zeveDagenGeleden = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString()
+    const recentActief = new Set((logboekData || []).filter(e => e.aangemaakt_op > zeveDagenGeleden).map(e => e.leerling_id))
+    setKlasStats({
+      totaalGekoppeld: goedgekeurdeIds.length,
+      totaalLogboekEntries: (logboekData || []).length,
+      totaalTakenGedaan: (opdrachtData || []).length,
+      totaalVragen: (vragenData || []).length,
+      onbeantwoordeVragen: (vragenData || []).filter(v => !v.antwoord).length,
+      totaalObservaties: (observatieData || []).length,
+      actiefDezeWeek: recentActief.size,
+      perLeerling: goedgekeurdeIds.map(id => ({
+        id,
+        logboek: (logboekData || []).filter(e => e.leerling_id === id).length,
+        taken: (opdrachtData || []).filter(e => e.leerling_id === id).length,
+        observaties: (observatieData || []).filter(e => e.leerling_id === id).length,
+        actiefDezeWeek: recentActief.has(id),
+      })),
+    })
+  }
 
   async function slaSchoolOp() {
     if (!schoolKeuze) return
@@ -292,6 +323,18 @@ export default function Begeleider() {
               </span>
             )}
           </button>
+          <button
+            onClick={() => setTab('klasoverzicht')}
+            className={`flex items-center gap-1.5 px-5 py-2 rounded-xl font-semibold text-sm transition-all ${tab === 'klasoverzicht' ? 'bg-green-600 text-white' : 'bg-white text-gray-600 hover:bg-gray-100'}`}
+          >
+            <BarChart2 className="w-4 h-4" /> Klasoverzicht
+          </button>
+          <button
+            onClick={() => setTab('handleiding')}
+            className={`flex items-center gap-1.5 px-5 py-2 rounded-xl font-semibold text-sm transition-all ${tab === 'handleiding' ? 'bg-green-600 text-white' : 'bg-white text-gray-600 hover:bg-gray-100'}`}
+          >
+            <Map className="w-4 h-4" /> Handleiding
+          </button>
         </div>
 
         {/* ── Leerlingen tab ── */}
@@ -374,13 +417,18 @@ export default function Begeleider() {
             ) : (
               <>
                 <div className="flex gap-2 mb-6 justify-center">
-                  {['alle', 'wormenhotel', 'keuringsdienst'].map(p => (
+                  {[
+                    { key: 'alle',           label: 'Alle',          icon: <LayoutGrid className="w-3.5 h-3.5" /> },
+                    { key: 'wilgenvlechten', label: 'Wilgenvlechten',icon: <Sprout className="w-3.5 h-3.5" /> },
+                    { key: 'wormenhotel',    label: 'Wormenhotel',   icon: <Worm className="w-3.5 h-3.5" /> },
+                    { key: 'keuringsdienst', label: 'Keuringsdienst',icon: <Sprout className="w-3.5 h-3.5" /> },
+                  ].map(p => (
                     <button
-                      key={p}
-                      onClick={() => { setGekozenProject(p); if (gekozenLeerling) laadLogboek(gekozenLeerling.id) }}
-                      className={`flex items-center gap-1.5 px-4 py-2 rounded-xl font-medium text-sm transition-all ${gekozenProject === p ? 'bg-gray-700 text-white' : 'bg-white text-gray-600 hover:bg-gray-100'}`}
+                      key={p.key}
+                      onClick={() => { setGekozenProject(p.key); if (gekozenLeerling) laadLogboek(gekozenLeerling.id) }}
+                      className={`flex items-center gap-1.5 px-4 py-2 rounded-xl font-medium text-sm transition-all ${gekozenProject === p.key ? 'bg-gray-700 text-white' : 'bg-white text-gray-600 hover:bg-gray-100'}`}
                     >
-                      {p === 'alle' ? <><LayoutGrid className="w-3.5 h-3.5" /> Alle</> : p === 'wormenhotel' ? <><Worm className="w-3.5 h-3.5" /> Wormenhotel</> : <><Sprout className="w-3.5 h-3.5" /> Keuringsdienst</>}
+                      {p.icon} {p.label}
                     </button>
                   ))}
                 </div>
@@ -551,6 +599,129 @@ export default function Begeleider() {
             )}
           </div>
         )}
+
+        {/* ── Klasoverzicht tab ── */}
+        {tab === 'klasoverzicht' && (
+          <div className="space-y-5">
+            {!klasStats ? (
+              <div className="bg-white rounded-2xl shadow p-10 text-center text-gray-400">
+                <BarChart2 className="w-12 h-12 mx-auto mb-3 text-gray-200" />
+                <p className="font-medium text-gray-600 mb-1">Nog geen goedgekeurde koppelingen</p>
+                <p className="text-sm">Koppel eerst leerlingen om het klasoverzicht te zien.</p>
+              </div>
+            ) : (
+              <>
+                {/* Statistieken */}
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                  {[
+                    { label: 'Gekoppelde leerlingen', waarde: klasStats.totaalGekoppeld, kleur: 'text-emerald-700', bg: 'bg-emerald-50' },
+                    { label: 'Actief deze week', waarde: klasStats.actiefDezeWeek, kleur: 'text-blue-700', bg: 'bg-blue-50' },
+                    { label: 'Logboekentries totaal', waarde: klasStats.totaalLogboekEntries, kleur: 'text-purple-700', bg: 'bg-purple-50' },
+                    { label: 'Onbeantwoorde vragen', waarde: klasStats.onbeantwoordeVragen, kleur: klasStats.onbeantwoordeVragen > 0 ? 'text-red-700' : 'text-gray-500', bg: klasStats.onbeantwoordeVragen > 0 ? 'bg-red-50' : 'bg-gray-50' },
+                  ].map(stat => (
+                    <div key={stat.label} className={`${stat.bg} rounded-2xl p-4 text-center`}>
+                      <p className={`text-3xl font-bold ${stat.kleur}`}>{stat.waarde}</p>
+                      <p className="text-xs text-gray-500 mt-1">{stat.label}</p>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Voortgang per leerling */}
+                <div className="bg-white rounded-2xl shadow p-5">
+                  <h2 className="font-bold text-gray-800 mb-4 flex items-center gap-2">
+                    <TrendingUp className="w-4 h-4 text-emerald-600" /> Voortgang per leerling
+                  </h2>
+                  <div className="space-y-3">
+                    {klasStats.perLeerling.map(stat => {
+                      const leerling = goedgekeurde.find(l => l.id === stat.id)
+                      if (!leerling) return null
+                      const maxTaken = Math.max(...klasStats.perLeerling.map(s => s.taken), 1)
+                      return (
+                        <div key={stat.id} className="flex items-center gap-3">
+                          <div className="w-28 shrink-0">
+                            <p className="text-sm font-medium text-gray-800 truncate">{leerling.naam}</p>
+                            <div className="flex items-center gap-1 mt-0.5">
+                              {stat.actiefDezeWeek
+                                ? <span className="text-xs text-green-600 font-medium flex items-center gap-0.5"><CheckCircle className="w-3 h-3" /> actief</span>
+                                : <span className="text-xs text-gray-400 flex items-center gap-0.5"><Clock className="w-3 h-3" /> inactief</span>
+                              }
+                            </div>
+                          </div>
+                          <div className="flex-1 space-y-1">
+                            <div className="flex items-center gap-2">
+                              <span className="text-xs text-gray-400 w-20 shrink-0">Taken</span>
+                              <div className="flex-1 bg-gray-100 rounded-full h-2">
+                                <div className="bg-emerald-500 h-2 rounded-full transition-all" style={{ width: `${Math.min(100, (stat.taken / maxTaken) * 100)}%` }} />
+                              </div>
+                              <span className="text-xs text-gray-600 w-6 text-right">{stat.taken}</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <span className="text-xs text-gray-400 w-20 shrink-0">Logboek</span>
+                              <div className="flex-1 bg-gray-100 rounded-full h-2">
+                                <div className="bg-blue-400 h-2 rounded-full transition-all" style={{ width: `${Math.min(100, (stat.logboek / Math.max(...klasStats.perLeerling.map(s => s.logboek), 1)) * 100)}%` }} />
+                              </div>
+                              <span className="text-xs text-gray-600 w-6 text-right">{stat.logboek}</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <span className="text-xs text-gray-400 w-20 shrink-0">Observaties</span>
+                              <div className="flex-1 bg-gray-100 rounded-full h-2">
+                                <div className="bg-teal-400 h-2 rounded-full transition-all" style={{ width: `${Math.min(100, (stat.observaties / Math.max(...klasStats.perLeerling.map(s => s.observaties), 1)) * 100)}%` }} />
+                              </div>
+                              <span className="text-xs text-gray-600 w-6 text-right">{stat.observaties}</span>
+                            </div>
+                          </div>
+                        </div>
+                      )
+                    })}
+                  </div>
+                </div>
+
+                {/* Waarschuwingen */}
+                {klasStats.perLeerling.filter(s => !s.actiefDezeWeek).length > 0 && (
+                  <div className="bg-amber-50 border border-amber-200 rounded-2xl p-4">
+                    <div className="flex items-center gap-2 mb-2">
+                      <AlertCircle className="w-4 h-4 text-amber-600" />
+                      <p className="font-semibold text-amber-800 text-sm">Inactieve leerlingen deze week</p>
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                      {klasStats.perLeerling.filter(s => !s.actiefDezeWeek).map(stat => {
+                        const l = goedgekeurde.find(l => l.id === stat.id)
+                        return l ? (
+                          <span key={stat.id} className="text-xs bg-amber-100 text-amber-800 px-2 py-1 rounded-full">{l.naam}</span>
+                        ) : null
+                      })}
+                    </div>
+                  </div>
+                )}
+              </>
+            )}
+          </div>
+        )}
+
+        {/* ── Handleiding tab ── */}
+        {tab === 'handleiding' && (
+          <div className="bg-white rounded-2xl shadow p-6">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 rounded-xl bg-emerald-100 flex items-center justify-center">
+                <Map className="w-5 h-5 text-emerald-700" />
+              </div>
+              <div>
+                <h2 className="font-bold text-gray-800">Docenthandleiding</h2>
+                <p className="text-sm text-gray-500">Gedetailleerde weekplanning, beoordeling en materialen</p>
+              </div>
+            </div>
+            <p className="text-gray-600 text-sm mb-5 leading-relaxed">
+              De volledige docenthandleiding staat op een aparte pagina. Daar vind je per week de activiteiten, didactische tips, differentiatie en de materialenlijst.
+            </p>
+            <button
+              onClick={() => navigate('/handleiding')}
+              className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-6 py-3 rounded-xl transition-colors"
+            >
+              <Map className="w-4 h-4" /> Open docenthandleiding <ArrowRight className="w-4 h-4" />
+            </button>
+          </div>
+        )}
+
       </div>
     </div>
   )

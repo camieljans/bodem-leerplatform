@@ -1,8 +1,8 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { supabase } from '../supabase'
 import { useAuth } from '../App'
-import { Worm, Sprout, AlertCircle, Lightbulb, ChevronLeft, ArrowRight } from 'lucide-react'
+import { Worm, Sprout, Leaf, AlertCircle, Lightbulb, ChevronLeft, ArrowRight } from 'lucide-react'
 
 const scholen = [
   { value: 'olympus', label: 'Olympus College' },
@@ -12,6 +12,7 @@ const scholen = [
 ]
 
 const niveaus = [
+  { value: 'basisschool', label: 'Basisschool (groep 7-8)' },
   { value: 'pro', label: 'Praktijkonderwijs (PRO)' },
   { value: 'vmbo-b', label: 'VMBO Basis' },
   { value: 'vmbo-k', label: 'VMBO Kader' },
@@ -34,14 +35,28 @@ export default function Login() {
   const [school, setSchool] = useState('')
   const [fout, setFout] = useState('')
   const [laden, setLaden] = useState(false)
+  const [scholenLijst, setScholenLijst] = useState(scholen.map(s => s.label))
   const navigate = useNavigate()
   const { project } = useAuth()
+
+  useEffect(() => {
+    async function laadScholen() {
+      const { data } = await supabase.from('profiles').select('school').not('school', 'is', null)
+      if (!data) return
+      const bestaand = scholen.map(s => s.label)
+      const extras = data.map(r => r.school).filter(s => s && !bestaand.includes(s))
+      const uniek = [...new Set(extras)]
+      setScholenLijst([...bestaand, ...uniek])
+    }
+    laadScholen()
+  }, [])
 
   const projectInfo = {
     wormenhotel:    { icon: Worm,   naam: 'Het Wormenhotel' },
     keuringsdienst: { icon: Sprout, naam: 'Keuringsdienst van Waarde' },
+    wilgenvlechten: { icon: Leaf,   naam: 'Wilgenvlechten' },
   }
-  const huidigProject = projectInfo[project] || { icon: Leaf, naam: 'Bodem Leerplatform' }
+  const huidigProject = projectInfo[project] || { icon: Leaf, naam: 'Circulair Leerplatform' }
   const ProjectIcon = huidigProject.icon
 
   async function handleLogin(e) {
@@ -66,32 +81,31 @@ export default function Login() {
     } else {
       if (!naam.trim()) { setFout('Vul je naam in.'); return }
     }
-    if (rol === 'leerling' && !leeftijd) { setFout('Vul je leeftijd in.'); return }
+    if (rol === 'leerling' && !leeftijd) { setFout('Kies je leerjaar.'); return }
     if (rol === 'leerling' && !niveau) { setFout('Kies je schoolniveau.'); return }
     if (!school) { setFout('Kies je school.'); return }
     setLaden(true)
     const volledigeNaam = rol === 'leerling'
       ? `${voornaam.trim()} ${achternaam.trim()}`
       : naam.trim()
-    const { data, error } = await supabase.auth.signUp({
-      email,
-      password: wachtwoord,
-      options: {
-        data: {
-          naam: volledigeNaam,
-          rol,
-          leeftijd: rol === 'leerling' ? parseInt(leeftijd) : null,
-          niveau: rol === 'leerling' ? niveau : null,
-          school,
-        }
-      }
-    })
+    const { data, error } = await supabase.auth.signUp({ email, password: wachtwoord })
     if (error) {
       setFout('Registratie mislukt: ' + error.message)
       setLaden(false)
       return
     }
-    if (data.user) navigate('/dashboard')
+    if (data.user) {
+      // Profiel direct aanmaken vanuit de app (niet via trigger)
+      await supabase.from('profiles').upsert({
+        id: data.user.id,
+        naam: volledigeNaam,
+        rol,
+        leeftijd: rol === 'leerling' ? parseInt(leeftijd) : null,
+        niveau: rol === 'leerling' ? niveau : null,
+        school,
+      })
+      navigate('/dashboard')
+    }
     setLaden(false)
   }
 
@@ -99,7 +113,7 @@ export default function Login() {
   const labelStijl = "block text-sm font-medium text-gray-700 mb-1.5"
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-6">
+    <div className="min-h-screen flex flex-col items-center justify-center p-6">
       <div className="w-full max-w-md">
 
         {/* Header */}
@@ -196,22 +210,30 @@ export default function Login() {
               </div>
               <div>
                 <label className={labelStijl}>Mijn school</label>
-                <select value={school} onChange={e => setSchool(e.target.value)} className={inputStijl}>
-                  <option value="">Kies je school...</option>
-                  {scholen.map(s => (
-                    <option key={s.value} value={s.value}>{s.label}</option>
+                <input
+                  type="text"
+                  list="scholen-lijst"
+                  value={school}
+                  onChange={e => setSchool(e.target.value)}
+                  placeholder="Zoek of typ je school..."
+                  className={inputStijl}
+                  autoComplete="off"
+                />
+                <datalist id="scholen-lijst">
+                  {scholenLijst.map(s => (
+                    <option key={s} value={s} />
                   ))}
-                </select>
+                </datalist>
               </div>
 
-              {rol === 'leerling' && (
+              {rol === 'leerling' && niveau !== 'basisschool' && (
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className={labelStijl}>Leeftijd</label>
+                    <label className={labelStijl}>Leerjaar</label>
                     <select value={leeftijd} onChange={e => setLeeftijd(e.target.value)} className={inputStijl}>
                       <option value="">Kies...</option>
-                      {Array.from({ length: 9 }, (_, i) => i + 10).map(l => (
-                        <option key={l} value={l}>{l} jaar</option>
+                      {[1,2,3,4,5,6].map(j => (
+                        <option key={j} value={j}>Leerjaar {j}</option>
                       ))}
                     </select>
                   </div>

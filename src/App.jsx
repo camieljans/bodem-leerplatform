@@ -9,6 +9,13 @@ import Opdrachten from './pages/Opdrachten'
 import Logboek from './pages/Logboek'
 import Begeleider from './pages/Begeleider'
 import Vragen from './pages/Vragen'
+import Briefing from './pages/Briefing'
+import Observaties from './pages/Observaties'
+import Woordenlijst from './pages/Woordenlijst'
+import Eindproduct from './pages/Eindproduct'
+import Handleiding from './pages/Handleiding'
+import ProjectKeuze from './pages/ProjectKeuze'
+import CinematicPreview from './pages/CinematicPreview'
 import Navbar from './components/Navbar'
 import NatuurAchtergrond from './components/NatuurAchtergrond'
 
@@ -19,7 +26,7 @@ export function useAuth() {
 }
 
 function ProtectedRoute({ children }) {
-  const { user, loading } = useAuth()
+  const { user, project, loading } = useAuth()
   if (loading) return (
     <div className="min-h-screen flex items-center justify-center bg-green-50">
       <div className="text-center">
@@ -29,6 +36,7 @@ function ProtectedRoute({ children }) {
     </div>
   )
   if (!user) return <Navigate to="/login" />
+  if (!project) return <Navigate to="/projectkeuze" />
   return children
 }
 
@@ -57,6 +65,7 @@ export default function App() {
   async function loadProfile(userId) {
     const { data } = await supabase.from('profiles').select('*').eq('id', userId).single()
     setProfile(data)
+    // Geen automatische project-toewijzing — leerling kiest zelf via /projectkeuze
     setLoading(false)
   }
 
@@ -70,19 +79,30 @@ export default function App() {
   return (
     <AuthContext.Provider value={{ user, profile, loading, project, selectProject, loadProfile }}>
       <BrowserRouter>
-        {user && toonNatuur && <NatuurAchtergrond />}
-        {user && <Navbar />}
+        <NatuurAchtergrond />
+        <div className={user && project ? 'flex min-h-screen' : ''}>
+          {user && project && <Navbar />}
+          <div className={user && project ? 'ml-52 flex-1 min-w-0' : ''}>
         <Routes>
           <Route path="/" element={<Welkom />} />
+          <Route path="/cinematic-preview" element={<CinematicPreview />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/projectkeuze" element={user ? <ProjectKeuze /> : <Navigate to="/login" />} />
           <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
           <Route path="/opdrachten" element={<ProtectedRoute><Opdrachten /></ProtectedRoute>} />
           <Route path="/lessen" element={<ProtectedRoute><Lessen /></ProtectedRoute>} />
           <Route path="/logboek" element={<ProtectedRoute><Logboek /></ProtectedRoute>} />
           <Route path="/begeleider" element={<ProtectedRoute><Begeleider /></ProtectedRoute>} />
           <Route path="/vragen" element={<ProtectedRoute><Vragen /></ProtectedRoute>} />
+          <Route path="/briefing" element={<ProtectedRoute><Briefing /></ProtectedRoute>} />
+          <Route path="/observaties" element={<ProtectedRoute><Observaties /></ProtectedRoute>} />
+          <Route path="/woordenlijst" element={<ProtectedRoute><Woordenlijst /></ProtectedRoute>} />
+          <Route path="/eindproduct" element={<ProtectedRoute><Eindproduct /></ProtectedRoute>} />
+          <Route path="/handleiding" element={<ProtectedRoute><Handleiding /></ProtectedRoute>} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
+          </div>
+        </div>
       </BrowserRouter>
     </AuthContext.Provider>
   )

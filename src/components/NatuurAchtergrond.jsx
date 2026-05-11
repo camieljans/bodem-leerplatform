@@ -9,86 +9,75 @@ export default function NatuurAchtergrond() {
         xmlns="http://www.w3.org/2000/svg"
       >
         {/* ── Zon (rechtsboven) ── */}
-        <circle cx="1360" cy="90" r="70" fill="#FFF9C4" opacity="0.35" />
-        <circle cx="1360" cy="90" r="48" fill="#FFEE58" opacity="0.18" />
+        <circle cx="1320" cy="80" r="90" fill="#FEF3C7" opacity="0.30" />
+        <circle cx="1320" cy="80" r="58" fill="#FDE68A" opacity="0.20" />
+        <circle cx="1320" cy="80" r="34" fill="#FCD34D" opacity="0.14" />
 
-        {/* ── Wolkjes ── */}
-        <ellipse cx="300" cy="80" rx="80" ry="28" fill="white" opacity="0.40" />
-        <ellipse cx="355" cy="68" rx="55" ry="22" fill="white" opacity="0.35" />
-        <ellipse cx="240" cy="75" rx="45" ry="18" fill="white" opacity="0.30" />
-
-        <ellipse cx="900" cy="55" rx="70" ry="24" fill="white" opacity="0.35" />
-        <ellipse cx="950" cy="44" rx="48" ry="19" fill="white" opacity="0.30" />
+        {/* ── Wolken ── */}
+        <ellipse cx="280"  cy="72"  rx="90"  ry="28"  fill="white" opacity="0.36" />
+        <ellipse cx="340"  cy="58"  rx="62"  ry="23"  fill="white" opacity="0.28" />
+        <ellipse cx="215"  cy="68"  rx="50"  ry="20"  fill="white" opacity="0.22" />
+        <ellipse cx="870"  cy="50"  rx="78"  ry="26"  fill="white" opacity="0.30" />
+        <ellipse cx="928"  cy="38"  rx="54"  ry="20"  fill="white" opacity="0.24" />
+        <ellipse cx="810"  cy="54"  rx="40"  ry="16"  fill="white" opacity="0.18" />
 
         {/* ── Bomen LINKS ── */}
-        {/* Grote boom achteraan */}
-        <rect x="52" y="680" width="22" height="110" rx="4" fill="#5D4037" opacity="0.16" />
-        <ellipse cx="63" cy="580" rx="72" ry="115" fill="#1B5E20" opacity="0.13" />
-        <ellipse cx="63" cy="545" rx="55" ry="85" fill="#2E7D32" opacity="0.12" />
-        <ellipse cx="63" cy="518" rx="38" ry="58" fill="#388E3C" opacity="0.11" />
-
-        {/* Middelste boom */}
-        <rect x="178" y="710" width="16" height="80" rx="3" fill="#6D4C41" opacity="0.14" />
-        <ellipse cx="186" cy="630" rx="52" ry="95" fill="#2E7D32" opacity="0.12" />
-        <ellipse cx="186" cy="600" rx="38" ry="68" fill="#43A047" opacity="0.11" />
-        <ellipse cx="186" cy="578" rx="26" ry="45" fill="#4CAF50" opacity="0.10" />
-
-        {/* Kleine boom vooraan */}
-        <rect x="118" y="730" width="12" height="60" rx="3" fill="#5D4037" opacity="0.13" />
-        <ellipse cx="124" cy="670" rx="38" ry="68" fill="#388E3C" opacity="0.11" />
-        <ellipse cx="124" cy="650" rx="26" ry="46" fill="#4CAF50" opacity="0.10" />
+        <rect x="30"  y="660" width="26" height="140" rx="5" fill="#2d4a1e" opacity="0.22" />
+        <ellipse cx="43"  cy="545" rx="82" ry="130" fill="#1a3a0f" opacity="0.18" />
+        <ellipse cx="43"  cy="505" rx="62" ry="95"  fill="#2d5a1b" opacity="0.16" />
+        <ellipse cx="43"  cy="475" rx="42" ry="64"  fill="#3a6e22" opacity="0.14" />
+        <rect x="155" y="695" width="18" height="100" rx="4" fill="#2d4a1e" opacity="0.20" />
+        <ellipse cx="164" cy="610" rx="58" ry="100" fill="#1e4a12" opacity="0.17" />
+        <ellipse cx="164" cy="578" rx="42" ry="72"  fill="#2d6a1a" opacity="0.15" />
+        <ellipse cx="164" cy="552" rx="28" ry="48"  fill="#45802a" opacity="0.13" />
+        <rect x="105" y="720" width="14" height="75" rx="3" fill="#3a5a22" opacity="0.18" />
+        <ellipse cx="112" cy="660" rx="42" ry="72"  fill="#2a5a18" opacity="0.15" />
+        <ellipse cx="112" cy="636" rx="28" ry="48"  fill="#3d7022" opacity="0.13" />
+        <ellipse cx="210" cy="760" rx="32" ry="38"  fill="#3a6a22" opacity="0.12" />
+        <ellipse cx="210" cy="742" rx="20" ry="26"  fill="#4a8030" opacity="0.10" />
 
         {/* ── Bomen RECHTS ── */}
-        {/* Grote boom achteraan */}
-        <rect x="1366" y="670" width="22" height="120" rx="4" fill="#4E342E" opacity="0.16" />
-        <ellipse cx="1377" cy="565" rx="75" ry="120" fill="#1B5E20" opacity="0.13" />
-        <ellipse cx="1377" cy="528" rx="57" ry="88" fill="#2E7D32" opacity="0.12" />
-        <ellipse cx="1377" cy="500" rx="40" ry="60" fill="#388E3C" opacity="0.11" />
+        <rect x="1384" y="650" width="26" height="150" rx="5" fill="#2d4a1e" opacity="0.22" />
+        <ellipse cx="1397" cy="532" rx="85" ry="135" fill="#1a3a0f" opacity="0.18" />
+        <ellipse cx="1397" cy="490" rx="64" ry="98"  fill="#2d5a1b" opacity="0.16" />
+        <ellipse cx="1397" cy="458" rx="44" ry="66"  fill="#3a6e22" opacity="0.14" />
+        <rect x="1258" y="690" width="18" height="105" rx="4" fill="#2d4a1e" opacity="0.20" />
+        <ellipse cx="1267" cy="600" rx="60" ry="105" fill="#1e4a12" opacity="0.17" />
+        <ellipse cx="1267" cy="566" rx="44" ry="75"  fill="#2d6a1a" opacity="0.15" />
+        <ellipse cx="1267" cy="538" rx="30" ry="50"  fill="#45802a" opacity="0.13" />
+        <rect x="1320" y="718" width="14" height="78" rx="3" fill="#3a5a22" opacity="0.18" />
+        <ellipse cx="1327" cy="655" rx="44" ry="74"  fill="#2a5a18" opacity="0.15" />
+        <ellipse cx="1327" cy="630" rx="29" ry="50"  fill="#3d7022" opacity="0.13" />
+        <ellipse cx="1228" cy="758" rx="34" ry="40"  fill="#3a6a22" opacity="0.12" />
+        <ellipse cx="1228" cy="740" rx="22" ry="28"  fill="#4a8030" opacity="0.10" />
 
-        {/* Middelste boom */}
-        <rect x="1246" y="700" width="16" height="90" rx="3" fill="#5D4037" opacity="0.14" />
-        <ellipse cx="1254" cy="615" rx="55" ry="98" fill="#2E7D32" opacity="0.12" />
-        <ellipse cx="1254" cy="585" rx="40" ry="70" fill="#43A047" opacity="0.11" />
-        <ellipse cx="1254" cy="562" rx="27" ry="46" fill="#4CAF50" opacity="0.10" />
+        {/* ── Grasgolven ── */}
+        <path d="M0,820 Q90,805 180,818 Q270,831 360,818 Q450,805 540,820 Q630,835 720,820 Q810,805 900,820 Q990,835 1080,820 Q1170,805 1260,820 Q1350,835 1440,820 L1440,900 L0,900 Z" fill="#3d7a2a" opacity="0.13" />
+        <path d="M0,845 Q120,832 240,845 Q360,858 480,845 Q600,832 720,845 Q840,858 960,845 Q1080,832 1200,845 Q1320,858 1440,845 L1440,900 L0,900 Z" fill="#2d5a1e" opacity="0.11" />
 
-        {/* Kleine boom vooraan */}
-        <rect x="1308" y="725" width="13" height="65" rx="3" fill="#6D4C41" opacity="0.13" />
-        <ellipse cx="1314" cy="662" rx="40" ry="70" fill="#388E3C" opacity="0.11" />
-        <ellipse cx="1314" cy="642" rx="27" ry="48" fill="#4CAF50" opacity="0.10" />
+        {/* ── Bodemlagen ── */}
+        <rect x="0" y="862" width="1440" height="14" fill="#7c5c3a" opacity="0.10" />
+        <rect x="0" y="876" width="1440" height="14" fill="#6b4e30" opacity="0.09" />
+        <rect x="0" y="890" width="1440" height="10" fill="#5c4226" opacity="0.08" />
 
-        {/* ── Gras & bodem onderaan ── */}
-        {/* Golvende grasslijn */}
-        <path
-          d="M0,800 Q120,782 240,795 Q360,808 480,796 Q600,784 720,798 Q840,812 960,800 Q1080,788 1200,800 Q1320,812 1440,798 L1440,900 L0,900 Z"
-          fill="#4CAF50" opacity="0.10"
-        />
-        {/* Grassprieten hints */}
-        <path d="M60,800 Q58,778 62,800" stroke="#388E3C" strokeWidth="2" fill="none" opacity="0.12" />
-        <path d="M65,800 Q67,772 63,800" stroke="#43A047" strokeWidth="2" fill="none" opacity="0.10" />
-        <path d="M1380,795 Q1378,770 1382,795" stroke="#388E3C" strokeWidth="2" fill="none" opacity="0.12" />
+        {/* Wortels */}
+        <path d="M68,840 Q82,862 76,890 Q80,900 72,900"           stroke="#6b4e30" strokeWidth="2"   fill="none" opacity="0.10" />
+        <path d="M80,842 Q92,866 88,892"                          stroke="#7c5c3a" strokeWidth="1.5" fill="none" opacity="0.08" />
+        <path d="M1362,838 Q1376,860 1370,888 Q1374,900 1366,900" stroke="#6b4e30" strokeWidth="2"   fill="none" opacity="0.10" />
+        <path d="M1374,840 Q1386,864 1382,890"                    stroke="#7c5c3a" strokeWidth="1.5" fill="none" opacity="0.08" />
 
-        {/* Bodemlagen */}
-        <rect x="0" y="810" width="1440" height="28" fill="#6D4C41" opacity="0.09" />
-        <rect x="0" y="838" width="1440" height="28" fill="#5D4037" opacity="0.08" />
-        <rect x="0" y="866" width="1440" height="34" fill="#4E342E" opacity="0.07" />
-
-        {/* Wortels (subtiel) */}
-        <path d="M80,810 Q95,835 88,865 Q92,880 85,900" stroke="#5D4037" strokeWidth="2" fill="none" opacity="0.09" />
-        <path d="M93,812 Q105,838 100,870" stroke="#6D4C41" strokeWidth="1.5" fill="none" opacity="0.07" />
-        <path d="M1355,808 Q1368,834 1362,862 Q1366,878 1360,900" stroke="#5D4037" strokeWidth="2" fill="none" opacity="0.09" />
-        <path d="M1342,810 Q1352,836 1348,868" stroke="#6D4C41" strokeWidth="1.5" fill="none" opacity="0.07" />
-
-        {/* ── Zwevende bladeren (midden) ── */}
-        <circle cx="420" cy="220" r="7" fill="#A5D6A7" opacity="0.22" />
-        <circle cx="445" cy="175" r="5" fill="#C8E6C9" opacity="0.18" />
-        <circle cx="400" cy="190" r="4" fill="#DCEDC8" opacity="0.16" />
-
-        <circle cx="980" cy="195" r="6" fill="#A5D6A7" opacity="0.20" />
-        <circle cx="1010" cy="155" r="4.5" fill="#C8E6C9" opacity="0.17" />
-        <circle cx="960" cy="168" r="5" fill="#DCEDC8" opacity="0.15" />
-
-        <circle cx="700" cy="130" r="5" fill="#B2DFDB" opacity="0.18" />
-        <circle cx="720" cy="160" r="3.5" fill="#C8E6C9" opacity="0.15" />
+        {/* ── Zwevende deeltjes ── */}
+        <circle cx="360"  cy="230" r="6"   fill="#86efac" opacity="0.20" />
+        <circle cx="390"  cy="185" r="4"   fill="#bbf7d0" opacity="0.16" />
+        <circle cx="338"  cy="205" r="3.5" fill="#d1fae5" opacity="0.14" />
+        <circle cx="430"  cy="260" r="3"   fill="#6ee7b7" opacity="0.12" />
+        <circle cx="1020" cy="200" r="5.5" fill="#86efac" opacity="0.18" />
+        <circle cx="1050" cy="158" r="4"   fill="#bbf7d0" opacity="0.15" />
+        <circle cx="996"  cy="178" r="4.5" fill="#d1fae5" opacity="0.13" />
+        <circle cx="700"  cy="140" r="4.5" fill="#a7f3d0" opacity="0.16" />
+        <circle cx="722"  cy="172" r="3"   fill="#bbf7d0" opacity="0.13" />
+        <circle cx="1100" cy="110" r="3"   fill="#FDE68A" opacity="0.18" />
+        <circle cx="1130" cy="140" r="2"   fill="#FEF3C7" opacity="0.14" />
       </svg>
     </div>
   )
