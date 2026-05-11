@@ -1,7 +1,8 @@
 import { useNavigate } from 'react-router-dom'
 import { useEffect } from 'react'
 import { useAuth } from '../App'
-import { Globe2, ChevronRight, LogIn } from 'lucide-react'
+import { ChevronRight, LogIn } from 'lucide-react'
+import CirkulairLogo from '../components/CirkulairLogo'
 
 export default function Welkom() {
   const { user, profile } = useAuth()
@@ -16,8 +17,8 @@ export default function Welkom() {
       <div className="max-w-md w-full text-center cinematic-panel rounded-[2rem] p-8">
 
         {/* Logo */}
-        <div className="w-20 h-20 rounded-3xl bg-emerald-900 flex items-center justify-center mx-auto mb-8 shadow-xl shadow-emerald-900/20">
-          <Globe2 className="w-10 h-10 text-emerald-100" />
+        <div className="mx-auto mb-8">
+          <CirkulairLogo className="w-20 h-20" />
         </div>
 
         {/* Titel */}

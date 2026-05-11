@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { supabase } from '../supabase'
 import { useAuth } from '../App'
-import { Worm, Sprout, Leaf, Globe2, AlertCircle, Lightbulb, ChevronLeft, ArrowRight } from 'lucide-react'
+import { Worm, Sprout, Leaf, AlertCircle, Lightbulb, ChevronLeft, ArrowRight } from 'lucide-react'
+import CirkulairLogo from '../components/CirkulairLogo'
 
 const scholen = [
   { value: 'olympus', label: 'Olympus College' },
@@ -119,8 +120,8 @@ export default function Login() {
 
         {/* Header */}
         <div className="text-center mb-8">
-          <div className="w-14 h-14 rounded-2xl bg-emerald-100 flex items-center justify-center mx-auto mb-4">
-            <Globe2 className="w-7 h-7 text-emerald-700" />
+          <div className="mx-auto mb-4 w-14 h-14">
+            <CirkulairLogo className="w-14 h-14" />
           </div>
           <h1 className="text-2xl font-bold text-gray-900">Circulair Leerplatform</h1>
           <p className="text-gray-500 mt-1 text-sm">Log in om verder te gaan</p>
