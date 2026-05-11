@@ -119,9 +119,9 @@ export default function Login() {
         {/* Header */}
         <div className="text-center mb-8">
           <div className="w-14 h-14 rounded-2xl bg-emerald-100 flex items-center justify-center mx-auto mb-4">
-            <ProjectIcon className="w-7 h-7 text-emerald-700" />
+            <Sprout className="w-7 h-7 text-emerald-700" />
           </div>
-          <h1 className="text-2xl font-bold text-gray-900">{huidigProject.naam}</h1>
+          <h1 className="text-2xl font-bold text-gray-900">Circulair Leerplatform</h1>
           <p className="text-gray-500 mt-1 text-sm">Log in om verder te gaan</p>
         </div>
 
@@ -277,7 +277,7 @@ export default function Login() {
           onClick={() => navigate('/')}
           className="mt-5 w-full flex items-center justify-center gap-1.5 text-gray-400 hover:text-gray-600 text-sm transition-colors"
         >
-          <ChevronLeft className="w-4 h-4" /> Terug naar projectkeuze
+          <ChevronLeft className="w-4 h-4" /> Terug naar startpagina
         </button>
       </div>
     </div>
