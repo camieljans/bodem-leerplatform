@@ -60,30 +60,6 @@ export default function Navbar() {
         <span className="font-semibold text-sm text-white leading-tight">{info.naam}</span>
       </button>
 
-      {/* Projectwisselaar voor iedereen */}
-      {(
-        <div className="px-3 pt-3 pb-1 border-b border-white/10">
-          <p className="text-[10px] text-emerald-100/40 uppercase tracking-wider px-1 mb-1.5">Project wisselen</p>
-          {Object.entries(projectInfo).map(([key, proj]) => {
-            const Icon = proj.icon
-            const actief = project === key
-            return (
-              <button
-                key={key}
-                onClick={() => { selectProject(key); navigate('/dashboard') }}
-                className={`w-full flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-medium transition-all mb-0.5 ${
-                  actief
-                    ? 'bg-emerald-300/15 text-emerald-50 ring-1 ring-emerald-200/10'
-                    : 'text-emerald-100/58 hover:text-white hover:bg-white/10'
-                }`}
-              >
-                <Icon className={`w-3.5 h-3.5 shrink-0 ${actief ? proj.kleur : ''}`} />
-                {proj.naam}
-              </button>
-            )
-          })}
-        </div>
-      )}
 
       {/* Navigatielinks */}
       <nav className="flex-1 px-3 py-4 space-y-0.5 overflow-y-auto">

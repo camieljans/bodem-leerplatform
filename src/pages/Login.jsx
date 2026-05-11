@@ -71,7 +71,9 @@ export default function Login() {
     if (profiel?.rol === 'begeleider') {
       navigate('/begeleider')
     } else {
-      navigate('/projectkeuze')
+      // Ga direct naar dashboard als er al een project gekozen is
+      const opgeslagenProject = localStorage.getItem('project')
+      navigate(opgeslagenProject ? '/dashboard' : '/projectkeuze')
     }
     setLaden(false)
   }
