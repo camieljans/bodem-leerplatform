@@ -5,10 +5,10 @@ import { AlertCircle, ChevronLeft, ArrowRight } from 'lucide-react'
 import CirkulairLogo from '../components/CirkulairLogo'
 
 const SCHOLEN = [
-  'Olympus College',
-  'Liemers College',
-  'Candea College',
-  'Produs College',
+  { value: 'olympus', label: 'Olympus College' },
+  { value: 'liemers', label: 'Liemers College' },
+  { value: 'candea',  label: 'Candea College' },
+  { value: 'produs',  label: 'Produs College' },
 ]
 
 const NIVEAUS = [
@@ -240,7 +240,7 @@ export default function Login() {
                 <label className={label}>School</label>
                 <select value={school} onChange={e => setSchool(e.target.value)} className={input}>
                   <option value="">Kies je school…</option>
-                  {SCHOLEN.map(s => <option key={s} value={s}>{s}</option>)}
+                  {SCHOLEN.map(s => <option key={s.value} value={s.value}>{s.label}</option>)}
                 </select>
               </div>
 
