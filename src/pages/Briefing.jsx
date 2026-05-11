@@ -1,10 +1,10 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { useAuth } from '../App'
 import { briefing } from '../data/briefing'
 import {
   FileText, Target, Lightbulb, CheckCircle, BookOpen, Layers,
   ChevronDown, ChevronUp, Sparkles, Clock, Users, ArrowRight, Flag,
-  FlaskConical, Leaf, Minus
+  FlaskConical, Leaf, Minus, Info, X
 } from 'lucide-react'
 
 const faseKleuren = {
@@ -22,6 +22,7 @@ export default function Briefing() {
   const data = briefing[project]
   const [openFase, setOpenFase] = useState(null)
   const [activeTab, setActiveTab] = useState('project')
+  const [openPot, setOpenPot] = useState(null)
 
   if (!data) return (
     <div className="p-8 text-center text-gray-500">Geen project geselecteerd.</div>
@@ -80,24 +81,77 @@ export default function Briefing() {
               <BookOpen className="w-5 h-5 text-emerald-600" /> Het experiment
             </h2>
             <p className="text-gray-600 text-sm mb-4">Gewas: <strong>{data.experiment.gewas}</strong></p>
-            <div className="grid grid-cols-3 gap-3 mb-4">
-              {[data.experiment.pot1, data.experiment.pot2, data.experiment.pot3].map((pot, i) => {
-                const cfg = i === 0
-                  ? { bg: 'bg-gray-50',   border: 'border-gray-200',  iconBg: 'bg-gray-100',   iconClr: 'text-gray-400',   Icon: Minus }
-                  : i === 1
-                  ? { bg: 'bg-blue-50',   border: 'border-blue-200',  iconBg: 'bg-blue-100',   iconClr: 'text-blue-500',   Icon: FlaskConical }
-                  : { bg: 'bg-green-50',  border: 'border-green-200', iconBg: 'bg-green-100',  iconClr: 'text-green-600',  Icon: Leaf }
-                return (
-                  <div key={i} className={`rounded-xl p-4 text-center border-2 ${cfg.bg} ${cfg.border}`}>
-                    <div className={`w-10 h-10 rounded-full ${cfg.iconBg} flex items-center justify-center mx-auto mb-3`}>
-                      <cfg.Icon className={`w-5 h-5 ${cfg.iconClr}`} />
-                    </div>
-                    <div className="font-bold text-sm text-gray-800">{pot.naam}</div>
-                    <div className="text-xs text-gray-500 mt-1">{pot.label}</div>
+            {(() => {
+              const potten = [data.experiment.pot1, data.experiment.pot2, data.experiment.pot3]
+              const cfgs = [
+                { bg: 'bg-gray-50',  border: 'border-gray-200',  iconBg: 'bg-gray-100',  iconClr: 'text-gray-400',  Icon: Minus },
+                { bg: 'bg-blue-50',  border: 'border-blue-200',  iconBg: 'bg-blue-100',  iconClr: 'text-blue-500',  Icon: FlaskConical },
+                { bg: 'bg-green-50', border: 'border-green-200', iconBg: 'bg-green-100', iconClr: 'text-green-600', Icon: Leaf },
+              ]
+              return (
+                <>
+                  <div className="grid grid-cols-3 gap-3 mb-3">
+                    {potten.map((pot, i) => {
+                      const cfg = cfgs[i]
+                      const klikbaar = !!pot.dosering
+                      return (
+                        <button
+                          key={i}
+                          onClick={() => klikbaar && setOpenPot(openPot === i ? null : i)}
+                          className={`rounded-xl p-4 text-center border-2 transition-all ${cfg.bg} ${cfg.border} ${klikbaar ? 'cursor-pointer hover:shadow-md hover:scale-[1.02]' : 'cursor-default'} ${openPot === i ? 'ring-2 ring-offset-1 ring-blue-400' : ''}`}
+                        >
+                          <div className={`w-10 h-10 rounded-full ${cfg.iconBg} flex items-center justify-center mx-auto mb-3`}>
+                            <cfg.Icon className={`w-5 h-5 ${cfg.iconClr}`} />
+                          </div>
+                          <div className="font-bold text-sm text-gray-800">{pot.naam}</div>
+                          <div className="text-xs text-gray-500 mt-1">{pot.label}</div>
+                          {klikbaar && (
+                            <div className="mt-2 text-xs text-blue-500 flex items-center justify-center gap-1">
+                              <Info className="w-3 h-3" /> dosering
+                            </div>
+                          )}
+                        </button>
+                      )
+                    })}
                   </div>
-                )
-              })}
-            </div>
+
+                  {/* Doseringskaart */}
+                  {openPot !== null && potten[openPot]?.dosering && (
+                    <div className={`rounded-xl border-2 p-4 mb-4 ${cfgs[openPot].bg} ${cfgs[openPot].border}`}>
+                      <div className="flex items-start justify-between mb-3">
+                        <h4 className="font-bold text-gray-800 text-sm">Dosering — {potten[openPot].naam}</h4>
+                        <button onClick={() => setOpenPot(null)} className="text-gray-400 hover:text-gray-600">
+                          <X className="w-4 h-4" />
+                        </button>
+                      </div>
+                      <div className="grid grid-cols-2 gap-2 mb-3">
+                        <div className="bg-white rounded-lg p-2">
+                          <p className="text-xs text-gray-400 mb-0.5">Per week</p>
+                          <p className="text-sm font-semibold text-gray-800">{potten[openPot].dosering.aanbevolen}</p>
+                        </div>
+                        <div className="bg-white rounded-lg p-2">
+                          <p className="text-xs text-gray-400 mb-0.5">Totaal (6 weken)</p>
+                          <p className="text-sm font-semibold text-gray-800">{potten[openPot].dosering.totaal}</p>
+                        </div>
+                      </div>
+                      <div className="bg-white rounded-lg p-3 mb-3">
+                        <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1">Methode</p>
+                        <p className="text-sm text-gray-700 leading-relaxed">{potten[openPot].dosering.methode}</p>
+                      </div>
+                      <div className="space-y-1.5">
+                        <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1">Tips</p>
+                        {potten[openPot].dosering.tips.map((tip, j) => (
+                          <div key={j} className="flex items-start gap-2 text-sm text-gray-700">
+                            <CheckCircle className="w-3.5 h-3.5 text-emerald-500 shrink-0 mt-0.5" />
+                            {tip}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </>
+              )
+            })()}
             <div className="bg-gray-50 rounded-xl p-4">
               <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Constanten (gelijk voor alle potten)</p>
               <ul className="space-y-1">

@@ -168,8 +168,24 @@ export const briefing = {
 
     experiment: {
       pot1: { naam: 'Controle', label: 'Geen toevoeging', beschrijving: 'Ongefertiliseerde potgrond zonder toevoeging', kleur: 'gray', emoji: '⬜' },
-      pot2: { naam: 'Kunstmest', label: 'Kunstmest', beschrijving: 'Ongefertiliseerde potgrond met kunstmest', kleur: 'blue', emoji: '🔵' },
-      pot3: { naam: 'Compostthee', label: 'Compostthee', beschrijving: 'Ongefertiliseerde potgrond met compostthee van Soil Valley', kleur: 'green', emoji: '🟢' },
+      pot2: {
+        naam: 'Kunstmest', label: 'Kunstmest', beschrijving: 'Ongefertiliseerde potgrond met kunstmest', kleur: 'blue', emoji: '🔵',
+        dosering: {
+          aanbevolen: '0,05 gram per week (opgelost in water)',
+          totaal: '0,30 gram over 6 weken',
+          methode: 'Los 1 gram kunstmest op in 1 liter water. Geef per potje 50 ml van deze oplossing, maximaal 1× per week. De rest van de week alleen gewoon water geven.',
+          tips: [
+            'NPK 15-5-20 is sterk — gebruik altijd de oplossingsmethode, nooit droog strooien',
+            'Te veel geeft snel zoutstress of verbranding van de wortels',
+            'Gebruik liever 0,05 g/week dan 0,10 g — het potje is klein',
+            '50 ml oplossing (1 g/L) × 1× per week = 0,05 g kunstmest per week',
+          ],
+        },
+      },
+      pot3: {
+        naam: 'Compostthee', label: 'Compostthee', beschrijving: 'Ongefertiliseerde potgrond met compostthee van Soil Valley', kleur: 'green', emoji: '🟢',
+        dosering: null, // wordt later toegevoegd
+      },
       gewas: 'Radijs',
       constanten: [
         'Dezelfde hoeveelheid licht voor alle drie potten',
