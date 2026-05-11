@@ -184,7 +184,18 @@ export const briefing = {
       },
       pot3: {
         naam: 'Compostthee', label: 'Compostthee', beschrijving: 'Ongefertiliseerde potgrond met compostthee van Soil Valley', kleur: 'green', emoji: '🟢',
-        dosering: null, // wordt later toegevoegd
+        dosering: {
+          aanbevolen: '50 ml wormenmest-thee per week',
+          totaal: '~300 ml thee over 6 weken',
+          methode: 'Los 2–3 eetlepels (±30–45 g) SYBASoil Worm Castings op in 1 liter water. Roer goed door en laat 30 minuten staan. Giet het water door een zeef. Geef per potje 50 ml van dit theewater, maximaal 1× per week. De rest van de week alleen gewoon water geven.',
+          tips: [
+            'Gebruik SYBASoil Worm Castings (de zwarte korrels) — dit is het vaste wormenmest dat je oplost in water',
+            'Maak elke week verse thee — niet bewaren, want de micro-organismen sterven af',
+            'Het theewater mag lichtbruin/troebel zijn, dat is normaal en juist goed',
+            'Wormenmest is zacht voor planten — geen verbrandingsrisico zoals bij kunstmest',
+            'Gebruik dezelfde hoeveelheid water als bij de kunstmestpot (50 ml) voor een eerlijke vergelijking',
+          ],
+        },
       },
       gewas: 'Radijs',
       constanten: [
