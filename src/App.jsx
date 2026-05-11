@@ -26,7 +26,7 @@ export function useAuth() {
 }
 
 function ProtectedRoute({ children }) {
-  const { user, project, loading } = useAuth()
+  const { user, profile, project, loading } = useAuth()
   if (loading) return (
     <div className="min-h-screen flex items-center justify-center bg-green-50">
       <div className="text-center">
@@ -36,7 +36,8 @@ function ProtectedRoute({ children }) {
     </div>
   )
   if (!user) return <Navigate to="/login" />
-  if (!project) return <Navigate to="/projectkeuze" />
+  const isBegeleider = profile?.rol === 'begeleider'
+  if (!isBegeleider && !project) return <Navigate to="/projectkeuze" />
   return children
 }
 
@@ -80,9 +81,9 @@ export default function App() {
     <AuthContext.Provider value={{ user, profile, loading, project, selectProject, loadProfile }}>
       <BrowserRouter>
         <NatuurAchtergrond />
-        <div className={user && project ? 'flex min-h-screen' : ''}>
-          {user && project && <Navbar />}
-          <div className={user && project ? 'ml-52 flex-1 min-w-0' : ''}>
+        <div className={(user && project) || (user && profile?.rol === 'begeleider') ? 'flex min-h-screen' : ''}>
+          {(user && project) || (user && profile?.rol === 'begeleider') ? <Navbar /> : null}
+          <div className={(user && project) || (user && profile?.rol === 'begeleider') ? 'ml-52 flex-1 min-w-0' : ''}>
         <Routes>
           <Route path="/" element={<Welkom />} />
           <Route path="/cinematic-preview" element={<CinematicPreview />} />

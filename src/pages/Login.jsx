@@ -106,7 +106,7 @@ export default function Login() {
         niveau: rol === 'leerling' ? niveau : null,
         school,
       })
-      navigate('/dashboard')
+      navigate(rol === 'begeleider' ? '/begeleider' : '/projectkeuze')
     }
     setLaden(false)
   }
