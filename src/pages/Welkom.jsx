@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import { useEffect } from 'react'
 import { useAuth } from '../App'
-import { Globe, ChevronRight, LogIn } from 'lucide-react'
+import { Globe2, ChevronRight, LogIn } from 'lucide-react'
 
 export default function Welkom() {
   const { user, profile } = useAuth()
@@ -17,7 +17,7 @@ export default function Welkom() {
 
         {/* Logo */}
         <div className="w-20 h-20 rounded-3xl bg-emerald-900 flex items-center justify-center mx-auto mb-8 shadow-xl shadow-emerald-900/20">
-          <Globe className="w-10 h-10 text-emerald-100" />
+          <Globe2 className="w-10 h-10 text-emerald-100" />
         </div>
 
         {/* Titel */}
