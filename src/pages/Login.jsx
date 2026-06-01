@@ -154,9 +154,9 @@ export default function Login() {
         {/* Header */}
         <div className="text-center mb-8">
           <div className="flex justify-center mb-4">
-            <CirkulairLogo className="w-14 h-14" />
+            <CirkulairLogo className="w-28 h-28" />
           </div>
-          <h1 className="text-2xl font-bold text-gray-900">Soil Valley Leerplatform</h1>
+          <h1 className="text-2xl font-bold text-gray-900">Leerplatform</h1>
           <p className="text-gray-500 mt-1 text-sm">
             {tab === 'login' ? 'Log in om verder te gaan' : 'Maak een nieuw account aan'}
           </p>

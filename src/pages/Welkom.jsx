@@ -18,12 +18,12 @@ export default function Welkom() {
 
         {/* Logo */}
         <div className="flex justify-center mb-8">
-          <CirkulairLogo className="w-20 h-20" />
+          <CirkulairLogo className="w-40 h-40" />
         </div>
 
         {/* Titel */}
         <h1 className="text-4xl font-bold text-stone-950 mb-3 tracking-tight">
-          Soil Valley Leerplatform
+          Leerplatform
         </h1>
         <p className="text-stone-600 text-lg mb-10 leading-relaxed">
           Ontdek de wereld onder je voeten.<br />
