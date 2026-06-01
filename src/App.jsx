@@ -98,9 +98,13 @@ export default function App() {
     <AuthContext.Provider value={{ user, profile, loading, project, selectProject, loadProfile }}>
       <BrowserRouter>
         <NatuurAchtergrond />
-        <div className={(user && project) || (user && profile?.rol === 'begeleider') ? 'flex min-h-screen' : ''}>
-          {(user && project) || (user && profile?.rol === 'begeleider') ? <Navbar /> : null}
-          <div className={(user && project) || (user && profile?.rol === 'begeleider') ? 'ml-52 flex-1 min-w-0' : ''}>
+        {(() => {
+          const isEigenaar = profile?.rol === 'eigenaar'
+          const toonNavbar = !isEigenaar && ((user && project) || (user && profile?.rol === 'begeleider'))
+          return (
+        <div className={toonNavbar ? 'flex min-h-screen' : ''}>
+          {toonNavbar ? <Navbar /> : null}
+          <div className={toonNavbar ? 'ml-52 flex-1 min-w-0' : ''}>
         <Routes>
           <Route path="/" element={<Welkom />} />
           <Route path="/cinematic-preview" element={<CinematicPreview />} />
@@ -127,6 +131,8 @@ export default function App() {
         </Routes>
           </div>
         </div>
+          )
+        })()}
       </BrowserRouter>
     </AuthContext.Provider>
   )
