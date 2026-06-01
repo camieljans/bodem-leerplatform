@@ -22,7 +22,7 @@ export default function Welkom() {
         </div>
 
         {/* Titel */}
-        <h1 className="text-5xl font-black text-stone-950 mb-3 tracking-tight -mt-24" style={{ fontFamily: "'Inter', system-ui, sans-serif" }}>
+        <h1 className="text-5xl font-bold text-stone-950 mb-3 tracking-tight -mt-24" style={{ fontFamily: "'Inter', system-ui, sans-serif" }}>
           Leerplatform
         </h1>
         <p className="text-stone-600 text-lg mb-10 leading-relaxed">

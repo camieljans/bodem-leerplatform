@@ -156,7 +156,7 @@ export default function Login() {
           <div className="flex justify-center">
             <CirkulairLogo className="w-56 h-56" />
           </div>
-          <h1 className="text-3xl font-black text-gray-900 tracking-tight -mt-16" style={{ fontFamily: "'Inter', system-ui, sans-serif" }}>Leerplatform</h1>
+          <h1 className="text-3xl font-bold text-gray-900 tracking-tight -mt-16" style={{ fontFamily: "'Inter', system-ui, sans-serif" }}>Leerplatform</h1>
           <p className="text-gray-500 mt-1 text-sm">
             {tab === 'login' ? 'Log in om verder te gaan' : 'Maak een nieuw account aan'}
           </p>
