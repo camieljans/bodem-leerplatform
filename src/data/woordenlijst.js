@@ -279,110 +279,15 @@ const KEURINGSDIENST_EXTRA = [
     categorie: 'Wetenschap',
   },
 ]
-
-const WILGENVLECHTEN_EXTRA = [
-  {
-    term: 'Voedselbos',
-    definitie: 'Een bos dat zo is ingericht dat het eetbare planten, fruit, noten en kruiden produceert. Het bootst de structuur van een natuurlijk bos na en heeft weinig onderhoud nodig.',
-    voorbeeld: 'In een voedselbos groeien appelbomen, frambozen, kruiden en paddestoelen naast elkaar.',
-    categorie: 'Basis',
-  },
-  {
-    term: 'Wilg (Salix)',
-    definitie: 'Een boom of struik die heel snel groeit en graag bij water staat. De takken zijn soepel en buigzaam en worden al eeuwenlang gebruikt om mee te vlechten.',
-    voorbeeld: 'De wilg langs de slootkant heeft lang, hangende takken die goed te vlechten zijn.',
-    categorie: 'Wetenschap',
-  },
-  {
-    term: 'Biodiversiteit',
-    definitie: 'De verscheidenheid aan levende wezens in een gebied — planten, dieren, insecten en schimmels samen. Hoe meer soorten er zijn, hoe sterker en gezonder het ecosysteem.',
-    voorbeeld: 'Door een wilgenhaag te plaatsen in het voedselbos krijgen meer insecten en vogels een thuis.',
-    categorie: 'Duurzaamheid',
-  },
-  {
-    term: 'Vlechten',
-    definitie: 'Het in elkaar weven van soepele takken of twijgen om een constructie te maken, zoals een haag, mand of schuilplaats.',
-    voorbeeld: 'Door dunne wilgentakken om palen te vlechten maak je een stevige, levende haag.',
-    categorie: 'Techniek',
-  },
-  {
-    term: 'Mycelium',
-    definitie: 'Het netwerk van fijne draden van schimmels in de bodem. Het verbindt planten ondergronds en helpt bij het uitwisselen van voedingsstoffen.',
-    voorbeeld: 'Dankzij het mycelium kan een wilg voedingsstoffen uitwisselen met naburige planten.',
-    categorie: 'Wetenschap',
-  },
-  {
-    term: 'Bestuiver',
-    definitie: 'Een dier — meestal een insect zoals een bij, zweefvlieg of vlinder — dat stuifmeel van bloem naar bloem verplaatst en zo voor bevruchting zorgt.',
-    voorbeeld: 'Bijen zijn de bekendste bestuivers, maar ook zweefvliegen doen heel veel bestuivingswerk.',
-    categorie: 'Wetenschap',
-  },
-  {
-    term: 'Nectar',
-    definitie: 'Een zoete vloeistof die bloemen produceren om insecten aan te lokken. Insecten eten de nectar en nemen daarbij onbewust stuifmeel mee.',
-    voorbeeld: 'Wilgenbloesem in het vroege voorjaar geeft nectar aan bijen als er nog weinig anders bloeit.',
-    categorie: 'Wetenschap',
-  },
-  {
-    term: 'Stuifmeel',
-    definitie: 'Kleine gele korreltjes van een bloem die zorgen voor bevruchting. Bestuivers nemen stuifmeel mee als ze nectar drinken.',
-    voorbeeld: 'Als een bij van wilgenbloem naar wilgenbloem vliegt, verspreidt ze stuifmeel.',
-    categorie: 'Wetenschap',
-  },
-  {
-    term: 'Honingbij',
-    definitie: 'Een sociale bij die in een korf of bijenkast leeft en honing maakt van nectar. Honingbijen zijn belangrijke bestuivers van fruit en groenten.',
-    voorbeeld: 'Honingbijen zijn dol op wilgenbloesem in de vroege lente.',
-    categorie: 'Wetenschap',
-  },
-  {
-    term: 'Zweefvlieg',
-    definitie: 'Een vlieg die op een bij of wesp lijkt maar geen stekel heeft. Zweefvliegen zijn heel goede bestuivers en hun larven eten bladluizen.',
-    voorbeeld: 'Je herkent een zweefvlieg omdat hij heel stil op één plek in de lucht kan blijven hangen.',
-    categorie: 'Wetenschap',
-  },
-  {
-    term: 'Vogelkers',
-    definitie: 'Een inheemse boom met witte bloemen en kleine zwarte besjes. Hij groeit goed naast wilgen en trekt veel vogels en insecten aan.',
-    voorbeeld: 'De vogelkers bloeit vroeg in het voorjaar en geeft nectar voor vlinders en bijen.',
-    categorie: 'Wetenschap',
-  },
-  {
-    term: 'Ecosysteemdienst',
-    definitie: 'Een nuttige taak die de natuur gratis uitvoert voor mensen, zoals het zuiveren van water, het bestuiven van gewassen of het vastleggen van CO₂.',
-    voorbeeld: 'Bestuiving door wilde bijen is een ecosysteemdienst die miljarden euro\'s waard is voor de landbouw.',
-    categorie: 'Duurzaamheid',
-  },
-  {
-    term: 'Natuurlijke materialen',
-    definitie: 'Materialen die rechtstreeks uit de natuur komen, zonder fabrieksbewerking. Denk aan takken, touw van plantenvezels, steen of klei.',
-    voorbeeld: 'Wilgentakken zijn natuurlijke materialen die je gratis kunt oogsten zonder de boom te schaden.',
-    categorie: 'Basis',
-  },
-  {
-    term: 'Snoeisel',
-    definitie: 'De takken en twijgen die je afsnijdt bij het snoeien van een boom of struik. Snoeisel van wilg is uitstekend materiaal om mee te vlechten.',
-    voorbeeld: 'Na het knotten van de wilg heb je veel snoeisel dat je direct kunt gebruiken voor vlechtwerk.',
-    categorie: 'Techniek',
-  },
-  {
-    term: 'Zuring',
-    definitie: 'Een wilde plant met zure, eetbare blaadjes die veel in voedselbossen voorkomt. De plant is ook waardevol voor vlinders, waarvan de rupsen ervan eten.',
-    voorbeeld: 'Je kunt zuring herkennen aan de hartvormige blaadjes die zuur smaken — probeer maar eens!',
-    categorie: 'Wetenschap',
-  },
-]
-
 export const woordenlijst = {
   wormenhotel: [...GEDEELD, ...WORMENHOTEL_EXTRA].sort((a, b) => a.term.localeCompare(b.term, 'nl')),
   keuringsdienst: [...GEDEELD, ...KEURINGSDIENST_EXTRA].sort((a, b) => a.term.localeCompare(b.term, 'nl')),
-  wilgenvlechten: [...GEDEELD, ...WILGENVLECHTEN_EXTRA].sort((a, b) => a.term.localeCompare(b.term, 'nl')),
 }
 
 export const categorieKleuren = {
-  Basis:       'bg-gray-100 text-gray-700',
-  Wetenschap:  'bg-blue-100 text-blue-800',
-  Techniek:    'bg-orange-100 text-orange-800',
-  Duurzaamheid:'bg-green-100 text-green-800',
-  Experiment:  'bg-purple-100 text-purple-800',
+  Basis:       'bg-gray-100 text-gray-600',
+  Wetenschap:  'bg-gray-100 text-gray-600',
+  Techniek:    'bg-gray-100 text-gray-600',
+  Duurzaamheid:'bg-gray-100 text-gray-600',
+  Experiment:  'bg-gray-100 text-gray-600',
 }

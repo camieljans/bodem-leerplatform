@@ -23,7 +23,7 @@ function datumLabel(iso) {
 
 const AI_WELKOM = {
   rol: 'assistant',
-  inhoud: 'Hé, ik ben jouw biologieassistent! 🌱 Ik ben specialist in bodem, wormen, planten, insecten en voedselbossen. Stel me gerust een vraag over jouw project of over de natuur!',
+  inhoud: 'Hé, ik ben jouw biologieassistent! Ik ben specialist in bodem, wormen, planten, insecten en voedselbossen. Stel me gerust een vraag over jouw project of over de natuur!',
   tijd: new Date().toISOString(),
 }
 
@@ -197,7 +197,7 @@ function AiChat({ userId, project }) {
 
 // ─── Begeleider-chat ───────────────────────────────────────────────────────────
 
-function BegeleiderChat({ userId, project }) {
+function BegeleiderChat({ userId, project, profile }) {
   const [vragen, setVragen] = useState([])
   const [invoer, setInvoer] = useState('')
   const [versturen, setVersturen] = useState(false)
@@ -243,6 +243,27 @@ function BegeleiderChat({ userId, project }) {
     } else {
       setInvoer('')
       laadVragen()
+      // E-mailnotificatie naar alle begeleiders van dezelfde school
+      try {
+        const { data: begeleiders } = await supabase
+          .from('profiles')
+          .select('email, naam')
+          .eq('school', profile?.school)
+          .eq('rol', 'begeleider')
+        for (const b of begeleiders ?? []) {
+          if (b.email) {
+            await fetch('/api/send-email', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                naar: b.email,
+                onderwerp: `Nieuwe vraag van ${profile?.naam}`,
+                tekst: `${profile?.naam} heeft een vraag gesteld:\n\n"${tekst}"\n\nBeantwoord via: ${window.location.origin}/begeleider`,
+              }),
+            })
+          }
+        }
+      } catch { /* e-mail fout is niet kritiek */ }
     }
     setVersturen(false)
   }
@@ -349,7 +370,7 @@ function BegeleiderChat({ userId, project }) {
 // ─── Hoofdpagina ───────────────────────────────────────────────────────────────
 
 export default function Vragen() {
-  const { user, project } = useAuth()
+  const { user, project, profile } = useAuth()
   const [actieveTab, setActieveTab] = useState('ai')
 
   const tabs = [
@@ -399,7 +420,7 @@ export default function Vragen() {
         {actieveTab === 'ai' ? (
           <AiChat userId={user.id} project={project} />
         ) : (
-          <BegeleiderChat userId={user.id} project={project} />
+          <BegeleiderChat userId={user.id} project={project} profile={profile} />
         )}
       </div>
     </div>

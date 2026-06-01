@@ -1182,99 +1182,6 @@ const KD_HAVO_MOE = [
     uitleg: 'Wisselende resultaten in onderzoek zijn normaal wanneer er veel variabelen in het spel zijn. Goede wetenschap probeert deze variabelen te controleren, maar in veldsituaties is dat moeilijk. Daarom is herhaalbaarheid zo belangrijk.',
   },
 ]
-
-// ─── Wilgenvlechten lesarrays ─────────────────────────────────────────────────
-
-const WV_BASIS_MAK = [
-  {
-    type: 'info',
-    titel: 'Wat is een voedselbos?',
-    tekst: 'Een voedselbos is een tuin die op een bos lijkt. Er groeien bomen, struiken en planten die allemaal eetbare dingen geven: appels, noten, bessen en kruiden. Een voedselbos heeft veel verschillende planten en dieren. Dat noemen we biodiversiteit. Hoe meer soorten, hoe gezonder het bos.',
-    feit: 'Er zijn al meer dan 800 voedselbosten in Nederland! Ze zijn goed voor mens én dier.',
-  },
-  {
-    type: 'vraag',
-    vraag: 'Wat vind je in een voedselbos?',
-    antwoorden: [
-      'Bomen en planten met eten, zoals appels en bessen',
-      'Alleen gras en bloemen',
-      'Alleen groenten in rijen',
-      'Alleen hoge bomen zonder eten',
-    ],
-    correct: 0,
-    uitleg: 'In een voedselbos groeien allerlei planten en bomen die eten geven. Denk aan appelbomen, bessenstruiken en kruiden.',
-  },
-  {
-    type: 'info',
-    titel: 'De wilg: een bijzondere boom',
-    tekst: 'De wilg is een boom met lange, smalle bladeren en soepele takken. Wilgen groeien heel snel. De takken zijn buigzaam: je kunt ze buigen zonder dat ze breken. Dat maakt de wilg perfect om mee te vlechten! Wilgen zijn ook erg belangrijk voor de natuur. Insecten, bijen en vogels komen graag naar de wilg.',
-    feit: 'Een wilg kan wel 50 jaar oud worden en zijn takken groeien elke lente weer terug.',
-  },
-  {
-    type: 'vraag',
-    vraag: 'Waarom is de wilg goed voor insecten?',
-    antwoorden: [
-      'Insecten vinden voedsel en schuilplaats bij de wilg',
-      'De wilg geeft melk aan insecten',
-      'Insecten eten de wortels van de wilg',
-      'De wilg ruikt slecht, dus insecten blijven weg',
-    ],
-    correct: 0,
-    uitleg: 'Bij de wilg vinden insecten zoals bijen stuifmeel en nectar. Ze vinden er ook een schuilplaats.',
-  },
-  {
-    type: 'info',
-    titel: 'Biodiversiteit: veel soorten leven samen',
-    tekst: 'Biodiversiteit betekent: veel verschillende soorten planten en dieren leven op dezelfde plek. Dat is goed! Als er veel soorten zijn, helpen ze elkaar. Bijen bestuiven bloemen. Vogels eten insecten. Wormen maken de grond los. Iedereen heeft een taak. In een voedselbos proberen we zoveel mogelijk biodiversiteit te maken.',
-    feit: 'Op één wilgenboom kunnen wel honderd verschillende soorten insecten leven!',
-  },
-]
-
-const WV_BASIS_GEM = [
-  {
-    type: 'info',
-    titel: 'Vlechten: een oeroude techniek',
-    tekst: 'Mensen vlechten al duizenden jaren met wilgentakken. Ze maakten er manden, hekken en hutten van. In het oude Egypte en bij de Vikingen gebruikten mensen al gevlochten wilg. Het is een van de oudste bouwmethodes ter wereld. Tegenwoordig gebruiken we wilgenvlechten ook in tuinen en voedselbosten om structuren te maken die de natuur helpen.',
-    feit: 'In Nederland zijn opgravingen gevonden van gevlochten wilgenmanden die meer dan 2.000 jaar oud zijn!',
-  },
-  {
-    type: 'vraag',
-    vraag: 'Hoe lang vlechten mensen al met wilgen?',
-    antwoorden: [
-      'Al duizenden jaren',
-      'Pas sinds 10 jaar',
-      'Alleen in Nederland',
-      'Alleen in de zomer',
-    ],
-    correct: 0,
-    uitleg: 'Vlechten met wilg is een heel oude techniek. Al in de tijd van het oude Egypte maakten mensen manden en hekken van wilgentakken.',
-  },
-  {
-    type: 'info',
-    titel: 'Insecten en planten helpen elkaar',
-    tekst: 'Planten hebben insecten nodig en insecten hebben planten nodig. Een bij vliegt van bloem naar bloem om nectar te halen. Daarbij plakt stuifmeel aan haar poten. Als ze naar de volgende bloem vliegt, brengt ze dat stuifmeel mee. Zo worden bloemen bestoven en kunnen er vruchten en zaden groeien. Dit heet bestuiving. Zonder bijen zouden veel planten geen vruchten geven.',
-    feit: 'Eén honingbij bezoekt op één dag wel 1.000 bloemen. Ze vliegen samen miljoenen bloemen per dag!',
-  },
-  {
-    type: 'vraag',
-    vraag: 'Wat doet een bij als ze van bloem naar bloem vliegt?',
-    antwoorden: [
-      'Ze brengt stuifmeel mee en bestuwt de bloem',
-      'Ze eet alle bloemblaadjes op',
-      'Ze plant nieuwe zaden in de grond',
-      'Ze maakt de bloem kapot',
-    ],
-    correct: 0,
-    uitleg: 'Bij het verzamelen van nectar plakt stuifmeel aan de poten van de bij. Zo draagt ze stuifmeel over van de ene bloem naar de andere. Dit heet bestuiving.',
-  },
-  {
-    type: 'info',
-    titel: 'Waarom bouwen we in het voedselbos?',
-    tekst: 'Als we iets bouwen van wilgentakken in het voedselbos, helpen we de natuur. Een gevlochten wand geeft insecten een schuilplaats. Een hekwerk van wilg geeft planten steun. Levende wilgentakken wortelen zelfs in de grond en groeien uit tot nieuwe struiken! Zo wordt jouw bouwsel na verloop van tijd onderdeel van het voedselbos zelf.',
-    feit: 'Als je een verse wilgentak in de grond steekt en water geeft, kan er na een paar weken al een nieuwe wilgenstruik uit groeien.',
-  },
-]
-
 // ─── Hoofdexport ──────────────────────────────────────────────────────────────
 
 export const lesinhoud = {
@@ -1310,21 +1217,6 @@ export const lesinhoud = {
         makkelijk: { label: 'Makkelijk', lessen: KD_GEDEELD_2 },
         gemiddeld: { label: 'Gemiddeld', lessen: KD_HAVO_GEM },
         moeilijk:  { label: 'Moeilijk',  lessen: KD_HAVO_MOE },
-      },
-    },
-  },
-
-  wilgenvlechten: {
-    niveaus: {
-      basis: {
-        makkelijk: { label: 'Makkelijk', lessen: WV_BASIS_MAK },
-        gemiddeld:  { label: 'Gemiddeld', lessen: WV_BASIS_GEM },
-        moeilijk:   { label: 'Moeilijk',  lessen: WV_BASIS_GEM },
-      },
-      pro: {
-        makkelijk: { label: 'Makkelijk', lessen: WV_BASIS_MAK },
-        gemiddeld:  { label: 'Gemiddeld', lessen: WV_BASIS_MAK },
-        moeilijk:   { label: 'Moeilijk',  lessen: WV_BASIS_GEM },
       },
     },
   },

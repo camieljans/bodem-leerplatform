@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { supabase } from '../supabase'
 import { useAuth } from '../App'
 import { useNavigate } from 'react-router-dom'
-import { GraduationCap, Users, BookOpen, MessageSquare, User, Send, Lock, Clock, CheckCircle, XCircle, School, LayoutGrid, Worm, Sprout, BarChart2, Map, ArrowRight, TrendingUp, AlertCircle } from 'lucide-react'
+import { GraduationCap, Users, BookOpen, MessageSquare, User, Send, Lock, Clock, CheckCircle, XCircle, School, LayoutGrid, Worm, Sprout, BarChart2, Map, ArrowRight, TrendingUp, AlertCircle, Microscope, Trophy, ExternalLink } from 'lucide-react'
 
 const scholen = [
   { value: 'olympus', label: 'Olympus College' },
@@ -26,7 +26,6 @@ const niveauLabels = {
 const projectNaam = {
   wormenhotel:    'Wormenhotel',
   keuringsdienst: 'Keuringsdienst',
-  wilgenvlechten: 'Wilgenvlechten',
 }
 
 export default function Begeleider() {
@@ -52,6 +51,13 @@ export default function Begeleider() {
   const [feedbackTekst, setFeedbackTekst] = useState({}) // entryId → tekst
   const [feedbackBezig, setFeedbackBezig] = useState(null)
   const [feedbackOpgeslagen, setFeedbackOpgeslagen] = useState(null)
+
+  // Observaties
+  const [observatieLeerling, setObservatieLeerling] = useState(null)
+  const [observatieData, setObservatieData] = useState([])
+
+  // Eindproducten
+  const [eindproducten, setEindproducten] = useState([])
 
   // School instellen (als dat nog niet gedaan is)
   const [schoolKeuze, setSchoolKeuze] = useState('')
@@ -223,9 +229,55 @@ export default function Begeleider() {
         beantwoord_op: new Date().toISOString(),
       })
       .eq('id', vraagId)
+    // E-mailnotificatie naar de leerling
+    try {
+      const vraag = vragen.find(v => v.id === vraagId)
+      if (vraag) {
+        const { data: leerlingProfiel } = await supabase
+          .from('profiles')
+          .select('email, naam')
+          .eq('id', vraag.leerling_id)
+          .single()
+        if (leerlingProfiel?.email) {
+          await fetch('/api/send-email', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              naar: leerlingProfiel.email,
+              onderwerp: 'Je begeleider heeft je vraag beantwoord',
+              tekst: `Hoi ${leerlingProfiel.naam},\n\nJe begeleider ${profile.naam} heeft je vraag beantwoord:\n\nJouw vraag: "${vraag.vraag}"\n\nAntwoord: "${tekst.trim()}"\n\nBekijk het via: ${window.location.origin}/vragen`,
+            }),
+          })
+        }
+      }
+    } catch { /* e-mail fout is niet kritiek */ }
     setAntwoorden(prev => ({ ...prev, [vraagId]: '' }))
     setVersturenId(null)
     laadVragen()
+  }
+
+  async function laadObservaties(leerlingId) {
+    const { data } = await supabase
+      .from('observaties')
+      .select('*')
+      .eq('leerling_id', leerlingId)
+      .order('week')
+    setObservatieData(data || [])
+  }
+
+  async function laadEindproducten() {
+    const goedgekeurdeIds = Object.entries(koppelingen)
+      .filter(([, status]) => status === 'goedgekeurd')
+      .map(([id]) => id)
+    if (goedgekeurdeIds.length === 0) { setEindproducten([]); return }
+    const { data } = await supabase
+      .from('eindproducten')
+      .select('*')
+      .in('leerling_id', goedgekeurdeIds)
+      .order('bijgewerkt_op', { ascending: false })
+    const naamMap = {}
+    for (const l of leerlingen) naamMap[l.id] = l.naam
+    setEindproducten((data || []).map(e => ({ ...e, leerling_naam: naamMap[e.leerling_id] || 'Onbekend' })))
   }
 
   async function laadLogboek(leerlingId) {
@@ -324,6 +376,18 @@ export default function Begeleider() {
             )}
           </button>
           <button
+            onClick={() => { setTab('observaties'); setObservatieLeerling(null); setObservatieData([]) }}
+            className={`flex items-center gap-1.5 px-5 py-2 rounded-xl font-semibold text-sm transition-all ${tab === 'observaties' ? 'bg-green-600 text-white' : 'bg-white text-gray-600 hover:bg-gray-100'}`}
+          >
+            <Microscope className="w-4 h-4" /> Observaties
+          </button>
+          <button
+            onClick={() => { setTab('eindproduct'); laadEindproducten() }}
+            className={`flex items-center gap-1.5 px-5 py-2 rounded-xl font-semibold text-sm transition-all ${tab === 'eindproduct' ? 'bg-green-600 text-white' : 'bg-white text-gray-600 hover:bg-gray-100'}`}
+          >
+            <Trophy className="w-4 h-4" /> Eindproduct
+          </button>
+          <button
             onClick={() => setTab('klasoverzicht')}
             className={`flex items-center gap-1.5 px-5 py-2 rounded-xl font-semibold text-sm transition-all ${tab === 'klasoverzicht' ? 'bg-green-600 text-white' : 'bg-white text-gray-600 hover:bg-gray-100'}`}
           >
@@ -419,7 +483,6 @@ export default function Begeleider() {
                 <div className="flex gap-2 mb-6 justify-center">
                   {[
                     { key: 'alle',           label: 'Alle',          icon: <LayoutGrid className="w-3.5 h-3.5" /> },
-                    { key: 'wilgenvlechten', label: 'Wilgenvlechten',icon: <Sprout className="w-3.5 h-3.5" /> },
                     { key: 'wormenhotel',    label: 'Wormenhotel',   icon: <Worm className="w-3.5 h-3.5" /> },
                     { key: 'keuringsdienst', label: 'Keuringsdienst',icon: <Sprout className="w-3.5 h-3.5" /> },
                   ].map(p => (
@@ -465,7 +528,7 @@ export default function Begeleider() {
                   <div className="md:col-span-2">
                     {!gekozenLeerling ? (
                       <div className="bg-white rounded-2xl shadow p-8 text-center text-gray-400">
-                        <div className="text-4xl mb-3">👈</div>
+                        <ArrowRight className="w-10 h-10 mx-auto mb-3 text-gray-200 rotate-180" />
                         <p>Klik op een leerling om het logboek te bekijken</p>
                       </div>
                     ) : (
@@ -513,7 +576,7 @@ export default function Begeleider() {
                                       disabled={feedbackBezig === entry.id}
                                       className="bg-green-600 hover:bg-green-700 disabled:opacity-50 text-white px-3 py-2 rounded-xl text-sm font-semibold transition-colors self-end"
                                     >
-                                      {feedbackBezig === entry.id ? '...' : feedbackOpgeslagen === entry.id ? '✅' : 'Opslaan'}
+                                      {feedbackBezig === entry.id ? '...' : feedbackOpgeslagen === entry.id ? <CheckCircle className="w-4 h-4" /> : 'Opslaan'}
                                     </button>
                                   </div>
                                 </div>
@@ -694,6 +757,183 @@ export default function Begeleider() {
                   </div>
                 )}
               </>
+            )}
+          </div>
+        )}
+
+        {/* ── Observaties tab ── */}
+        {tab === 'observaties' && (
+          <>
+            {goedgekeurde.length === 0 ? (
+              <div className="bg-white rounded-2xl shadow p-10 text-center text-gray-400">
+                <Lock className="w-12 h-12 mx-auto mb-3 text-gray-200" />
+                <p className="font-medium text-gray-600 mb-1">Nog geen goedgekeurde koppelingen</p>
+                <p className="text-sm">Koppel eerst leerlingen om observaties te bekijken.</p>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="md:col-span-1">
+                  <div className="bg-white rounded-2xl shadow p-4">
+                    <h2 className="font-bold text-gray-700 mb-3 text-sm uppercase tracking-wide">Leerlingen ({goedgekeurde.length})</h2>
+                    <div className="space-y-2">
+                      {goedgekeurde.map(l => (
+                        <button
+                          key={l.id}
+                          onClick={() => { setObservatieLeerling(l); laadObservaties(l.id) }}
+                          className={`w-full text-left px-3 py-3 rounded-xl transition-all text-sm flex items-center gap-2 ${observatieLeerling?.id === l.id ? 'bg-green-600 text-white' : 'hover:bg-gray-100 text-gray-700'}`}
+                        >
+                          <User className={`w-4 h-4 shrink-0 ${observatieLeerling?.id === l.id ? 'text-green-100' : 'text-gray-400'}`} />
+                          <div>
+                            <div className="font-medium">{l.naam}</div>
+                            <div className={`text-xs mt-0.5 ${observatieLeerling?.id === l.id ? 'text-green-100' : 'text-gray-400'}`}>
+                              {projectNaam[l.project] || '—'}
+                            </div>
+                          </div>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+                <div className="md:col-span-2">
+                  {!observatieLeerling ? (
+                    <div className="bg-white rounded-2xl shadow p-8 text-center text-gray-400">
+                      <div className="text-4xl mb-3">👈</div>
+                      <p>Klik op een leerling om de observaties te bekijken</p>
+                    </div>
+                  ) : observatieData.length === 0 ? (
+                    <div className="bg-white rounded-2xl shadow p-8 text-center text-gray-400">
+                      <Microscope className="w-10 h-10 mx-auto mb-3 text-gray-200" />
+                      <p>Nog geen observaties ingevuld door {observatieLeerling.naam}.</p>
+                    </div>
+                  ) : (
+                    <div className="space-y-4">
+                      {observatieData.map(obs => (
+                        <div key={obs.id} className="bg-white rounded-2xl shadow p-5">
+                          <div className="flex items-center justify-between mb-3">
+                            <span className="font-bold text-gray-800">Week {obs.week}</span>
+                            <span className="text-xs text-gray-400 bg-gray-100 px-2 py-1 rounded-full">
+                              {projectNaam[obs.project] || obs.project}
+                            </span>
+                          </div>
+                          <div className="grid grid-cols-2 gap-2 text-sm">
+                            {Object.entries(obs.data || {}).map(([key, val]) => {
+                              if (key === 'notities' || key === 'bijzonderheden') return null
+                              if (typeof val === 'object' && val !== null) {
+                                // Keuringsdienst pot-object
+                                const potLabels = {
+                                  hoogte_cm:        'Rozethoogte (cm)',
+                                  knol_diameter_mm: 'Knoldiameter (mm)',
+                                  knol_zichtbaar:   'Knol zichtbaar',
+                                  bladeren:         'Aantal bladeren',
+                                  bladgrootte:      'Bladgrootte',
+                                  bladkleur:        'Bladkleur',
+                                  conditie:         'Conditie',
+                                  geen_bladvorming: 'Geen bladvorming',
+                                  grondvochtigheid: 'Grondvochtigheid',
+                                  ziekte:           'Ziekte / plaag',
+                                  bolschieten:      'Bolschieten',
+                                }
+                                const potNamen = { pot1: 'Pot 1 – Controle', pot2: 'Pot 2 – Kunstmest', pot3: 'Pot 3 – Compostthee' }
+                                return (
+                                  <div key={key} className="col-span-2 bg-gray-50 rounded-xl p-3">
+                                    <p className="font-semibold text-gray-600 mb-2">{potNamen[key] ?? key}</p>
+                                    {val.geen_bladvorming ? (
+                                      <p className="text-xs text-amber-700 font-medium mb-1.5">Nog geen bladvorming</p>
+                                    ) : null}
+                                    <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-xs">
+                                      {Object.entries(val).filter(([k]) => k !== 'geen_bladvorming' && k !== 'bolschieten').map(([k, v]) => {
+                                        if (val.geen_bladvorming && (k === 'bladeren' || k === 'bladkleur' || k === 'bladgrootte' || k === 'conditie')) return null
+                                        const weergave = typeof v === 'boolean' ? (v ? 'Ja' : 'Nee') : String(v)
+                                        if (weergave === '' || weergave === 'null') return null
+                                        return (
+                                          <div key={k}><span className="text-gray-400">{potLabels[k] ?? k}: </span><span className="font-medium capitalize">{weergave}</span></div>
+                                        )
+                                      })}
+                                    </div>
+                                  </div>
+                                )
+                              }
+                              if (Array.isArray(val)) {
+                                return (
+                                  <div key={key} className="col-span-2">
+                                    <span className="text-gray-500 capitalize">{key}: </span>
+                                    <span className="font-medium">{val.join(', ') || '—'}</span>
+                                  </div>
+                                )
+                              }
+                              return (
+                                <div key={key}>
+                                  <span className="text-gray-500 capitalize">{key.replace(/_/g, ' ')}: </span>
+                                  <span className="font-medium">{String(val)}</span>
+                                </div>
+                              )
+                            })}
+                          </div>
+                          {(obs.data?.notities || obs.data?.bijzonderheden) && (
+                            <div className="mt-3 bg-amber-50 border border-amber-100 rounded-xl p-3 text-sm text-amber-800">
+                              <span className="font-semibold">Notities: </span>
+                              {obs.data.notities || obs.data.bijzonderheden}
+                            </div>
+                          )}
+                          <p className="text-xs text-gray-300 mt-2">{new Date(obs.bijgewerkt_op || obs.aangemaakt_op).toLocaleDateString('nl-NL')}</p>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+          </>
+        )}
+
+        {/* ── Eindproduct tab ── */}
+        {tab === 'eindproduct' && (
+          <div className="space-y-4">
+            {goedgekeurde.length === 0 ? (
+              <div className="bg-white rounded-2xl shadow p-10 text-center text-gray-400">
+                <Lock className="w-12 h-12 mx-auto mb-3 text-gray-200" />
+                <p className="font-medium text-gray-600 mb-1">Nog geen goedgekeurde koppelingen</p>
+                <p className="text-sm">Koppel eerst leerlingen om eindproducten te bekijken.</p>
+              </div>
+            ) : eindproducten.length === 0 ? (
+              <div className="bg-white rounded-2xl shadow p-10 text-center text-gray-400">
+                <Trophy className="w-12 h-12 mx-auto mb-3 text-gray-200" />
+                <p>Nog geen eindproducten ingediend door jouw leerlingen.</p>
+              </div>
+            ) : (
+              eindproducten.map(ep => (
+                <div key={ep.id} className="bg-white rounded-2xl shadow p-5">
+                  <div className="flex items-start justify-between gap-3 mb-3">
+                    <div className="flex items-center gap-3">
+                      <div className="w-9 h-9 rounded-full bg-amber-100 flex items-center justify-center shrink-0">
+                        <Trophy className="w-4 h-4 text-amber-600" />
+                      </div>
+                      <div>
+                        <p className="font-semibold text-gray-800">{ep.leerling_naam}</p>
+                        <p className="text-xs text-gray-400">{projectNaam[ep.project] || ep.project}</p>
+                      </div>
+                    </div>
+                    <span className="text-xs bg-amber-100 text-amber-700 px-3 py-1 rounded-full font-medium shrink-0">{ep.type}</span>
+                  </div>
+                  <h3 className="font-bold text-gray-800 mb-1">{ep.titel}</h3>
+                  {ep.beschrijving && (
+                    <p className="text-sm text-gray-600 leading-relaxed mb-3">{ep.beschrijving}</p>
+                  )}
+                  {ep.url && (
+                    <a
+                      href={ep.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 text-sm text-blue-600 hover:text-blue-800 font-medium"
+                    >
+                      <ExternalLink className="w-3.5 h-3.5" /> Bekijk eindproduct
+                    </a>
+                  )}
+                  <p className="text-xs text-gray-300 mt-2">
+                    Ingediend op {new Date(ep.bijgewerkt_op || ep.aangemaakt_op).toLocaleDateString('nl-NL', { day: 'numeric', month: 'long', year: 'numeric' })}
+                  </p>
+                </div>
+              ))
             )}
           </div>
         )}

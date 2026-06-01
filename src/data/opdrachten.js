@@ -10,42 +10,42 @@ export const opdrachten = {
     basis: [
       {
         week: 1,
-        titel: 'Kennismaken: afval en de natuur',
-        intro: 'Deze week start jullie project. Je gaat leren dat afval niet zomaar "weg" is — het kan opnieuw gebruikt worden. Wormen helpen daarbij!',
+        titel: 'Kennismaken & Bouwen: jullie wormenhotel',
+        intro: 'Vandaag leer je wat afval kan worden en bouw je meteen het wormenhotel! Van idee naar een levend systeem in één les.',
         taken: [
           {
             type: 'bespreek',
-            tekst: 'Praat met je groep: welk afval gooi jij thuis weg? Maak een lijstje van minstens 5 soorten afval. Welke zijn van planten of dieren afkomstig?',
-          },
-          {
-            type: 'teken',
-            tekst: 'Teken een simpele tekening van wat jij denkt dat er met een appel gebeurt als hij op de grond valt in het bos. Wat zie je na 1 dag? Na 1 week? Na 1 jaar?',
+            tekst: 'Klassengesprek: welk afval gooi jij thuis weg? Maak een lijstje van minstens 5 soorten. Welke kunnen in het wormenhotel?',
           },
           {
             type: 'doe',
-            tekst: 'Ga buiten zoeken naar regenwormen! Kijk onder stenen of in vochtige aarde. Hoeveel vind je? Hoe bewegen ze? Schrijf op wat je ziet.',
+            tekst: 'Bouw het wormenhotel! Verdeel de taken in je groep: wie boort de gaatjes (drainage), wie legt karton en aarde als bedding, wie voegt de wormen toe, wie geeft het eerste voedsel? Bouw stap voor stap.',
+          },
+          {
+            type: 'teken',
+            tekst: 'Maak een tekening of foto van het afgewerkte wormenhotel. Schrijf erbij welke laag wat doet: drainage, bedding, voedsel.',
           },
           {
             type: 'schrijf',
-            tekst: 'Schrijf in je logboek: wat weet je al over wormen en composteren? En wat wil je graag leren tijdens dit project?',
+            tekst: 'Schrijf in je logboek: hoe ziet het hotel er nu uit? Wat denk je dat de wormen de komende weken gaan doen?',
           },
         ],
         reflectie: [
-          'Wat vind jij het meest verrassende aan regenwormen?',
+          'Wat vond je het spannendst aan het bouwen?',
           'Waarom denk je dat het goed is om afval opnieuw te gebruiken?',
         ],
         vragen: [
           {
-            vraag: 'Wat heb je deze week buiten gedaan met regenwormen?',
-            opties: ['We hebben ze opgegeten', 'We hebben ze gezocht en bekeken', 'We hebben ze gekleurd', 'We hebben ze naar huis meegenomen'],
+            vraag: 'Wat heb je deze week gebouwd?',
+            opties: ['Een vogelhuis', 'Een wormenhotel', 'Een moestuin', 'Een aquarium'],
             correct: 1,
-            uitleg: 'Deze week ben je buiten gaan zoeken naar regenwormen en heb je gekeken hoe ze bewegen.',
+            uitleg: 'Jullie hebben een wormenhotel gebouwd van hergebruikte materialen.',
           },
           {
-            vraag: 'Welk afval van deze lijst komt van een plant?',
+            vraag: 'Welk afval van deze lijst mag in het wormenhotel?',
             opties: ['Een plastic fles', 'Een appelschil', 'Een stuk glas', 'Een blikje'],
             correct: 1,
-            uitleg: 'Een appelschil komt van een appel — dat is een plant. Plastic, glas en blikjes niet.',
+            uitleg: 'Een appelschil is organisch afval — dat eten de wormen op en zetten het om in compost.',
           },
         ],
       },
@@ -92,42 +92,42 @@ export const opdrachten = {
       },
       {
         week: 3,
-        titel: 'Bouwen: het wormenhotel',
-        intro: 'Deze week bouwen jullie jullie eigen wormenhotel! Zorg dat iedereen een taak heeft.',
+        titel: 'Eerste observaties: hoe gaat het met de wormen?',
+        intro: 'Het hotel staat nu twee weken. Tijd voor een eerste echte inspectie! Kijk goed, schrijf op wat je ziet en stuur bij als er iets niet klopt.',
         taken: [
           {
             type: 'doe',
-            tekst: 'Verdeel de taken in de groep: wie maakt de gaten (drainage), wie legt de bedding, wie voegt de wormen toe, wie doet het eerste voedsel erin? Bouw het wormenhotel stap voor stap.',
+            tekst: 'Doe je eerste volledige observatie: til het deksel op en kijk goed. Hoe ruikt het? Zijn de wormen actief? Is de grond vochtig genoeg? Vul het observatieformulier in.',
           },
           {
-            type: 'teken',
-            tekst: 'Maak een foto of tekening van jullie afgewerkte wormenhotel. Schrijf erbij welke laag wat doet.',
+            type: 'onderzoek',
+            tekst: 'Vergelijk met wat je verwachtte: klopt het? Zoek op wat een goede geur betekent (bosgrond) en wat een slechte geur betekent (zuur, ammoniak). Wat ruik jij?',
           },
           {
             type: 'schrijf',
-            tekst: 'Maak een "verzorgingsschema": wie voedt de wormen op welke dag? Wat gaan jullie erin gooien? Schrijf dit op en hang het naast het wormenhotel.',
+            tekst: 'Schrijf in je logboek: wat zie je dat goed gaat? Is er iets raars? Wat ga je aanpassen — meer vocht, minder voedsel, ander voedsel?',
           },
           {
             type: 'bespreek',
-            tekst: 'Overleg: hoe weten jullie dat de wormen het naar hun zin hebben? Maak een lijstje van tekenen dat het goed gaat (goede geur, actieve wormen, enz.).',
+            tekst: 'Bespreek met je groep: hoe weten jullie dat de wormen het goed hebben? Maak een lijstje van goede tekenen én waarschuwingssignalen.',
           },
         ],
         reflectie: [
-          'Wat was het moeilijkste aan het bouwen?',
-          'Waar moet je op letten bij het verzorgen van de wormen?',
+          'Wat valt je op vergeleken met week 1?',
+          'Wat moet je aanpassen en waarom?',
         ],
         vragen: [
           {
-            vraag: 'Waarvoor dienen de gaten onderaan het wormenhotel?',
-            opties: ['Zodat de wormen kunnen ontsnappen', 'Zodat overtollig water weg kan lopen', 'Zodat er meer zaden in passen', 'Zodat de wormen sneller eten'],
+            vraag: 'Wat betekent het als het wormenhotel naar bosgrond ruikt?',
+            opties: ['Er zit iets mis', 'Het hotel werkt goed', 'De wormen zijn dood', 'Er is te veel water'],
             correct: 1,
-            uitleg: 'De gaten zijn de drainagelaag: water dat er teveel is kan eruit lopen.',
+            uitleg: 'Een bosgrondgeur betekent dat de compostering goed verloopt — precies zoals het hoort.',
           },
           {
-            vraag: 'Wat heb je als groep gemaakt om de zorg te verdelen?',
-            opties: ['Een prijslijst', 'Een verzorgingsrooster', 'Een plattegrond van de klas', 'Een foto van de wormen'],
+            vraag: 'Wat doe je als de grond te droog is?',
+            opties: ['Niets, dat lost zichzelf op', 'Voorzichtig wat water toevoegen', 'Meer voedsel toevoegen', 'De wormen eruit halen'],
             correct: 1,
-            uitleg: 'Jullie hebben een verzorgingsrooster gemaakt zodat iedereen weet wanneer hij of zij voedt.',
+            uitleg: 'Wormen ademen door hun huid — als de grond te droog is, gaan ze dood. Een beetje water toevoegen helpt.',
           },
         ],
       },
@@ -259,42 +259,42 @@ export const opdrachten = {
     midden: [
       {
         week: 1,
-        titel: 'Kennismaken: afval en kringlopen',
-        intro: 'Deze week start het project. Je ontdekt dat afval niet zomaar "weg" is — in de natuur wordt alles hergebruikt. Wormen spelen daarin een grote rol!',
+        titel: 'Kennismaken & Bouwen: kringloop in actie',
+        intro: 'Vandaag ontdek je hoe afval opnieuw voeding wordt — en je bouwt meteen het systeem waarmee je dat gaat onderzoeken: jullie eigen wormenhotel.',
         taken: [
           {
             type: 'bespreek',
-            tekst: 'Praat met je groep: wat gooi jij thuis weg? Maak een lijstje van minstens 6 soorten afval. Welke komen van planten of dieren, en welke niet? Wat denk je dat er met elk soort afval gebeurt?',
+            tekst: 'Praat met je groep: wat gooi jij thuis weg? Maak een lijstje van minstens 6 soorten afval. Welke kunnen in een wormenhotel, welke niet? Onderbouw je antwoord.',
           },
           {
             type: 'doe',
-            tekst: 'Ga buiten zoeken naar plekken waar de natuur zelf "composteert": dode bladeren, rottend hout of schimmels op boomstronken. Zoek minimaal twee plekken en schrijf op wat je ziet.',
+            tekst: 'Bouw het wormenhotel stap voor stap. Verdeel de rollen: drainage (gaatjes boren), bedding (karton + aarde), wormen toevoegen, eerste voeding geven. Zorg dat iedereen een taak heeft en weet waarom die stap belangrijk is.',
           },
           {
             type: 'teken',
-            tekst: 'Teken een kringloop: begin bij een appel aan een boom → appel valt → schimmels/wormen → compost → nieuwe plant → nieuwe appel. Maak de cirkel compleet met pijlen en labels.',
+            tekst: 'Teken de kringloop: appel aan boom → appel valt → wormen/schimmels → compost → nieuwe plant → nieuwe appel. Maak de cirkel compleet. Voeg ook toe: waar past jullie wormenhotel in deze kringloop?',
           },
           {
             type: 'schrijf',
-            tekst: 'Schrijf in je logboek: wat weet je al over wormen en composteren? Wat vind je interessant of wil je graag leren tijdens dit project?',
+            tekst: 'Schrijf je hypothese op: wat verwacht je de komende weken te zien in het wormenhotel? Hoe snel denk je dat de wormen het voedsel opeten?',
           },
         ],
         reflectie: [
           'Wat is het verschil tussen afval "weggooien" en afval "composteren"?',
-          'Waarom is het goed als afval opnieuw gebruikt wordt door de natuur?',
+          'Waarom is het logisch dat jullie het hotel al in week 1 bouwen?',
         ],
         vragen: [
           {
-            vraag: 'Wat betekent het dat de natuur "composteert"?',
-            opties: ['De natuur gooit alles in de prullenbak', 'De natuur breekt dood materiaal af en maakt er voeding van', 'De natuur verbrandt bladeren en hout', 'De natuur slaat afval op in de grond'],
+            vraag: 'Waar past het wormenhotel in de kringloop van de natuur?',
+            opties: ['Het vervangt de zon', 'Het zet organisch afval om in compost voor nieuwe planten', 'Het maakt plastic afbreekbaar', 'Het vervangt de bodem volledig'],
             correct: 1,
-            uitleg: 'In de natuur wordt dood materiaal zoals bladeren en hout afgebroken door schimmels en wormen — dat is composteren.',
+            uitleg: 'Het wormenhotel versnelt wat de natuur ook doet: organisch afval afbreken en omzetten in voedingsstoffen voor planten.',
           },
           {
-            vraag: 'Wat tekende je als kringloop deze week?',
-            opties: ['Een appel die in de vuilnisbak belandt', 'Een appel die via wormen en compost een nieuwe plant wordt', 'Een worm die een boom opeet', 'Een boom die water drinkt'],
+            vraag: 'Wat is de rol van de drainagelaag onderaan het hotel?',
+            opties: ['Wormen tegenhouden', 'Overtollig water laten weglopen', 'Meer zaden opslaan', 'Warmte vasthouden'],
             correct: 1,
-            uitleg: 'De kringloop laat zien hoe een appel via wormen en compost weer voeding wordt voor een nieuwe plant.',
+            uitleg: 'Zonder drainage staat het hotel onder water en verdrinken de wormen.',
           },
         ],
       },
@@ -341,42 +341,42 @@ export const opdrachten = {
       },
       {
         week: 3,
-        titel: 'Bouwen: het wormenhotel',
-        intro: 'Deze week bouwen jullie jullie eigen wormenhotel! Zorg dat iedereen een taak heeft en dat jullie weten waarom elk onderdeel er is.',
+        titel: 'Eerste observaties & bijsturing',
+        intro: 'Na twee weken is het tijd voor een grondige inspectie. Wat zie je? Wat ruik je? Klopt het met je hypothese — en wat moet je aanpassen?',
         taken: [
           {
             type: 'doe',
-            tekst: 'Bouw het wormenhotel stap voor stap. Verdeel de taken: wie maakt de gaten (drainage), wie legt de bedding, wie voegt de wormen toe, wie doet het eerste voedsel erin? Werkt iedereen mee?',
+            tekst: 'Voer een volledige observatie uit: vul het observatieformulier in (vochtigheid, geur, activiteit, geschat aantal wormen). Til voorzichtig wat materiaal opzij om te kijken hoe diep de wormen zitten.',
           },
           {
-            type: 'teken',
-            tekst: 'Maak een foto of tekening van jullie afgewerkte wormenhotel. Schrijf erbij welke laag wat doet en waarom jullie bepaalde keuzes hebben gemaakt.',
+            type: 'onderzoek',
+            tekst: 'Vergelijk je observatie met je hypothese uit week 1. Klopt wat je verwachtte? Zoek op wat een zure geur of ammoniak-geur betekent en hoe je dat oplost.',
           },
           {
             type: 'schrijf',
-            tekst: 'Maak een verzorgingsrooster: wie voedt de wormen op welke dag? Wat gaan jullie erin gooien? Hang dit schema naast het wormenhotel zodat iedereen het weet.',
+            tekst: 'Schrijf een korte analyse: wat gaat goed, wat gaat minder goed en waarom? Wat ga je concreet aanpassen — vochtgehalte, hoeveelheid voedsel, type voedsel?',
           },
           {
             type: 'bespreek',
-            tekst: 'Overleg met je groep: hoe weten jullie dat de wormen het goed hebben? Maak een lijstje van tekenen dat het goed gaat, zoals: goede geur, actieve wormen, vochtige grond.',
+            tekst: 'Bespreek met je groep: zijn jullie observaties hetzelfde? Wie heeft iets anders gezien? Hoe verklaar je de verschillen?',
           },
         ],
         reflectie: [
-          'Wat was het moeilijkste aan het bouwen, en hoe hebben jullie dat opgelost?',
-          'Waarom is het belangrijk dat iedereen weet wanneer hij of zij de wormen moet voeren?',
+          'Wat klopte er van je hypothese, en wat niet? Hoe verklaar je dat?',
+          'Wat is het verschil tussen een observatie en een mening?',
         ],
         vragen: [
           {
-            vraag: 'Waarvoor dienen de gaatjes onderaan het wormenhotel?',
-            opties: ['Zodat de wormen kunnen ontsnappen', 'Zodat overtollig water weg kan lopen', 'Zodat er meer zaden in passen', 'Zodat de wormen sneller eten'],
+            vraag: 'Wat betekent een ammoniakgeur in het wormenhotel?',
+            opties: ['Alles gaat prima', 'Er is te veel stikstofrijk voedsel (bijv. gras of te veel fruit)', 'De wormen zijn actief', 'De grond is te droog'],
             correct: 1,
-            uitleg: 'De gaatjes zorgen dat water weg kan lopen — wormen hebben vocht nodig, maar mogen niet verdrinken.',
+            uitleg: 'Ammoniakgeur ontstaat als er te veel stikstofrijk materiaal vergaat. Oplossing: minder fruit, meer koolstofrijk materiaal zoals karton of droge bladeren.',
           },
           {
-            vraag: 'Wat heb je gemaakt zodat iedereen weet wanneer hij de wormen moet voeren?',
-            opties: ['Een rekenmachine', 'Een verzorgingsrooster', 'Een plattegrond van de klas', 'Een tekening van de wormen'],
+            vraag: 'Wat is het doel van het vergelijken van je observatie met je hypothese?',
+            opties: ['Bewijzen dat je gelijk had', 'Leren van wat er echt gebeurt vergeleken met wat je verwachtte', 'De begeleider tevreden stellen', 'Bewijs dat wormen slim zijn'],
             correct: 1,
-            uitleg: 'Met een verzorgingsrooster weet iedereen wanneer hij aan de beurt is om te voeren.',
+            uitleg: 'Wetenschap draait om toetsen: je verwachting vergelijken met de werkelijkheid en daarvan leren.',
           },
         ],
       },
@@ -530,7 +530,7 @@ export const opdrachten = {
           },
           {
             type: 'doe',
-            tekst: 'Geef meteen de eerste voeding: pot 2 krijgt kunstmest, pot 3 compostthee. Noteer hoeveel je hebt toegevoegd. Pot 1 krijgt alleen water.',
+            tekst: 'Geef meteen de eerste voeding:\n• Pot 2 (kunstmest): los 1 gram kunstmest op in 1 liter water. Geef 50 ml van deze oplossing aan pot 2.\n• Pot 3 (compostthee): roer 2–3 eetlepels SYBASoil Worm Castings door 1 liter water, laat 30 minuten staan en zeef het. Geef 50 ml van dit theewater aan pot 3.\n• Pot 1 (controle): geef alleen 50 ml gewoon water.\nNoteer hoeveel je hebt toegevoegd en om hoe laat.',
           },
         ],
         reflectie: [
@@ -557,6 +557,10 @@ export const opdrachten = {
         titel: 'Eerste observaties: kiemen de zaden al?',
         intro: 'Je experiment staat! Nu begint het bijhouden. Kijk elke dag goed naar de potten en schrijf op wat je ziet.',
         taken: [
+          {
+            type: 'doe',
+            tekst: 'Wekelijkse voeding (doe dit elke week op dezelfde dag):\n• Pot 2: 50 ml kunstmestoplossing (1 g/L water)\n• Pot 3: 50 ml compostthee (2–3 eetlepels Worm Castings per liter, zeven)\n• Pot 1: 50 ml gewoon water\nDe rest van de week geven alle potten alleen gewoon water.',
+          },
           {
             type: 'onderzoek',
             tekst: 'Kijk elke dag naar de drie potten: kiemen er al zaden? Welke pot kiemt het eerst? Schrijf dit elke dag op met de datum erbij.',
@@ -596,6 +600,10 @@ export const opdrachten = {
         taken: [
           {
             type: 'doe',
+            tekst: 'Wekelijkse voeding:\n• Pot 2: 50 ml kunstmestoplossing (1 g/L water)\n• Pot 3: 50 ml compostthee (2–3 eetlepels Worm Castings per liter, zeven)\n• Pot 1: 50 ml gewoon water',
+          },
+          {
+            type: 'doe',
             tekst: 'Meet alle planten met je meetformulier. Meet de hoogte altijd vanaf de grond tot het hoogste blad. Schrijf ook de bladkleur op en hoe de plant er in het algemeen uitziet.',
           },
           {
@@ -631,6 +639,10 @@ export const opdrachten = {
         titel: 'Verdieping: wat doet de bodem?',
         intro: 'Je experiment loopt goed. Deze week kijk je verder dan alleen de groei — je onderzoekt wat er in de bodem en de wortels gebeurt.',
         taken: [
+          {
+            type: 'doe',
+            tekst: 'Wekelijkse voeding:\n• Pot 2: 50 ml kunstmestoplossing (1 g/L water)\n• Pot 3: 50 ml compostthee (2–3 eetlepels Worm Castings per liter, zeven)\n• Pot 1: 50 ml gewoon water',
+          },
           {
             type: 'onderzoek',
             tekst: 'Zoek op: hoe nemen plantenwortels voedingsstoffen op? Wat doen bacteriën in de bodem? Schrijf in eigen woorden op wat je hebt gevonden.',
@@ -767,7 +779,7 @@ export const opdrachten = {
           },
           {
             type: 'doe',
-            tekst: 'Geef nu meteen de eerste voeding: geef pot 2 kunstmest en pot 3 compostthee volgens de aanbevolen hoeveelheden. Noteer precies hoeveel je hebt toegevoegd. Pot 1 krijgt niets — dat is de controlepot.',
+            tekst: 'Geef nu meteen de eerste voeding:\n• Pot 2 (kunstmest): los 1 gram kunstmest op in 1 liter water. Geef 50 ml van deze oplossing aan pot 2.\n• Pot 3 (compostthee): roer 2–3 eetlepels SYBASoil Worm Castings door 1 liter water, laat 30 minuten staan en zeef het. Geef 50 ml van dit theewater aan pot 3.\n• Pot 1 (controle): geef alleen 50 ml gewoon water.\nNoteer exact: hoeveelheid, tijdstip en eventuele observaties.',
           },
         ],
         reflectie: [
@@ -794,6 +806,10 @@ export const opdrachten = {
         titel: 'Eerste metingen en observaties',
         intro: 'Het experiment loopt! Tijd voor je eerste nauwkeurige metingen. Goede data begint bij een vaste methode die je elke week herhaalt.',
         taken: [
+          {
+            type: 'doe',
+            tekst: 'Wekelijkse voeding:\n• Pot 2: 50 ml kunstmestoplossing (1 g/L water)\n• Pot 3: 50 ml compostthee (2–3 eetlepels Worm Castings per liter, zeven)\n• Pot 1: 50 ml gewoon water',
+          },
           {
             type: 'onderzoek',
             tekst: 'Kijk elke dag of er zaadjes ontkiemen. Schrijf op: welke pot ontkiemt als eerste? Hoeveel zaadjes groeien er op in elke pot? Noteer datum en pot.',
@@ -831,6 +847,10 @@ export const opdrachten = {
         titel: 'Meten: systematisch waarnemen',
         intro: 'Goede wetenschap vraagt nauwkeurige metingen. Deze week leer je hoe je data verzamelt op een manier die je echt kunt vergelijken.',
         taken: [
+          {
+            type: 'doe',
+            tekst: 'Wekelijkse voeding:\n• Pot 2: 50 ml kunstmestoplossing (1 g/L water)\n• Pot 3: 50 ml compostthee (2–3 eetlepels Worm Castings per liter, zeven)\n• Pot 1: 50 ml gewoon water',
+          },
           {
             type: 'doe',
             tekst: 'Meet elke plant met je observatieformulier. Gebruik altijd dezelfde meetmethode: meet altijd vanaf de bodem van de pot omhoog. Noteer ook het tijdstip van meten. Tip: als je meerdere zaden per pot hebt geplant, kun je in week 4 voorzichtig één radijsje uitrekken zonder het experiment te verstoren.',
@@ -872,6 +892,10 @@ export const opdrachten = {
         titel: 'Verdieping: wat gebeurt er in de bodem?',
         intro: 'Terwijl de planten groeien, verdiep je je in de wetenschap. Wat gebeurt er precies in de bodem als je kunstmest of compostthee toevoegt?',
         taken: [
+          {
+            type: 'doe',
+            tekst: 'Wekelijkse voeding:\n• Pot 2: 50 ml kunstmestoplossing (1 g/L water)\n• Pot 3: 50 ml compostthee (2–3 eetlepels Worm Castings per liter, zeven)\n• Pot 1: 50 ml gewoon water',
+          },
           {
             type: 'onderzoek',
             tekst: 'Zoek op hoe plantenwortels voedingsstoffen opnemen. Wat zijn wortelharen? Waarom moeten voedingsstoffen opgelost zijn in water? Hoe helpt dit verklaren waarom compostthee (vloeibaar) snel werkt? Welke rol spelen bacteriën in compostthee? Op welke manier kunnen ze de plant helpen naast het geven van voedingsstoffen?',
@@ -995,296 +1019,5 @@ export const opdrachten = {
         ],
       },
     ],
-  },
-
-  // ════════════════════════════════════════════════════════════════════════════
-  wilgenvlechten: {
-
-    basis: [
-      {
-        week: 1,
-        titel: 'Kennismaken met het voedselbos',
-        intro: 'Welkom bij dit project! We gaan buiten werken in het voedselbos. Een voedselbos is een tuin vol bomen, struiken en planten die eetbare dingen groeien. Heel gaaf!',
-        taken: [
-          { type: 'bespreek', tekst: 'Praat met je groep: wat denk je dat een voedselbos is? Welke planten en bomen groeien er misschien in? Noem er vijf.' },
-          { type: 'doe',      tekst: 'Ga naar buiten! Zoek een wilgenboom of wilgentak. Kijk goed: hoe lang zijn de bladeren? Hoe voelen de takken aan? Zijn de takken buigzaam of breekbaar?' },
-          { type: 'teken',    tekst: 'Teken de wilgenboom of een tak die je hebt gevonden. Schrijf erbij: hoe groot is de boom? Welke kleur hebben de bladeren?' },
-        ],
-        reflectie: [
-          'Wat vond jij het leukste van buiten zijn vandaag?',
-          'Wat wil je meer leren over het voedselbos?',
-        ],
-        vragen: [
-          {
-            vraag: 'Wat is een voedselbos?',
-            opties: ['Een winkel voor biologisch eten', 'Een tuin vol bomen en planten met eetbare opbrengst', 'Een bos waar je niet mag komen', 'Een kas met alleen groenten'],
-            correct: 1,
-            uitleg: 'In een voedselbos groeien bomen, struiken en planten die eetbare dingen leveren.',
-          },
-          {
-            vraag: 'Hoe voelen wilgentakken aan?',
-            opties: ['Hard en breekbaar', 'Zacht en buigzaam', 'Droog en korrelig', 'Glad als plastic'],
-            correct: 1,
-            uitleg: 'Wilgentakken zijn buigzaam, daarom zijn ze goed te gebruiken voor vlechten.',
-          },
-        ],
-      },
-      {
-        week: 2,
-        titel: 'Wilgen en de natuur',
-        intro: 'De wilg is een bijzondere boom. Insecten, vogels en andere dieren houden van de wilg. Deze week ontdek je waarom wilgen zo belangrijk zijn voor de natuur.',
-        taken: [
-          { type: 'onderzoek', tekst: 'Ga naar de wilgenboom. Kijk goed: welke insecten zie je op of bij de boom? Tel ze en schrijf op welke soorten je ziet. Kijk ook onder de bladeren!' },
-          { type: 'teken',     tekst: 'Maak een insectenposter. Teken minstens drie insecten die je bij de wilg hebt gezien. Schrijf bij elk insect de naam en wat het doet bij de wilg.' },
-          { type: 'bespreek',  tekst: 'Praat met je groep: waarom zijn bijen belangrijk voor planten en mensen? Wat zou er gebeuren als er geen bijen meer waren?' },
-        ],
-        reflectie: [
-          'Welk insect vond jij het interessantst? Waarom?',
-          'Waarom is de wilg goed voor dieren en insecten?',
-        ],
-        vragen: [
-          {
-            vraag: 'Waarom zijn bijen belangrijk voor planten?',
-            opties: ['Ze eten de bladeren op', 'Ze zorgen voor bestuiving zodat planten vruchten maken', 'Ze graven wortels los', 'Ze drinken water uit de bloemen'],
-            correct: 1,
-            uitleg: 'Bijen verplaatsen stuifmeel en zorgen zo dat bloemen vruchten kunnen vormen.',
-          },
-          {
-            vraag: 'Waar kun je de meeste insecten vinden bij een wilgenboom?',
-            opties: ['In de stam van de boom', 'Op en onder de bladeren', 'In de grond naast de boom', 'Alleen in de lucht erboven'],
-            correct: 1,
-            uitleg: 'Veel insecten zitten op en onder de bladeren waar ze voedsel en schuilplaatsen vinden.',
-          },
-        ],
-      },
-      {
-        week: 3,
-        titel: 'Ontwerpen en plannen',
-        intro: 'We gaan iets bouwen van wilgentakken! Dat heet wilgenvlechten. Je kunt een hekwerk maken, een insectenwand of een steun voor planten. Deze week bedenk je wat jij wil maken.',
-        taken: [
-          { type: 'denk',    tekst: 'Bedenk wat je wil maken van wilgentakken. Kies uit: een hekwerk, een insectenwand of een plantensteun. Welke past het beste in het voedselbos?' },
-          { type: 'teken',   tekst: 'Maak een ontwerp van wat je gaat bouwen. Teken hoe het eruit ziet. Hoe groot wordt het? Hoeveel takken heb je nodig?' },
-          { type: 'bespreek', tekst: 'Praat met je groep: voor wie of wat is jouw bouwsel? Helpt het insecten? Helpt het planten groeien? Of beschermt het iets?' },
-        ],
-        reflectie: [
-          'Wat ga je bouwen? Vertel in twee zinnen.',
-          'Hoe draagt jouw bouwsel bij aan de natuur?',
-        ],
-        vragen: [
-          {
-            vraag: 'Wat betekent vlechten?',
-            opties: ['Takken aan elkaar lijmen', 'Takken over en onder elkaar weven', 'Takken naast elkaar leggen', 'Takken in de grond steken'],
-            correct: 1,
-            uitleg: 'Bij vlechten weef je dunne takken afwisselend over en onder de steunen.',
-          },
-          {
-            vraag: 'Welk bouwsel past het beste bij het helpen van insecten?',
-            opties: ['Een hekwerk van plastic', 'Een insectenwand van wilgentakken', 'Een speelplek van rubber', 'Een basketbalmand'],
-            correct: 1,
-            uitleg: 'Een insectenwand van wilgentakken biedt schuilplaatsen en nestgelegenheid voor insecten.',
-          },
-        ],
-      },
-      {
-        week: 4,
-        titel: 'Bouwen: wilgenvlechten',
-        intro: 'Vandaag gaan we echt bouwen! Pak de wilgentakken en ga aan de slag. Vlechten betekent: takken over en onder elkaar weven. Het is even oefenen, maar dan lukt het!',
-        taken: [
-          { type: 'doe',    tekst: 'Vlecht je ontwerp met wilgentakken. Begin met de dikste takken als steun. Weef de dunnere takken er tussenin. Vraag om hulp als iets niet lukt.' },
-          { type: 'doe',    tekst: 'Help je groepje. Houdt iemand een tak vast terwijl jij vlecht? Wissel taken af. Zorg dat iedereen meedoet.' },
-          { type: 'schrijf', tekst: 'Schrijf in je logboek: hoe ging het bouwen? Wat was moeilijk? Wat ging goed? Ben je tevreden met het resultaat?' },
-        ],
-        reflectie: [
-          'Wat was het moeilijkste aan het vlechten?',
-          'Wat zou je de volgende keer anders doen?',
-        ],
-        vragen: [
-          {
-            vraag: 'Welke takken gebruik je als stevige steun bij het vlechten?',
-            opties: ['De dunste takjes', 'De dikste takken', 'Droge, gebroken takken', 'Takken van een andere boom'],
-            correct: 1,
-            uitleg: 'Dikke takken zijn sterk genoeg om als basissteun te dienen.',
-          },
-          {
-            vraag: 'Hoe werk je goed samen tijdens het bouwen?',
-            opties: ['Eén persoon doet alles', 'Taken afwisselen zodat iedereen meedoet', 'Alleen kijken en niet aanraken', 'Wachten tot de leraar het doet'],
-            correct: 1,
-            uitleg: 'Door taken te wisselen draagt iedereen bij en leer je van elkaar.',
-          },
-        ],
-      },
-      {
-        week: 5,
-        titel: 'Observeren en presenteren',
-        intro: 'Je bouwsel staat in het voedselbos. Nu kijken we wat er gebeurt! Komen er al dieren op af? Deze week observeer je en vertel je aan de klas wat je hebt gemaakt.',
-        taken: [
-          { type: 'doe',     tekst: 'Ga naar je bouwsel. Observeer tien minuten: welke insecten of vogels komen erop af? Schrijf op wat je ziet. Kom je elke dag kijken voor betere resultaten!' },
-          { type: 'teken',   tekst: 'Teken wat je ziet bij je bouwsel. Zijn er insecten, vogels of planten die het gebruiken? Maak een mooie tekening.' },
-          { type: 'bespreek', tekst: 'Presenteer aan de klas: wat heb je gebouwd, hoe heb je het gedaan en wat heb je geobserveerd? Vertel ook: hoe helpt jouw bouwsel de natuur?' },
-        ],
-        reflectie: [
-          'Wat heb je geleerd van dit hele project?',
-          'Hoe kun jij thuis ook iets doen voor de natuur?',
-        ],
-        vragen: [
-          {
-            vraag: 'Hoe observeer je goed welke dieren je bouwsel gebruiken?',
-            opties: ['Snel rondlopen en dan weggaan', 'Tien minuten stilzitten en rustig kijken en noteren', "Foto's nemen zonder te kijken", 'Alleen in de ochtend gaan kijken'],
-            correct: 1,
-            uitleg: 'Rustig observeren en noteren geeft de betrouwbaarste waarnemingen.',
-          },
-          {
-            vraag: 'Hoe helpt jouw wilgenvlechtwerk de natuur in het voedselbos?',
-            opties: ['Het maakt het bos kleiner', 'Het biedt schuilplaats en nestplek voor dieren en insecten', 'Het houdt dieren weg', 'Het heeft geen effect op de natuur'],
-            correct: 1,
-            uitleg: 'Wilgenvlechtwerk biedt structuur die insecten en vogels als schuilplaats en nestplek gebruiken.',
-          },
-        ],
-      },
-    ],
-
-    pro: [
-      {
-        week: 1,
-        titel: 'Kennismaken met het voedselbos',
-        intro: 'We gaan buiten werken! In een voedselbos groeien bomen en planten met eten. Heel gaaf om te ontdekken.',
-        taken: [
-          { type: 'bespreek', tekst: 'Wat is een voedselbos? Noem samen vijf planten of bomen die er in kunnen groeien.' },
-          { type: 'doe',      tekst: 'Ga naar buiten. Zoek een wilg. Voel de takken: zijn ze buigzaam?' },
-          { type: 'teken',    tekst: 'Teken de wilg of een tak. Schrijf erbij: hoe groot en welke kleur?' },
-        ],
-        reflectie: [
-          'Wat vond je leuk aan buiten zijn?',
-          'Wat wil je leren over het voedselbos?',
-        ],
-        vragen: [
-          {
-            vraag: 'Wat groeit er in een voedselbos?',
-            opties: ['Alleen gras', 'Bomen en planten met eetbare opbrengst', 'Alleen bloemen', 'Stenen en mos'],
-            correct: 1,
-            uitleg: 'Een voedselbos heeft bomen, struiken en planten die eten leveren.',
-          },
-          {
-            vraag: 'Zijn wilgentakken buigzaam of hard?',
-            opties: ['Hard en breekbaar', 'Buigzaam en soepel', 'Zo stijf als ijzer', 'Ze breken meteen'],
-            correct: 1,
-            uitleg: 'Wilgentakken zijn buigzaam, dat maakt ze perfect om mee te vlechten.',
-          },
-        ],
-      },
-      {
-        week: 2,
-        titel: 'Wilgen en de natuur',
-        intro: 'Insecten en vogels houden van wilgen. Ontdek deze week waarom.',
-        taken: [
-          { type: 'onderzoek', tekst: 'Ga naar de wilg. Kijk welke insecten je ziet. Schrijf drie soorten op.' },
-          { type: 'teken',     tekst: 'Teken twee insecten die je hebt gezien. Schrijf bij elk wat het doet.' },
-          { type: 'bespreek',  tekst: 'Waarom zijn bijen belangrijk? Praat met je groep.' },
-        ],
-        reflectie: [
-          'Welk insect vond je het interessantst?',
-          'Waarom is de wilg goed voor dieren?',
-        ],
-        vragen: [
-          {
-            vraag: 'Wat doen bijen bij bloemen?',
-            opties: ['Ze eten de bloemblaadjes op', 'Ze verzamelen nectar en verspreiden stuifmeel', 'Ze graven gaten in de stengel', 'Ze drinken alleen water'],
-            correct: 1,
-            uitleg: 'Bijen nemen stuifmeel mee van bloem naar bloem en zorgen zo voor bestuiving.',
-          },
-          {
-            vraag: 'Waarom is de wilg goed voor insecten?',
-            opties: ['De wilg heeft giftige bladeren', 'De wilg biedt voedsel en schuilplaats', 'Insecten houden niet van wilgen', 'De wilg maakt het te donker'],
-            correct: 1,
-            uitleg: 'Wilgen bieden nectar, bladeren als voedsel en takken als schuilplaats voor insecten.',
-          },
-        ],
-      },
-      {
-        week: 3,
-        titel: 'Ontwerpen en plannen',
-        intro: 'We gaan iets bouwen van wilgentakken. Wat ga jij maken?',
-        taken: [
-          { type: 'denk',     tekst: 'Kies wat je maakt: een hekwerk, insectenwand of plantensteun.' },
-          { type: 'teken',    tekst: 'Teken je ontwerp. Hoe groot? Hoeveel takken?' },
-          { type: 'bespreek', tekst: 'Vertel je groep: waarvoor is jouw bouwsel goed?' },
-        ],
-        reflectie: [
-          'Wat ga je bouwen?',
-          'Hoe helpt je bouwsel de natuur?',
-        ],
-        vragen: [
-          {
-            vraag: 'Wat ga jij maken van wilgentakken?',
-            opties: ['Een vogelkooi van metaal', 'Een hekwerk, insectenwand of plantensteun', 'Een tafel en stoel', 'Een vogelbad'],
-            correct: 1,
-            uitleg: 'Van wilgentakken maak je dingen die goed passen in het voedselbos.',
-          },
-          {
-            vraag: 'Waarvoor is een plantensteun van wilgentakken handig?',
-            opties: ['Om planten te laten klimmen en rechtop te groeien', 'Om planten meer water te geven', 'Om planten mooier te laten zien', 'Om onkruid te verwijderen'],
-            correct: 0,
-            uitleg: 'Een plantensteun helpt klimplanten omhoog groeien in de goede richting.',
-          },
-        ],
-      },
-      {
-        week: 4,
-        titel: 'Bouwen: wilgenvlechten',
-        intro: 'Vandaag bouwen we! Takken over en onder elkaar weven: dat is vlechten.',
-        taken: [
-          { type: 'doe',     tekst: 'Vlecht je ontwerp. Dikke takken als steun, dunne takken ertussen weven.' },
-          { type: 'doe',     tekst: 'Help je groepje. Wissel taken af.' },
-          { type: 'schrijf', tekst: 'Schrijf op: wat was moeilijk? Wat ging goed?' },
-        ],
-        reflectie: [
-          'Wat was het moeilijkste?',
-          'Wat doe je anders de volgende keer?',
-        ],
-        vragen: [
-          {
-            vraag: 'Wat doe je eerst als je begint met vlechten?',
-            opties: ['Dunne takjes als eerste erin weven', 'Dikke takken neerzetten als steun', 'Alles tegelijk vastzetten', 'De takken in het water leggen'],
-            correct: 1,
-            uitleg: 'Eerst de stevige steuntakken plaatsen geeft een goede basis om op te vlechten.',
-          },
-          {
-            vraag: 'Hoe help je je groepje goed?',
-            opties: ['Zelf alles doen zodat het snel klaar is', 'Een tak vasthouden terwijl een ander vlecht', 'Niets doen en kijken', 'Alleen opdrachten geven'],
-            correct: 1,
-            uitleg: 'Samenwerken maakt het werk makkelijker en leuker voor iedereen.',
-          },
-        ],
-      },
-      {
-        week: 5,
-        titel: 'Observeren en presenteren',
-        intro: 'Je bouwsel staat in het voedselbos. Komen er al dieren op af? Ga kijken!',
-        taken: [
-          { type: 'doe',     tekst: 'Ga naar je bouwsel. Kijk tien minuten. Schrijf op wat je ziet.' },
-          { type: 'teken',   tekst: 'Teken een dier of insect dat je bij je bouwsel zag.' },
-          { type: 'bespreek', tekst: 'Vertel de klas: wat heb je gemaakt en wat heb je gezien?' },
-        ],
-        reflectie: [
-          'Wat heb je geleerd van dit project?',
-          'Wat kun jij thuis doen voor de natuur?',
-        ],
-        vragen: [
-          {
-            vraag: 'Hoe observeer je goed wat er bij je bouwsel gebeurt?',
-            opties: ['Snel kijken en dan weggaan', 'Tien minuten stilzitten en rustig kijken', 'Alleen in de avond kijken', 'Alles fotograferen zonder te kijken'],
-            correct: 1,
-            uitleg: 'Rustig en geduldig kijken geeft de beste kans om dieren te zien.',
-          },
-          {
-            vraag: 'Wat vertel je de klas bij je presentatie?',
-            opties: ['Alleen hoe lang het duurde', 'Wat je hebt gemaakt, hoe je het deed en wat je hebt gezien', 'Alleen de naam van je bouwsel', 'Niets, je laat alleen een foto zien'],
-            correct: 1,
-            uitleg: 'Een goede presentatie vertelt wat, hoe én wat je hebt geobserveerd.',
-          },
-        ],
-      },
-    ],
-
   },
 }

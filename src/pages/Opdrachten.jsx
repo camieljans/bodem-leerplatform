@@ -3,7 +3,7 @@ import { useAuth } from '../App'
 import { useNavigate } from 'react-router-dom'
 import { supabase } from '../supabase'
 import { opdrachten } from '../data/opdrachten'
-import { ClipboardList, MessageCircle, Microscope, Wrench, PenLine, Palette, Brain, BookOpen, Lightbulb, ChevronLeft, ChevronRight, CheckCircle2, XCircle } from 'lucide-react'
+import { ClipboardList, MessageCircle, Microscope, Wrench, PenLine, Palette, Brain, BookOpen, Lightbulb, ChevronLeft, ChevronRight, CheckCircle2, XCircle, Check } from 'lucide-react'
 import { bepaalNiveau } from '../utils/bepaalNiveau'
 
 // ─── Kennischeck component ────────────────────────────────────────────────────
@@ -89,7 +89,7 @@ function Kennischeck({ vragen, userId, project, week }) {
               </div>
               {beantwoord && (
                 <p className="text-xs text-gray-600 mt-3 bg-white rounded-xl px-4 py-2.5 border border-gray-100 leading-relaxed">
-                  💡 {v.uitleg}
+                  <Lightbulb className="w-3.5 h-3.5 inline mr-1.5 shrink-0 text-amber-500" />{v.uitleg}
                 </p>
               )}
             </div>
@@ -239,7 +239,7 @@ export default function Opdrachten() {
               />
             </div>
             {voortgangPct === 100 && (
-              <p className="text-sm mt-2 font-semibold text-white/90">✓ Alle opdrachten afgerond!</p>
+              <p className="text-sm mt-2 font-semibold text-white/90 flex items-center gap-1.5"><Check className="w-4 h-4" /> Alle opdrachten afgerond!</p>
             )}
           </div>
 
@@ -297,6 +297,23 @@ export default function Opdrachten() {
               })}
             </div>
 
+            {/* Logboek-herinnering */}
+            <div
+              onClick={() => navigate('/logboek')}
+              className="cursor-pointer mb-8 flex items-center gap-4 bg-emerald-50 border border-emerald-200 rounded-2xl px-5 py-4 hover:bg-emerald-100 transition-colors group"
+            >
+              <div className="shrink-0 w-11 h-11 rounded-xl bg-emerald-200 flex items-center justify-center group-hover:bg-emerald-300 transition-colors">
+                <BookOpen className="w-6 h-6 text-emerald-700" />
+              </div>
+              <div className="flex-1">
+                <p className="font-bold text-emerald-900 text-sm">Schrijf in je logboek</p>
+                <p className="text-emerald-700 text-xs mt-0.5">
+                  Noteer je metingen, observaties en gedachten van week {gekozenWeek} in je logboek.
+                </p>
+              </div>
+              <ChevronRight className="w-5 h-5 text-emerald-500 group-hover:translate-x-0.5 transition-transform shrink-0" />
+            </div>
+
             {/* Kennischeck (alleen tonen als er vragen zijn) */}
             {huidigeWeek.vragen?.length > 0 && (
               <Kennischeck
@@ -319,10 +336,10 @@ export default function Opdrachten() {
                   onClick={() => navigate('/logboek')}
                   className="flex items-center gap-1.5 bg-amber-200 hover:bg-amber-300 text-amber-900 text-sm font-semibold px-3 py-1.5 rounded-xl transition-colors"
                 >
-                  <BookOpen className="w-4 h-4" /> Ga naar logboek
+                  <BookOpen className="w-4 h-4" /> Open logboek
                 </button>
               </div>
-              <p className="text-amber-700 text-sm mb-3">Beantwoord deze vragen in je logboek van week {gekozenWeek}:</p>
+              <p className="text-amber-700 text-sm mb-3">Schrijf de antwoorden op deze vragen in je <strong>logboek van week {gekozenWeek}</strong>:</p>
               <ul className="space-y-2">
                 {huidigeWeek.reflectie.map((vraag, i) => (
                   <li key={i} className="flex gap-2 text-amber-800 text-sm">

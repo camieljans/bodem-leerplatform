@@ -128,6 +128,7 @@ export default function Login() {
       school,
       niveau:   rol === 'leerling' ? niveau : null,
       leeftijd: rol === 'leerling' && leerjaar ? parseInt(leerjaar) : null,
+      email:    regEmail.trim(),
     })
 
     if (profielError) {
@@ -155,7 +156,7 @@ export default function Login() {
           <div className="flex justify-center mb-4">
             <CirkulairLogo className="w-14 h-14" />
           </div>
-          <h1 className="text-2xl font-bold text-gray-900">Circulair Leerplatform</h1>
+          <h1 className="text-2xl font-bold text-gray-900">Soil Valley Leerplatform</h1>
           <p className="text-gray-500 mt-1 text-sm">
             {tab === 'login' ? 'Log in om verder te gaan' : 'Maak een nieuw account aan'}
           </p>

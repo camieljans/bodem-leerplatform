@@ -1,31 +1,30 @@
 import { useNavigate, useLocation } from 'react-router-dom'
 import { supabase } from '../supabase'
 import { useAuth } from '../App'
-import { Home, ClipboardList, BookOpen, MessageSquare, Users, LogOut, Worm, Sprout, Microscope, BookA, Trophy, Map, GraduationCap } from 'lucide-react'
+import { Home, ClipboardList, BookOpen, MessageSquare, Users, LogOut, Worm, Sprout, Microscope, BookA, Trophy, Map, GraduationCap, RefreshCw } from 'lucide-react'
 
 const projectInfo = {
   wormenhotel:    { icon: Worm,   naam: 'Wormenhotel',             kleur: 'text-emerald-400' },
   keuringsdienst: { icon: Sprout, naam: 'Keuringsdienst',          kleur: 'text-teal-400' },
-  wilgenvlechten: { icon: Map,    naam: 'Wilgenvlechten',           kleur: 'text-lime-400' },
 }
 
 const leerlingLinks = [
-  { pad: '/dashboard',   label: 'Home',         icon: Home },
-  { pad: '/briefing',    label: 'Project',      icon: Map },
-  { pad: '/opdrachten',  label: 'Opdrachten',   icon: ClipboardList },
-  { pad: '/lessen',      label: 'Lessen',       icon: GraduationCap },
-  { pad: '/observaties', label: 'Observaties',  icon: Microscope },
-  { pad: '/logboek',     label: 'Logboek',      icon: BookOpen },
-  { pad: '/eindproduct', label: 'Eindproduct',  icon: Trophy },
-  { pad: '/vragen',      label: 'Vragen',       icon: MessageSquare },
-  { pad: '/woordenlijst',label: 'Woordenlijst', icon: BookA },
+  { pad: '/dashboard',   label: 'Home',                icon: Home },
+  { pad: '/briefing',    label: 'Project',             icon: Map },
+  { pad: '/opdrachten',  label: 'Opdrachten',          icon: ClipboardList },
+  { pad: '/observaties', label: 'Observaties',         icon: Microscope },
+  { pad: '/logboek',     label: 'Logboek',             icon: BookOpen },
+  { pad: '/eindproduct', label: 'Eindproduct',         icon: Trophy },
+  { pad: '/vragen',      label: 'Vragen',              icon: MessageSquare },
+  { pad: '/woordenlijst',label: 'Woordenlijst',        icon: BookA },
+  { pad: '/lessen',      label: 'Extra leermateriaal', icon: GraduationCap },
 ]
 
 export default function Navbar() {
   const { profile, project, selectProject } = useAuth()
   const navigate = useNavigate()
   const location = useLocation()
-  const info = projectInfo[project] || { icon: Worm, naam: 'Circulair Leerplatform', kleur: 'text-emerald-400' }
+  const info = projectInfo[project] || { icon: Worm, naam: 'Soil Valley Leerplatform', kleur: 'text-emerald-400' }
   const ProjectIcon = info.icon
 
   async function uitloggen() {
@@ -60,6 +59,17 @@ export default function Navbar() {
         <span className="font-semibold text-sm text-white leading-tight">{info.naam}</span>
       </button>
 
+
+      {/* Wissel project (alleen voor leerlingen) */}
+      {!isBegeleider && (
+        <button
+          onClick={() => navigate('/projectkeuze')}
+          className="mx-3 mb-1 flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs text-emerald-300/50 hover:text-emerald-200 hover:bg-white/8 transition-all"
+        >
+          <RefreshCw className="w-3 h-3" />
+          Wissel project
+        </button>
+      )}
 
       {/* Navigatielinks */}
       <nav className="flex-1 px-3 py-4 space-y-0.5 overflow-y-auto">

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useAuth } from '../App'
 import { woordenlijst, categorieKleuren } from '../data/woordenlijst'
-import { BookA, Search, ChevronDown, ChevronUp, Tag } from 'lucide-react'
+import { BookA, Search, ChevronDown, ChevronUp, Tag, BookOpen } from 'lucide-react'
 
 export default function Woordenlijst() {
   const { project } = useAuth()
@@ -100,7 +100,7 @@ export default function Woordenlijst() {
                 className={`px-4 py-1.5 rounded-full text-sm font-semibold transition-all ${
                   actieveCategorie === cat
                     ? 'bg-emerald-600 text-white shadow'
-                    : `${categorieKleuren[cat] ?? 'bg-gray-100 text-gray-600'} hover:opacity-80`
+                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                 }`}
               >
                 {cat}
@@ -119,7 +119,7 @@ export default function Woordenlijst() {
         {/* Accordion list */}
         {gefilterd.length === 0 ? (
           <div className="bg-white rounded-2xl shadow p-10 text-center">
-            <p className="text-4xl mb-3">🔍</p>
+            <Search className="w-10 h-10 mx-auto mb-3 text-gray-200" />
             <p className="text-gray-500 font-medium">Geen begrippen gevonden</p>
             <p className="text-gray-400 text-sm mt-1">Probeer een andere zoekterm of verwijder het filter</p>
           </div>
@@ -189,7 +189,7 @@ export default function Woordenlijst() {
         {/* Empty state when no project */}
         {alle.length === 0 && (
           <div className="bg-white rounded-2xl shadow p-10 text-center mt-4">
-            <p className="text-4xl mb-3">📚</p>
+            <BookOpen className="w-10 h-10 mx-auto mb-3 text-gray-200" />
             <p className="text-gray-500 font-medium">Geen begrippen beschikbaar</p>
             <p className="text-gray-400 text-sm mt-1">Er is nog geen project geselecteerd</p>
           </div>

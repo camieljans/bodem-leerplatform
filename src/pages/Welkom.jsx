@@ -23,7 +23,7 @@ export default function Welkom() {
 
         {/* Titel */}
         <h1 className="text-4xl font-bold text-stone-950 mb-3 tracking-tight">
-          Circulair Leerplatform
+          Soil Valley Leerplatform
         </h1>
         <p className="text-stone-600 text-lg mb-10 leading-relaxed">
           Ontdek de wereld onder je voeten.<br />

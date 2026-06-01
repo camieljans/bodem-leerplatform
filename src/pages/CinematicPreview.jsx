@@ -88,7 +88,7 @@ export default function CinematicPreview() {
                 <ProjectIcon className="h-5 w-5" />
               </div>
               <div>
-                <p className="text-xs font-bold uppercase tracking-[0.28em] text-white/45">Circulair Leerplatform</p>
+                <p className="text-xs font-bold uppercase tracking-[0.28em] text-white/45">Soil Valley Leerplatform</p>
                 <p className="font-semibold text-white/90">Cinematische preview</p>
               </div>
             </div>

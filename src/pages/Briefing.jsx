@@ -4,18 +4,22 @@ import { briefing } from '../data/briefing'
 import {
   FileText, Target, Lightbulb, CheckCircle, BookOpen, Layers,
   ChevronDown, ChevronUp, Sparkles, Clock, Users, ArrowRight, Flag,
-  FlaskConical, Leaf, Minus, Info, X
+  FlaskConical, Leaf, Minus, Info, X, Brain, Wrench,
+  Sprout, BarChart2, MapPin, Microscope, Film
 } from 'lucide-react'
 
-const faseKleuren = {
-  green:  { bg: 'bg-green-50',  border: 'border-green-200', dot: 'bg-green-500',  tekst: 'text-green-800',  badge: 'bg-green-100 text-green-700' },
-  blue:   { bg: 'bg-blue-50',   border: 'border-blue-200',  dot: 'bg-blue-500',   tekst: 'text-blue-800',   badge: 'bg-blue-100 text-blue-700' },
-  orange: { bg: 'bg-orange-50', border: 'border-orange-200',dot: 'bg-orange-500', tekst: 'text-orange-800', badge: 'bg-orange-100 text-orange-700' },
-  purple: { bg: 'bg-purple-50', border: 'border-purple-200',dot: 'bg-purple-500', tekst: 'text-purple-800', badge: 'bg-purple-100 text-purple-700' },
-  teal:   { bg: 'bg-teal-50',   border: 'border-teal-200',  dot: 'bg-teal-500',   tekst: 'text-teal-800',   badge: 'bg-teal-100 text-teal-700' },
-  red:    { bg: 'bg-red-50',    border: 'border-red-200',   dot: 'bg-red-500',    tekst: 'text-red-800',    badge: 'bg-red-100 text-red-700' },
-  yellow: { bg: 'bg-yellow-50', border: 'border-yellow-200',dot: 'bg-yellow-400', tekst: 'text-yellow-800', badge: 'bg-yellow-100 text-yellow-700' },
-}
+// Vaste Lucide-iconen per fase-index (0–5), onafhankelijk van projectdata
+const FASE_ICONS = [Sprout, FlaskConical, BarChart2, MapPin, Microscope, Film]
+
+// Emerald-gradiënt: alleen icon en badge variëren (donker → licht); bg/border/tekst zijn uniform
+const FASE_STIJLEN = [
+  { iconBg: 'bg-emerald-800', iconClr: 'text-emerald-50',  badge: 'bg-emerald-800 text-emerald-50'  },
+  { iconBg: 'bg-emerald-600', iconClr: 'text-white',        badge: 'bg-emerald-600 text-white'        },
+  { iconBg: 'bg-emerald-500', iconClr: 'text-white',        badge: 'bg-emerald-500 text-white'        },
+  { iconBg: 'bg-emerald-300', iconClr: 'text-emerald-900',  badge: 'bg-emerald-300 text-emerald-900'  },
+  { iconBg: 'bg-emerald-200', iconClr: 'text-emerald-800',  badge: 'bg-emerald-200 text-emerald-800'  },
+  { iconBg: 'bg-emerald-100', iconClr: 'text-emerald-700',  badge: 'bg-emerald-100 text-emerald-700'  },
+]
 
 export default function Briefing() {
   const { project } = useAuth()
@@ -216,34 +220,35 @@ export default function Briefing() {
             {activeTab === 'fases' && (
               <div className="space-y-3">
                 {data.fases.map((fase, i) => {
-                  const kleur = faseKleuren[fase.kleur] || faseKleuren.green
+                  const stijl = FASE_STIJLEN[i] || FASE_STIJLEN[FASE_STIJLEN.length - 1]
+                  const FaseIcon = FASE_ICONS[i] || Leaf
                   const isOpen = openFase === i
                   return (
-                    <div key={i} className={`rounded-2xl border ${kleur.border} ${kleur.bg} overflow-hidden`}>
+                    <div key={i} className="rounded-2xl border border-emerald-100 bg-emerald-50 overflow-hidden">
                       <button
                         className="w-full flex items-center gap-4 p-4 text-left"
                         onClick={() => setOpenFase(isOpen ? null : i)}
                       >
-                        <div className={`w-10 h-10 rounded-xl flex items-center justify-center text-xl shrink-0 bg-white shadow-sm`}>
-                          {fase.icon}
+                        <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${stijl.iconBg}`}>
+                          <FaseIcon className={`w-5 h-5 ${stijl.iconClr}`} />
                         </div>
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2 flex-wrap">
-                            <span className={`text-xs font-bold px-2 py-0.5 rounded-full ${kleur.badge}`}>Fase {fase.nr}</span>
-                            <span className={`text-xs text-gray-500`}>{fase.duur}</span>
+                            <span className={`text-xs font-bold px-2 py-0.5 rounded-full ${stijl.badge}`}>Fase {fase.nr}</span>
+                            <span className="text-xs text-gray-500">{fase.duur}</span>
                           </div>
-                          <p className={`font-bold mt-0.5 ${kleur.tekst}`}>{fase.naam}</p>
+                          <p className="font-bold mt-0.5 text-emerald-900">{fase.naam}</p>
                         </div>
                         {isOpen ? <ChevronUp className="w-4 h-4 text-gray-400 shrink-0" /> : <ChevronDown className="w-4 h-4 text-gray-400 shrink-0" />}
                       </button>
                       {isOpen && (
-                        <div className="px-4 pb-4 border-t border-white/50 pt-3">
+                        <div className="px-4 pb-4 border-t border-emerald-100 pt-3">
                           <p className="text-sm text-gray-700 mb-3 leading-relaxed">{fase.beschrijving}</p>
                           <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Activiteiten</p>
                           <ul className="space-y-1.5">
                             {fase.activiteiten.map((act, j) => (
                               <li key={j} className="flex items-start gap-2 text-sm text-gray-700">
-                                <ArrowRight className={`w-3.5 h-3.5 mt-0.5 shrink-0 ${kleur.dot === 'bg-green-500' ? 'text-green-500' : 'text-gray-400'}`} />
+                                <ArrowRight className="w-3.5 h-3.5 mt-0.5 shrink-0 text-emerald-600" />
                                 {act}
                               </li>
                             ))}
@@ -266,13 +271,13 @@ export default function Briefing() {
             {activeTab === 'leerdoelen' && (
               <div className="space-y-5">
                 {[
-                  { label: 'Kennis', icon: '🧠', items: data.leerdoelen.kennis, kleur: 'blue' },
-                  { label: 'Vaardigheden', icon: '🔧', items: data.leerdoelen.vaardigheden, kleur: 'green' },
-                  { label: 'Houding', icon: '💡', items: data.leerdoelen.houding, kleur: 'amber' },
+                  { label: 'Kennis',       Icon: Brain,     items: data.leerdoelen.kennis,        kleur: 'blue'  },
+                  { label: 'Vaardigheden', Icon: Wrench,    items: data.leerdoelen.vaardigheden,  kleur: 'green' },
+                  { label: 'Houding',      Icon: Lightbulb, items: data.leerdoelen.houding,       kleur: 'amber' },
                 ].map(groep => (
                   <div key={groep.label}>
                     <h3 className="font-bold text-gray-700 mb-3 flex items-center gap-2">
-                      <span>{groep.icon}</span> {groep.label}
+                      <groep.Icon className="w-4 h-4 opacity-70" /> {groep.label}
                     </h3>
                     <ul className="space-y-2">
                       {groep.items.map((item, i) => (
@@ -295,13 +300,18 @@ export default function Briefing() {
                 </div>
                 <h3 className="font-bold text-gray-700">Mogelijke vormen</h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  {data.eindproduct.vormen.map((vorm, i) => (
+                  {data.eindproduct.vormen.map((vorm, i) => {
+                    const VormIcon = [Film, Microscope, Users, Wrench, FileText][i % 5]
+                    return (
                     <div key={i} className="bg-gray-50 border border-gray-100 rounded-2xl p-4">
-                      <div className="text-2xl mb-2">{vorm.icon}</div>
+                      <div className="w-9 h-9 rounded-xl bg-emerald-100 flex items-center justify-center mb-2">
+                        <VormIcon className="w-4 h-4 text-emerald-700" />
+                      </div>
                       <p className="font-semibold text-gray-800 mb-1">{vorm.label}</p>
                       <p className="text-sm text-gray-500">{vorm.beschrijving}</p>
                     </div>
-                  ))}
+                    )
+                  })}
                 </div>
               </div>
             )}

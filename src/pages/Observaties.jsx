@@ -12,10 +12,10 @@
 -- CREATE POLICY "Users manage own observaties" ON observaties USING (auth.uid() = leerling_id) WITH CHECK (auth.uid() = leerling_id);
 */
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { supabase } from '../supabase'
 import { useAuth } from '../App'
-import { Microscope, Save, CheckCircle, AlertCircle, ChevronLeft, ChevronRight } from 'lucide-react'
+import { Microscope, Save, CheckCircle, AlertCircle, ChevronLeft, ChevronRight, Camera, X, Sun, Cloud, CloudRain, Wind, CloudSun, Minus, FlaskConical, Leaf } from 'lucide-react'
 
 // ---------------------------------------------------------------------------
 // Defaults
@@ -23,18 +23,35 @@ import { Microscope, Save, CheckCircle, AlertCircle, ChevronLeft, ChevronRight }
 
 function defaultWormenhotel() {
   return {
+    temperatuur_c: '',
     vochtigheid: 3,
     geur: 'neutraal',
     activiteit: 'beetje beweging',
+    aantal_wormen: '',
+    eicocons: false,
+    verteringssnelheid: 'normaal',
     afval_toegevoegd: false,
     afval_omschrijving: '',
     compost_hoeveelheid: 'geen',
     notities: '',
+    foto_url: null,
   }
 }
 
 function defaultPot() {
-  return { hoogte_cm: '', bladkleur: 'lichtgroen', bladeren: '', conditie: 'goed' }
+  return {
+    hoogte_cm:         '',         // rozethoogte
+    knol_diameter_mm:  '',         // knoldiameter — hoofdmeting
+    knol_zichtbaar:    false,      // knol boven grond zichtbaar
+    grondvochtigheid:  'matig',
+    geen_bladvorming:  false,
+    bladeren:          '',
+    bladkleur:         'lichtgroen',
+    bladgrootte:       'middel',
+    conditie:          'goed',
+    ziekte:            'geen',
+    bolschieten:       false,      // bolschieten = ongewenst bij radijs
+  }
 }
 
 function defaultKeuringsdienst() {
@@ -43,22 +60,12 @@ function defaultKeuringsdienst() {
     pot2: defaultPot(),
     pot3: defaultPot(),
     notities: '',
-  }
-}
-
-function defaultWilgenvlechten() {
-  return {
-    weer: 'bewolkt',
-    insecten: [],
-    vogels: [],
-    bijzonderheden: '',
-    notities: '',
+    foto_url: null,
   }
 }
 
 function defaultVoorProject(proj) {
   if (proj === 'keuringsdienst') return defaultKeuringsdienst()
-  if (proj === 'wilgenvlechten') return defaultWilgenvlechten()
   return defaultWormenhotel()
 }
 
@@ -72,126 +79,217 @@ const inputCls =
 const selectCls = inputCls
 
 // ---------------------------------------------------------------------------
-// Wilgenvlechten: checkbox groep helper
+// Wormenhotel visualisatie
 // ---------------------------------------------------------------------------
 
-const INSECTEN_OPTIES = ['Bij', 'Hommel', 'Zweefvlieg', 'Vlinder', 'Mier', 'Lieveheersbeestje', 'Wants', 'Anders']
-const VOGELS_OPTIES   = ['Mus', 'Merel', 'Koolmees', 'Pimpelmees', 'Specht', 'Ekster', 'Kraai', 'Anders']
+function WormenhotelVisualisatie({ data }) {
+  const vochtigheid      = Math.max(1, Math.min(5, Number(data.vochtigheid) || 3))
+  const activiteit       = data.activiteit || 'beetje beweging'
+  const aantalWormen     = Math.max(0, Math.min(Number(data.aantal_wormen) || 0, 100))
+  const eicocons         = !!data.eicocons
+  const afvalToegevoegd  = !!data.afval_toegevoegd
+  const compost          = data.compost_hoeveelheid || 'geen'
+  const temp             = Number(data.temperatuur_c) || null
 
-function CheckboxGroep({ label, opties, geselecteerd, onChange }) {
-  function toggle(optie) {
-    if (geselecteerd.includes(optie)) {
-      onChange(geselecteerd.filter(o => o !== optie))
-    } else {
-      onChange([...geselecteerd, optie])
-    }
+  const isActief = activiteit !== 'geen beweging'
+  // Wiggle + kruipsnelheid op basis van activiteit
+  const animDur   = activiteit === 'veel beweging' ? 1.0 : 2.2   // wiggelperiode (s)
+  const moveBase  = activiteit === 'veel beweging' ? 10 : 22      // basis kruiptijd (s)
+  const moveRange = activiteit === 'veel beweging' ? 8  : 14      // variatie (s)
+
+  // Grondkleur: droger = lichter, natter = donkerder
+  const soilPalette = ['#a07840','#8a6030','#6b4520','#523318','#3d2410']
+  const soilColor   = soilPalette[vochtigheid - 1]
+
+  // Compostlaag hoogte onderaan
+  const compostH = compost === 'veel' ? 36 : compost === 'beetje' ? 20 : 6
+
+  // Visueel aantal wormen = exact het ingevoerde aantal, max 35
+  const nWorms = aantalWormen > 0 ? Math.min(aantalWormen, 35) : (isActief ? 8 : 3)
+
+  const W = 240, H = 200
+  const padL = 28, padR = W - 28
+  const bW   = padR - padL
+  const boxTop = 38, boxBot = H - 12
+  const bH     = boxBot - boxTop
+
+  // Lagen
+  const foodH      = afvalToegevoegd ? 26 : 0
+  const foodTop    = boxTop
+  const activeTop  = foodTop + foodH
+  const activeH    = bH - foodH - compostH - 16
+  const compostTop = activeTop + activeH
+  const drainTop   = compostTop + compostH
+
+  // Deterministisch willekeurig getal op basis van twee onafhankelijke seeds
+  function lcg(a, b) {
+    const s = ((a * 48271 + b * 16807 + 1) * 1664525 + 1013904223) & 0x7fffffff
+    return s / 0x7fffffff  // 0..1
   }
+
+  // Wormen: elk met een eigen kruippad door de hele grondzone
+  const soilTop = activeTop + 4
+  const soilBot = drainTop - 4
+  const soilH   = soilBot - soilTop
+  const soilL   = padL + 4
+  const soilR   = padR - 4
+
+  const worms = Array.from({ length: nWorms }, (_, i) => {
+    // Unieke x/y via gescheiden seeds
+    const x0 = soilL + lcg(i, 1) * (soilR - soilL)
+    const y0 = soilTop + lcg(i, 2) * soilH
+    const len = 6 + lcg(i, 3) * 5        // 6–11 px
+    const amp = 1.5 + lcg(i, 4) * 1.5
+
+    // 3 tussenpunten voor kruippad (allemaal binnen de grond)
+    const wx = (n) => soilL + lcg(i * 7 + n, n + 10) * (soilR - soilL)
+    const wy = (n) => soilTop + lcg(i * 13 + n, n + 20) * soilH
+    const motionPath = `M${x0.toFixed(1)},${y0.toFixed(1)} Q${wx(1).toFixed(1)},${wy(1).toFixed(1)} ${wx(2).toFixed(1)},${wy(2).toFixed(1)} Q${wx(3).toFixed(1)},${wy(3).toFixed(1)} ${wx(4).toFixed(1)},${wy(4).toFixed(1)} Q${wx(5).toFixed(1)},${wy(5).toFixed(1)} ${x0.toFixed(1)},${y0.toFixed(1)}`
+
+    const wigDur   = (animDur * 0.5 + lcg(i, 5) * animDur * 0.7).toFixed(2)
+    const moveDur  = (moveBase + lcg(i, 6) * moveRange).toFixed(2)
+    const delay    = (lcg(i, 7) * 3).toFixed(2)
+
+    return { x0, y0, len, amp, motionPath, wigDur, moveDur, delay }
+  })
+
   return (
-    <div>
-      <label className="block text-sm font-semibold text-gray-700 mb-2">{label}</label>
-      <div className="grid grid-cols-2 gap-2">
-        {opties.map(optie => (
-          <label
-            key={optie}
-            className={`flex items-center gap-2.5 px-3 py-2.5 rounded-xl border cursor-pointer transition-all select-none ${
-              geselecteerd.includes(optie)
-                ? 'bg-lime-50 border-lime-400 text-lime-800'
-                : 'bg-white border-gray-200 text-gray-700 hover:border-gray-300'
-            }`}
-          >
-            <input
-              type="checkbox"
-              checked={geselecteerd.includes(optie)}
-              onChange={() => toggle(optie)}
-              className="sr-only"
-            />
-            <div
-              className={`w-4 h-4 rounded flex items-center justify-center shrink-0 transition-colors ${
-                geselecteerd.includes(optie) ? 'bg-lime-500' : 'border-2 border-gray-300'
-              }`}
-            >
-              {geselecteerd.includes(optie) && (
-                <svg viewBox="0 0 12 12" className="w-3 h-3">
-                  <path d="M2 6l3 3 5-5" stroke="white" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              )}
-            </div>
-            <span className="text-sm font-medium">{optie}</span>
-          </label>
+    <div className="rounded-2xl border border-amber-100 bg-gradient-to-b from-amber-50 to-white mb-6">
+      <p className="text-center text-xs font-semibold text-amber-700 pt-3 mb-1 tracking-wide uppercase">
+        Live wormenhotel
+      </p>
+
+      <svg viewBox={`0 0 ${W} ${H}`} xmlns="http://www.w3.org/2000/svg" className="w-full max-w-xs mx-auto block">
+
+        {/* ── Houten zijwanden ── */}
+        {/* Links */}
+        <rect x={padL - 7} y={boxTop - 2} width={7} height={bH + 4} fill="#8B5E3C"/>
+        <rect x={padL - 7} y={boxTop + 14} width={7} height={2} fill="#6b4520" opacity="0.5"/>
+        <rect x={padL - 7} y={boxTop + 34} width={7} height={2} fill="#6b4520" opacity="0.5"/>
+        {/* Rechts */}
+        <rect x={padR} y={boxTop - 2} width={7} height={bH + 4} fill="#8B5E3C"/>
+        <rect x={padR} y={boxTop + 14} width={7} height={2} fill="#6b4520" opacity="0.5"/>
+        <rect x={padR} y={boxTop + 34} width={7} height={2} fill="#6b4520" opacity="0.5"/>
+        {/* Bodem */}
+        <rect x={padL - 7} y={boxBot} width={bW + 14} height={7} rx="2" fill="#6b4520"/>
+
+        {/* ── Deksel ── */}
+        <rect x={padL - 10} y={boxTop - 12} width={bW + 20} height={12} rx="4" fill="#a07040" stroke="#6b4520" strokeWidth="1"/>
+        {/* Ventilatiesleuven */}
+        {[0,1,2,3,4].map(i => (
+          <rect key={i} x={padL + 10 + i*34} y={boxTop - 9} width={18} height={4} rx="2" fill="#6b4520" opacity="0.35"/>
         ))}
-      </div>
-      {geselecteerd.length === 0 && (
-        <p className="text-xs text-gray-400 mt-1.5">
-          Niets geselecteerd — klik aan wat je hebt gezien.
-        </p>
-      )}
-    </div>
-  )
-}
 
-function WilgenvlechtenForm({ data, onChange }) {
-  function set(key, value) {
-    onChange({ ...data, [key]: value })
-  }
-  return (
-    <div className="space-y-6">
-      {/* Weer */}
-      <div>
-        <label className="block text-sm font-semibold text-gray-700 mb-2">
-          Hoe was het weer?
-        </label>
-        <select value={data.weer} onChange={e => set('weer', e.target.value)} className={selectCls}>
-          <option value="zonnig">☀️  Zonnig</option>
-          <option value="bewolkt">⛅  Bewolkt</option>
-          <option value="regenachtig">🌧️  Regenachtig</option>
-          <option value="winderig">💨  Winderig</option>
-          <option value="wisselend">🌤️  Wisselend</option>
-        </select>
-      </div>
+        {/* ── Drainage laag (grind) ── */}
+        <rect x={padL} y={drainTop} width={bW} height={boxBot - drainTop} fill="#c8b890"/>
+        {Array.from({length: 16}, (_,i) => (
+          <ellipse key={i} cx={padL + 8 + (i*13)%(bW-16)} cy={drainTop + 4 + (i*7)%8}
+            rx={3 + i%3} ry={2 + i%2} fill="#b0a070" opacity="0.7"/>
+        ))}
 
-      {/* Insecten */}
-      <CheckboxGroep
-        label="Welke insecten heb je gezien? 🐝"
-        opties={INSECTEN_OPTIES}
-        geselecteerd={data.insecten || []}
-        onChange={val => set('insecten', val)}
-      />
+        {/* ── Volwassen compost (donker onderaan) ── */}
+        {compostH > 0 && (
+          <rect x={padL} y={compostTop} width={bW} height={compostH} fill="#2a1208"/>
+        )}
 
-      {/* Vogels */}
-      <CheckboxGroep
-        label="Welke vogels heb je gezien? 🐦"
-        opties={VOGELS_OPTIES}
-        geselecteerd={data.vogels || []}
-        onChange={val => set('vogels', val)}
-      />
+        {/* ── Actieve compostzone ── */}
+        <rect x={padL} y={activeTop} width={bW} height={activeH} fill={soilColor}/>
+        {/* Textuur stipjes */}
+        {Array.from({length: 18}, (_,i) => (
+          <circle key={i} cx={padL + 8 + (i*19)%(bW-16)} cy={activeTop + 6 + (i*11)%(activeH-12)}
+            r={1 + i%2} fill="#2e1508" opacity="0.3"/>
+        ))}
 
-      {/* Bijzonderheden */}
-      <div>
-        <label className="block text-sm font-semibold text-gray-700 mb-2">
-          Bijzonderheden{' '}
-          <span className="font-normal text-gray-400">(iets speciaals gezien of gehoord?)</span>
-        </label>
-        <textarea
-          value={data.bijzonderheden}
-          onChange={e => set('bijzonderheden', e.target.value)}
-          placeholder="Bijv. een egel, een slak op de wilgtakken, een regenwormpje..."
-          rows={3}
-          className={`${inputCls} resize-none leading-relaxed`}
-        />
-      </div>
+        {/* Vochtdruppels als vochtigheid hoog is */}
+        {vochtigheid >= 4 && Array.from({length: vochtigheid - 2}, (_,i) => {
+          const dx = padL + 20 + i * 30
+          const dy = activeTop + 18 + (i%2)*20
+          return (
+            <path key={i}
+              d={`M${dx},${dy} Q${dx-3},${dy+7} ${dx},${dy+11} Q${dx+3},${dy+7} ${dx},${dy}`}
+              fill="#78b8e0" opacity="0.4"/>
+          )
+        })}
 
-      {/* Notities */}
-      <div>
-        <label className="block text-sm font-semibold text-gray-700 mb-2">
-          Notities / extra opmerkingen
-        </label>
-        <textarea
-          value={data.notities}
-          onChange={e => set('notities', e.target.value)}
-          placeholder="Hoe ziet je vlechtwerk eruit na deze week? Zijn er al nieuwe takjes aan het groeien?"
-          rows={4}
-          className={`${inputCls} resize-none leading-relaxed`}
-        />
+        {/* ── Voedsellaag bovenin ── */}
+        {afvalToegevoegd && (
+          <>
+            <rect x={padL} y={foodTop} width={bW} height={foodH} fill="#4a7228" opacity="0.65"/>
+            {[[padL+18,foodTop+9,'#8dc050'],[padL+45,foodTop+6,'#d4a030'],[padL+75,foodTop+13,'#6b9040'],
+              [padL+105,foodTop+7,'#c86030'],[padL+135,foodTop+11,'#90b040'],[padL+160,foodTop+8,'#b8501a']
+            ].map(([fx,fy,fc],i)=>(
+              <ellipse key={i} cx={fx} cy={fy} rx={6+i%3} ry={3+i%2} fill={fc} opacity="0.85"/>
+            ))}
+          </>
+        )}
+
+        {/* ── Wormen ── */}
+        {worms.map(({ x0, y0, len, amp, motionPath, wigDur, moveDur, delay }, i) => {
+          const hw = len / 2
+          // Worm getekend rondom (0,0) — animateMotion plaatst het op het kruippad
+          const d1 = `M${-hw},0 Q${-hw*0.3},${-amp} 0,0 Q${hw*0.4},${amp} ${hw},0`
+          const d2 = `M${-hw},0 Q${-hw*0.3},${amp} 0,0 Q${hw*0.4},${-amp} ${hw},0`
+          return (
+            <path key={i} d={d1}
+              fill="none" stroke="#d49860" strokeWidth="1.8" strokeLinecap="round"
+            >
+              {isActief ? (
+                <>
+                  {/* Wiebelen */}
+                  <animate attributeName="d" values={`${d1};${d2};${d1}`}
+                    dur={`${wigDur}s`} begin={`${delay}s`} repeatCount="indefinite"/>
+                  {/* Kruipen door de bak — rotate=auto draait worm mee met rijrichting */}
+                  <animateMotion path={motionPath}
+                    dur={`${moveDur}s`} begin={`${delay}s`} repeatCount="indefinite"
+                    rotate="auto"/>
+                </>
+              ) : (
+                /* Geen beweging: worm staat stil op startpositie */
+                <animateMotion path={`M${x0.toFixed(1)},${y0.toFixed(1)}`}
+                  dur="1s" fill="freeze"/>
+              )}
+            </path>
+          )
+        })}
+
+        {/* ── Eicocons ── */}
+        {eicocons && [[padL+28,activeTop+18],[padL+95,activeTop+35],[padL+148,activeTop+22]].map(([ex,ey],i) => (
+          <ellipse key={i} cx={ex} cy={ey} rx="5" ry="7" fill="#f0e060" stroke="#c8a820" strokeWidth="0.8" opacity="0.9">
+            <animate attributeName="opacity" values="0.9;0.6;0.9" dur="3s" begin={`${i*0.8}s`} repeatCount="indefinite"/>
+          </ellipse>
+        ))}
+
+        {/* ── Temperatuur badge ── */}
+        {temp !== null && temp > 0 && (
+          <g>
+            <rect x={padR - 34} y={boxTop + 4} width={32} height={17} rx="5" fill="white" opacity="0.88"/>
+            <text x={padR - 18} y={boxTop + 16} textAnchor="middle" fontSize="9.5" fill="#c84040" fontWeight="bold">
+              {temp}°C
+            </text>
+          </g>
+        )}
+
+        {/* ── Glas-outline over box ── */}
+        <rect x={padL} y={boxTop} width={bW} height={bH} fill="none" stroke="#6b4520" strokeWidth="1.5"/>
+
+      </svg>
+
+      {/* Legenda */}
+      <div className="flex justify-center gap-3 pb-3 flex-wrap px-4">
+        <span className="text-[10px] text-amber-700 bg-amber-100 px-2 py-0.5 rounded-full font-medium">
+          Vocht {vochtigheid}/5
+        </span>
+        <span className="text-[10px] text-amber-700 bg-amber-100 px-2 py-0.5 rounded-full font-medium">
+          {aantalWormen > 0 ? `~${aantalWormen} wormen` : 'wormen onbekend'}
+        </span>
+        <span className="text-[10px] text-amber-700 bg-amber-100 px-2 py-0.5 rounded-full font-medium">
+          {activiteit}
+        </span>
+        {eicocons && (
+          <span className="text-[10px] text-yellow-700 bg-yellow-100 px-2 py-0.5 rounded-full font-medium">
+            eicocons aanwezig
+          </span>
+        )}
       </div>
     </div>
   )
@@ -208,6 +306,58 @@ function WormenhotelForm({ data, onChange }) {
 
   return (
     <div className="space-y-6">
+      {/* Temperatuur + wormentelling */}
+      <div className="grid grid-cols-2 gap-4">
+        <div>
+          <label className="block text-sm font-semibold text-gray-700 mb-2">Temperatuur (°C)</label>
+          <input
+            type="number"
+            min={0}
+            max={50}
+            step={0.5}
+            value={data.temperatuur_c ?? ''}
+            onChange={e => set('temperatuur_c', e.target.value === '' ? '' : Number(e.target.value))}
+            placeholder="20.0"
+            className={inputCls}
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-semibold text-gray-700 mb-2">Geschat aantal wormen</label>
+          <input
+            type="number"
+            min={0}
+            step={1}
+            value={data.aantal_wormen ?? ''}
+            onChange={e => set('aantal_wormen', e.target.value === '' ? '' : Number(e.target.value))}
+            placeholder="0"
+            className={inputCls}
+          />
+        </div>
+      </div>
+
+      {/* Eicocons + verteringssnelheid */}
+      <div className="grid grid-cols-2 gap-4">
+        <div>
+          <label className="block text-sm font-semibold text-gray-700 mb-2">Verteringssnelheid</label>
+          <select value={data.verteringssnelheid ?? 'normaal'} onChange={e => set('verteringssnelheid', e.target.value)} className={selectCls}>
+            <option value="snel">Snel</option>
+            <option value="normaal">Normaal</option>
+            <option value="langzaam">Langzaam</option>
+          </select>
+        </div>
+        <div className="flex items-end pb-0.5">
+          <label className="flex items-center gap-2.5 cursor-pointer select-none h-[46px]">
+            <input
+              type="checkbox"
+              checked={!!data.eicocons}
+              onChange={e => set('eicocons', e.target.checked)}
+              className="w-4 h-4 rounded accent-emerald-600"
+            />
+            <span className="text-sm font-semibold text-gray-700">Eicocons gezien</span>
+          </label>
+        </div>
+      </div>
+
       {/* Vochtigheid */}
       <div>
         <label className="block text-sm font-semibold text-gray-700 mb-2">
@@ -348,6 +498,295 @@ const POT_META = [
   { key: 'pot3', label: 'Pot 3 – Compostthee', kleur: 'emerald' },
 ]
 
+// ---------------------------------------------------------------------------
+// Keuringsdienst: live plant SVG visualisatie
+// ---------------------------------------------------------------------------
+
+const LEAF_COLORS = {
+  lichtgroen:  { fill: '#7dcf5a', stroke: '#4fa832', vein: '#3d9020' },
+  donkergroen: { fill: '#2e8b2e', stroke: '#1d5c1d', vein: '#145014' },
+  geel:        { fill: '#ddc24a', stroke: '#b89a20', vein: '#8c7010' },
+  bruin:       { fill: '#8b5e3c', stroke: '#5e3a1e', vein: '#3e2010' },
+}
+
+// Samengesteld radijsblad: bladsteel + 2-3 paren zijblaadjes + eindblaadje
+function radijsBlad(sx, crownY, hoek, lengte, lkl, droop, ziek, idx) {
+  // hoek in graden (0 = rechts, -90 = omhoog)
+  const droopExtra = droop ? 45 : 0
+  const sideSign   = hoek <= -90 ? -1 : 1
+  const adjHoek    = hoek + sideSign * droopExtra
+  const ar         = adjHoek * Math.PI / 180
+
+  const ex = sx + Math.cos(ar) * lengte
+  const ey = crownY + Math.sin(ar) * lengte
+
+  // Perpendiculaire richting voor zijblaadjes
+  const px = -Math.sin(ar)
+  const py =  Math.cos(ar)
+
+  // Zijblaadje helper
+  function zijblad(t, breedte, side) {
+    const bx = sx + Math.cos(ar) * lengte * t
+    const by = crownY + Math.sin(ar) * lengte * t
+    const lx = bx + px * side * breedte
+    const ly = by + py * side * breedte
+    const bladHoek = adjHoek + side * 55
+    return (
+      <ellipse
+        cx={lx} cy={ly}
+        rx={breedte * 0.75} ry={breedte * 0.45}
+        fill={ziek ? '#9e7a18' : lkl.fill}
+        stroke={lkl.stroke} strokeWidth="0.5"
+        transform={`rotate(${bladHoek},${lx},${ly})`}
+      />
+    )
+  }
+
+  const paren = lengte > 35 ? [[0.35, 7], [0.62, 8.5]] : [[0.45, 7]]
+
+  return (
+    <g key={idx} opacity={droop ? 0.85 : 1}>
+      {/* Bladsteel */}
+      <path
+        d={`M${sx},${crownY} Q${sx+Math.cos(ar)*lengte*0.5},${crownY+Math.sin(ar)*lengte*0.5} ${ex},${ey}`}
+        fill="none" stroke={lkl.vein} strokeWidth="1.5" strokeLinecap="round"
+      />
+      {/* Zijblaadjes */}
+      {paren.map(([t, breedte], pi) =>
+        [-1, 1].map(side => (
+          <g key={`${pi}-${side}`}>{zijblad(t, breedte, side)}</g>
+        ))
+      )}
+      {/* Eindblaadje (groter) */}
+      <ellipse
+        cx={ex} cy={ey}
+        rx={lengte > 30 ? 11 : 7} ry={lengte > 30 ? 7 : 4.5}
+        fill={ziek && idx%2===0 ? '#9e7a18' : lkl.fill}
+        stroke={lkl.stroke} strokeWidth="0.5"
+        transform={`rotate(${adjHoek},${ex},${ey})`}
+      />
+      {/* Middennerf eindblaadje */}
+      <line
+        x1={ex - Math.cos(ar)*7} y1={ey - Math.sin(ar)*7}
+        x2={ex + Math.cos(ar)*5} y2={ey + Math.sin(ar)*5}
+        stroke={lkl.vein} strokeWidth="0.6" opacity="0.7"
+      />
+      {/* Ziektespot */}
+      {ziek && idx%2===0 && (
+        <circle
+          cx={ex - Math.cos(ar)*3 + px*4}
+          cy={ey - Math.sin(ar)*3 + py*4}
+          r="2" fill="#5a2e08" opacity="0.7"
+        />
+      )}
+    </g>
+  )
+}
+
+function PotVisualisatie({ potData, potIdx }) {
+  const hoogte       = Math.max(0, Number(potData.hoogte_cm) || 0)
+  const knolDiam     = Math.max(0, Number(potData.knol_diameter_mm) || 0)
+  const nBladeren    = potData.geen_bladvorming ? 0 : Math.max(0, Math.min(Number(potData.bladeren) || 0, 10))
+  const bladgr       = potData.bladgrootte || 'middel'
+  const lkl          = LEAF_COLORS[potData.bladkleur] || LEAF_COLORS.lichtgroen
+  const droop        = potData.conditie === 'slecht'
+  const sway         = potData.conditie === 'matig'
+  const ziek         = (potData.ziekte || 'geen') !== 'geen'
+  const bolschieten  = !!potData.bolschieten
+  const hasPlant     = hoogte > 0 || knolDiam > 0
+
+  const W = 110, H = 250
+  const sx = W / 2
+
+  // Glazen pot geometrie
+  const potTopY   = 140   // bovenkant pot (binnenkant)
+  const potBotY   = H - 8 // onderkant pot
+  const iTopW     = 36    // halve breedte binnenkant boven
+  const iBotW     = 26    // halve breedte binnenkant onder
+  const oTopW     = 40    // halve breedte buitenkant boven
+  const oBotW     = 30    // halve breedte buitenkant onder
+  const rimY      = potTopY - 8
+  const soilY     = potTopY + 8   // grondoppervlak
+
+  // Knol
+  const maxKnol = 18
+  const knolR    = knolDiam > 0
+    ? Math.min(knolDiam / 45, 1) * maxKnol + 3
+    : (hoogte > 0 ? 3 : 0)
+  const knolCY   = soilY + knolR * 0.45
+  const crownY   = soilY - Math.min(knolR * 0.3, 5)
+
+  // Wortels — penwortel en zijwortels op basis van groeifase
+  const rootStart = knolCY + knolR
+  const potSpace  = potBotY - 10 - rootStart
+  const rootFrac  = hasPlant ? Math.min(0.25 + (knolDiam / 45) * 0.65 + (hoogte / 30) * 0.1, 0.92) : 0
+  const mainRootY = rootStart + potSpace * rootFrac
+
+  // Bladeren rozet
+  const bladHoeken = []
+  if (nBladeren > 0) {
+    const spreiding = Math.min(75, 20 + nBladeren * 10)
+    for (let i = 0; i < nBladeren; i++) {
+      bladHoeken.push(nBladeren === 1
+        ? -90
+        : -90 + (-spreiding + i * (2 * spreiding / (nBladeren - 1)))
+      )
+    }
+  }
+  const bladGrFactor = bladgr === 'groot' ? 1.25 : bladgr === 'klein' ? 0.7 : 1
+  const bladLen      = (18 + Math.min(hoogte / 17, 1) * 55) * bladGrFactor
+  const boltSteelLen = 45
+
+  const clipId = `gc${potIdx}`
+
+  return (
+    <svg viewBox={`0 0 ${W} ${H}`} xmlns="http://www.w3.org/2000/svg" className="w-full">
+      <defs>
+        <clipPath id={clipId}>
+          <path d={`M${sx-iTopW},${potTopY} L${sx-iBotW},${potBotY} L${sx+iBotW},${potBotY} L${sx+iTopW},${potTopY} Z`}/>
+        </clipPath>
+      </defs>
+
+      {/* ── 1. Grondvulling — hele pot interior ── */}
+      <rect x={0} y={potTopY} width={W} height={potBotY - potTopY}
+        fill="#7a4a22" clipPath={`url(#${clipId})`}/>
+      {/* Lichtere laag bovenin voor variatie */}
+      <rect x={0} y={potTopY} width={W} height={22}
+        fill="#6b3d1a" clipPath={`url(#${clipId})`} opacity="0.6"/>
+
+      {/* ── 2. Wortels (zichtbaar door glas) ── */}
+      {hasPlant && rootFrac > 0 && (
+        <g clipPath={`url(#${clipId})`}>
+          {/* Penwortel */}
+          <path
+            d={`M${sx},${rootStart} Q${sx+3},${(rootStart+mainRootY)/2} ${sx},${mainRootY}`}
+            fill="none" stroke="#d4aa70" strokeWidth="2" strokeLinecap="round"
+          />
+          {rootFrac > 0.22 && (
+            <path d={`M${sx},${rootStart+potSpace*0.18} Q${sx-10},${rootStart+potSpace*0.24} ${sx-17},${rootStart+potSpace*0.21}`}
+              fill="none" stroke="#d4aa70" strokeWidth="1.2" strokeLinecap="round"/>
+          )}
+          {rootFrac > 0.3 && (
+            <path d={`M${sx},${rootStart+potSpace*0.29} Q${sx+9},${rootStart+potSpace*0.34} ${sx+16},${rootStart+potSpace*0.32}`}
+              fill="none" stroke="#d4aa70" strokeWidth="1.2" strokeLinecap="round"/>
+          )}
+          {rootFrac > 0.42 && (
+            <path d={`M${sx},${rootStart+potSpace*0.41} Q${sx-8},${rootStart+potSpace*0.48} ${sx-14},${rootStart+potSpace*0.47}`}
+              fill="none" stroke="#d4aa70" strokeWidth="1" strokeLinecap="round" opacity="0.85"/>
+          )}
+          {rootFrac > 0.55 && (
+            <>
+              <path d={`M${sx},${rootStart+potSpace*0.53} Q${sx+7},${rootStart+potSpace*0.58} ${sx+13},${rootStart+potSpace*0.57}`}
+                fill="none" stroke="#d4aa70" strokeWidth="1" strokeLinecap="round" opacity="0.8"/>
+              <path d={`M${sx-17},${rootStart+potSpace*0.21} Q${sx-22},${rootStart+potSpace*0.27} ${sx-19},${rootStart+potSpace*0.33}`}
+                fill="none" stroke="#c8986a" strokeWidth="0.7" strokeLinecap="round" opacity="0.65"/>
+            </>
+          )}
+          {rootFrac > 0.68 && (
+            <>
+              <path d={`M${sx},${rootStart+potSpace*0.66} Q${sx-6},${rootStart+potSpace*0.74} ${sx-11},${rootStart+potSpace*0.73}`}
+                fill="none" stroke="#d4aa70" strokeWidth="0.9" strokeLinecap="round" opacity="0.7"/>
+              <path d={`M${sx+16},${rootStart+potSpace*0.32} Q${sx+19},${rootStart+potSpace*0.42} ${sx+15},${rootStart+potSpace*0.5}`}
+                fill="none" stroke="#c8986a" strokeWidth="0.7" strokeLinecap="round" opacity="0.6"/>
+            </>
+          )}
+        </g>
+      )}
+
+      {/* ── 3. Grondoppervlak (dekt wortelhals) ── */}
+      <ellipse cx={sx} cy={soilY+2} rx={iTopW} ry="7" fill="#3e2208" clipPath={`url(#${clipId})`}/>
+      <ellipse cx={sx} cy={soilY}   rx={iTopW-2} ry="5" fill="#5c3518" opacity="0.95" clipPath={`url(#${clipId})`}/>
+      {[[sx-11,soilY-1],[sx+8,soilY-2],[sx-2,soilY-4],[sx+14,soilY],[sx-15,soilY]].map(([x,y],i)=>(
+        <circle key={i} cx={x} cy={y} r="1.2" fill="#2e1508" opacity="0.5"/>
+      ))}
+
+      {/* ── 4. Radijs knol ── */}
+      {knolR > 2 && (
+        <>
+          <ellipse cx={sx} cy={knolCY} rx={knolR} ry={knolR*1.1} fill="#d42b2b" stroke="#a01818" strokeWidth="0.8"/>
+          <ellipse cx={sx-knolR*0.28} cy={knolCY-knolR*0.28} rx={knolR*0.28} ry={knolR*0.18} fill="rgba(255,255,255,0.3)"/>
+          <ellipse cx={sx} cy={knolCY+knolR*0.85} rx={knolR*0.25} ry={knolR*0.15} fill="#f0e0d0" opacity="0.65"/>
+          <ellipse cx={sx} cy={soilY+3} rx={iTopW-1} ry="5.5" fill="#3e2208" clipPath={`url(#${clipId})`}/>
+          <ellipse cx={sx} cy={soilY+1} rx={iTopW-3} ry="4" fill="#5c3518" opacity="0.9" clipPath={`url(#${clipId})`}/>
+        </>
+      )}
+
+      {/* ── 5. Bolschietsteel + bladeren + bloem ── */}
+      {bolschieten && hoogte > 0 && (
+        <path d={`M${sx},${crownY} Q${sx+8},${crownY-boltSteelLen*0.5} ${sx+5},${crownY-boltSteelLen}`}
+          fill="none" stroke="#5a8a34" strokeWidth="2" strokeLinecap="round"/>
+      )}
+      {bladHoeken.map((hoek, i) =>
+        radijsBlad(sx, crownY, hoek, bladLen, lkl, droop || (sway && i%2===0), ziek, i)
+      )}
+      {bolschieten && hoogte > 0 && (() => {
+        const bx = sx + 5, by = crownY - boltSteelLen
+        return (
+          <g>
+            {[0,72,144,216,288].map((a,i) => {
+              const r2 = (a-90)*Math.PI/180
+              const px2 = bx + Math.cos(r2)*7, py2 = by + Math.sin(r2)*7
+              return <ellipse key={i} cx={px2} cy={py2} rx="5" ry="3"
+                fill="#fff9e0" stroke="#d4b000" strokeWidth="0.5"
+                transform={`rotate(${a},${px2},${py2})`}/>
+            })}
+            <circle cx={bx} cy={by} r="3.5" fill="#ffe000" stroke="#c8a800" strokeWidth="0.5"/>
+          </g>
+        )
+      })()}
+
+      {/* ── 6. Glas outline — altijd als laatste, tekent over grond ── */}
+      <path
+        d={`M${sx-oTopW},${potTopY} L${sx-oBotW},${potBotY} L${sx+oBotW},${potBotY} L${sx+oTopW},${potTopY} Z`}
+        fill="none" stroke="#89bdd3" strokeWidth="2"
+      />
+      {/* Glasglans */}
+      <path d={`M${sx-oTopW+3},${potTopY+6} L${sx-oBotW+2},${potBotY-6}`}
+        fill="none" stroke="rgba(255,255,255,0.5)" strokeWidth="1.8" strokeLinecap="round"/>
+      {/* Bodem */}
+      <ellipse cx={sx} cy={potBotY} rx={oBotW} ry="3.5" fill="rgba(140,200,225,0.2)" stroke="#89bdd3" strokeWidth="2"/>
+      {/* Rand / lip */}
+      <rect x={sx-oTopW-3} y={rimY} width={(oTopW+3)*2} height="12" rx="5"
+        fill="rgba(180,220,240,0.2)" stroke="#89bdd3" strokeWidth="2"/>
+      <rect x={sx-oTopW} y={rimY+2} width={oTopW*2} height="3" rx="2" fill="rgba(255,255,255,0.35)"/>
+    </svg>
+  )
+}
+
+const POT_VIS = [
+  { key: 'pot1', label: 'Pot 1', sub: 'Controle',    kleurDot: 'bg-gray-400'    },
+  { key: 'pot2', label: 'Pot 2', sub: 'Kunstmest',   kleurDot: 'bg-blue-400'    },
+  { key: 'pot3', label: 'Pot 3', sub: 'Compostthee', kleurDot: 'bg-emerald-500' },
+]
+
+function DriePotenVisualisatie({ data }) {
+  return (
+    <div className="rounded-2xl border border-sky-100 mb-6 bg-gradient-to-b from-sky-50 to-white">
+      <p className="text-center text-xs font-semibold text-sky-400 pt-3 mb-1 tracking-wide uppercase">
+        Live radijsweergave
+      </p>
+      <div className="flex justify-around items-end px-2 pb-3">
+        {POT_VIS.map(({ key, label, sub, kleurDot }, i) => (
+          <div key={key} className="flex flex-col items-center w-[30%]">
+            <PotVisualisatie potData={data[key]} potIdx={i} />
+            <div className="flex items-center gap-1 mt-1">
+              <div className={`w-2 h-2 rounded-full ${kleurDot} shrink-0`}/>
+              <p className="text-xs font-bold text-gray-700">{label}</p>
+            </div>
+            <p className="text-[10px] text-gray-400">{sub}</p>
+            <p className="text-[10px] text-red-500 font-medium mt-0.5">
+              {Number(data[key]?.knol_diameter_mm) > 0 ? `${data[key].knol_diameter_mm} mm` : '—'}
+            </p>
+            <p className="text-[10px] text-emerald-600">
+              {Number(data[key]?.hoogte_cm) > 0 ? `${data[key].hoogte_cm} cm` : ''}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
 const potBadge = {
   gray: 'bg-gray-100 text-gray-700 border-gray-200',
   blue: 'bg-blue-50 text-blue-700 border-blue-200',
@@ -359,66 +798,167 @@ function PotForm({ label, kleur, potData, onChange }) {
     onChange({ ...potData, [key]: value })
   }
 
+  const geenBladvorming = !!potData.geen_bladvorming
+
   return (
     <div className={`border rounded-2xl p-5 ${potBadge[kleur]} bg-opacity-30`}>
-      <h3 className="font-bold text-base mb-4">{label}</h3>
-      <div className="grid grid-cols-2 gap-4">
-        {/* Hoogte */}
-        <div className="col-span-2 sm:col-span-1">
-          <label className="block text-xs font-semibold mb-1.5 opacity-80">Hoogte (cm)</label>
+      <h3 className="font-bold text-base mb-1">{label}</h3>
+      <p className="text-[11px] opacity-60 mb-4">Vul de metingen in voor deze pot</p>
+
+      {/* ── Groeiafmetingen ── */}
+      <p className="text-[10px] font-bold uppercase tracking-wide opacity-50 mb-2">Groei</p>
+      <div className="grid grid-cols-2 gap-3 mb-4">
+        <div>
+          <label className="block text-xs font-semibold mb-1.5 opacity-80">
+            Rozethoogte (cm)
+          </label>
           <input
-            type="number"
-            min={0}
-            step={0.1}
+            type="number" min={0} step={0.5}
             value={potData.hoogte_cm}
             onChange={e => set('hoogte_cm', e.target.value === '' ? '' : Number(e.target.value))}
             placeholder="0.0"
             className={inputCls}
           />
         </div>
-
-        {/* Aantal bladeren */}
-        <div className="col-span-2 sm:col-span-1">
-          <label className="block text-xs font-semibold mb-1.5 opacity-80">Aantal bladeren</label>
+        <div>
+          <label className="block text-xs font-semibold mb-1.5 opacity-80">
+            Knoldiameter (mm) — hoofdmeting
+          </label>
           <input
-            type="number"
-            min={0}
-            step={1}
-            value={potData.bladeren}
-            onChange={e => set('bladeren', e.target.value === '' ? '' : Number(e.target.value))}
+            type="number" min={0} step={1}
+            value={potData.knol_diameter_mm ?? ''}
+            onChange={e => set('knol_diameter_mm', e.target.value === '' ? '' : Number(e.target.value))}
             placeholder="0"
             className={inputCls}
           />
         </div>
+      </div>
 
-        {/* Bladkleur */}
-        <div className="col-span-2 sm:col-span-1">
-          <label className="block text-xs font-semibold mb-1.5 opacity-80">Bladkleur</label>
+      {/* Knol zichtbaar */}
+      <div className="mb-4">
+        <label className="flex items-center gap-2.5 cursor-pointer select-none">
+          <input
+            type="checkbox"
+            checked={!!potData.knol_zichtbaar}
+            onChange={e => set('knol_zichtbaar', e.target.checked)}
+            className="w-4 h-4 rounded accent-emerald-600"
+          />
+          <span className="text-xs font-semibold opacity-80">
+            Knol zichtbaar boven de grond
+          </span>
+        </label>
+      </div>
+
+      {/* ── Bladeren ── */}
+      <p className="text-[10px] font-bold uppercase tracking-wide opacity-50 mb-2">Bladeren</p>
+      <div className="mb-3">
+        <label className="flex items-center gap-2.5 cursor-pointer select-none">
+          <input
+            type="checkbox"
+            checked={geenBladvorming}
+            onChange={e => set('geen_bladvorming', e.target.checked)}
+            className="w-4 h-4 rounded accent-emerald-600"
+          />
+          <span className="text-xs font-semibold opacity-80">Nog geen bladvorming</span>
+        </label>
+      </div>
+
+      {!geenBladvorming && (
+        <div className="grid grid-cols-2 gap-3 mb-4">
+          <div>
+            <label className="block text-xs font-semibold mb-1.5 opacity-80">Aantal bladeren</label>
+            <input
+              type="number" min={0} step={1}
+              value={potData.bladeren}
+              onChange={e => set('bladeren', e.target.value === '' ? '' : Number(e.target.value))}
+              placeholder="0"
+              className={inputCls}
+            />
+          </div>
+          <div>
+            <label className="block text-xs font-semibold mb-1.5 opacity-80">Bladgrootte</label>
+            <select
+              value={potData.bladgrootte ?? 'middel'}
+              onChange={e => set('bladgrootte', e.target.value)}
+              className={selectCls}
+            >
+              <option value="klein">Klein</option>
+              <option value="middel">Middel</option>
+              <option value="groot">Groot</option>
+            </select>
+          </div>
+          <div>
+            <label className="block text-xs font-semibold mb-1.5 opacity-80">Bladkleur</label>
+            <select
+              value={potData.bladkleur}
+              onChange={e => set('bladkleur', e.target.value)}
+              className={selectCls}
+            >
+              <option value="lichtgroen">Lichtgroen</option>
+              <option value="donkergroen">Donkergroen</option>
+              <option value="geel">Geel (chlorose)</option>
+              <option value="bruin">Bruin / afstervend</option>
+            </select>
+          </div>
+          <div>
+            <label className="block text-xs font-semibold mb-1.5 opacity-80">Conditie</label>
+            <select
+              value={potData.conditie}
+              onChange={e => set('conditie', e.target.value)}
+              className={selectCls}
+            >
+              <option value="uitstekend">Uitstekend</option>
+              <option value="goed">Goed</option>
+              <option value="matig">Matig (slap)</option>
+              <option value="slecht">Slecht (hangend)</option>
+            </select>
+          </div>
+        </div>
+      )}
+
+      {/* ── Overig ── */}
+      <p className="text-[10px] font-bold uppercase tracking-wide opacity-50 mb-2">Overig</p>
+      <div className="grid grid-cols-2 gap-3">
+        <div>
+          <label className="block text-xs font-semibold mb-1.5 opacity-80">Grondvochtigheid</label>
           <select
-            value={potData.bladkleur}
-            onChange={e => set('bladkleur', e.target.value)}
+            value={potData.grondvochtigheid ?? 'matig'}
+            onChange={e => set('grondvochtigheid', e.target.value)}
             className={selectCls}
           >
-            <option value="lichtgroen">Lichtgroen</option>
-            <option value="donkergroen">Donkergroen</option>
-            <option value="geel">Geel</option>
-            <option value="bruin">Bruin</option>
+            <option value="droog">Droog</option>
+            <option value="matig">Matig</option>
+            <option value="nat">Nat</option>
           </select>
         </div>
-
-        {/* Conditie */}
-        <div className="col-span-2 sm:col-span-1">
-          <label className="block text-xs font-semibold mb-1.5 opacity-80">Conditie</label>
+        <div>
+          <label className="block text-xs font-semibold mb-1.5 opacity-80">Ziekte / plaag</label>
           <select
-            value={potData.conditie}
-            onChange={e => set('conditie', e.target.value)}
+            value={potData.ziekte ?? 'geen'}
+            onChange={e => set('ziekte', e.target.value)}
             className={selectCls}
           >
-            <option value="uitstekend">Uitstekend</option>
-            <option value="goed">Goed</option>
-            <option value="matig">Matig</option>
-            <option value="slecht">Slecht</option>
+            <option value="geen">Geen</option>
+            <option value="bladluis">Bladluis</option>
+            <option value="aardvlo">Aardvlo (gaatjes)</option>
+            <option value="valse meeldauw">Valse meeldauw</option>
+            <option value="wortelrot">Wortelrot</option>
+            <option value="andere ziekte">Anders</option>
           </select>
+        </div>
+        <div className="col-span-2">
+          <label className="flex items-center gap-2.5 cursor-pointer select-none">
+            <input
+              type="checkbox"
+              checked={!!potData.bolschieten}
+              onChange={e => set('bolschieten', e.target.checked)}
+              className="w-4 h-4 rounded accent-amber-500"
+            />
+            <span className="text-xs font-semibold opacity-80">
+              Bolschieten zichtbaar{' '}
+              <span className="font-normal opacity-60">(ongewenst — knol stopt met groeien)</span>
+            </span>
+          </label>
         </div>
       </div>
     </div>
@@ -432,6 +972,8 @@ function KeuringsDienstForm({ data, onChange }) {
 
   return (
     <div className="space-y-5">
+      <DriePotenVisualisatie data={data} />
+
       {POT_META.map(({ key, label, kleur }) => (
         <PotForm
           key={key}
@@ -797,122 +1339,13 @@ function KeuringsDienstChart({ observaties }) {
 }
 
 // ---------------------------------------------------------------------------
-// SVG chart: Wilgenvlechten — insecten & vogels grouped bar chart
-// ---------------------------------------------------------------------------
-
-function WilgenvlechtenChart({ observaties }) {
-  const W = 560
-  const H = 200
-  const PAD = { top: 20, right: 20, bottom: 40, left: 44 }
-  const weeks = Array.from({ length: 5 }, (_, i) => i + 1)
-  const chartW = W - PAD.left - PAD.right
-  const chartH = H - PAD.top - PAD.bottom
-
-  const weekData = weeks.map(w => {
-    const obs = observaties.find(o => o.week === w)
-    if (!obs) return { insecten: null, vogels: null, hasData: false }
-    return {
-      insecten: obs.data?.insecten?.length || 0,
-      vogels: obs.data?.vogels?.length || 0,
-      hasData: true,
-    }
-  })
-
-  const allVals = weekData.filter(d => d.hasData).flatMap(d => [d.insecten, d.vogels])
-  const yMax = Math.max(...allVals, 4)
-
-  const SLOT_W = chartW / weeks.length
-  const BAR_W  = (SLOT_W * 0.65) / 2
-
-  function xCenter(i) { return PAD.left + (i + 0.5) * SLOT_W }
-  function yOf(val)   { return PAD.top + chartH - (val / yMax) * chartH }
-
-  const gridVals = [0, Math.ceil(yMax / 2), yMax]
-  const hasData  = weekData.some(d => d.hasData)
-
-  return (
-    <div>
-      <h3 className="font-bold text-gray-700 mb-3 text-sm">Waargenomen soorten per week</h3>
-      {!hasData && (
-        <p className="text-sm text-gray-400 italic">Nog geen observaties opgeslagen om te tonen.</p>
-      )}
-      <svg viewBox={`0 0 ${W} ${H}`} className="w-full" style={{ maxHeight: 220 }} aria-label="Soorten grafiek">
-        {/* Grid */}
-        {gridVals.map(v => (
-          <g key={v}>
-            <line x1={PAD.left} x2={W - PAD.right} y1={yOf(v)} y2={yOf(v)} stroke="#e5e7eb" strokeWidth={1} />
-            <text x={PAD.left - 6} y={yOf(v) + 4} textAnchor="end" fontSize={10} fill="#9ca3af">{v}</text>
-          </g>
-        ))}
-
-        {/* X-labels */}
-        {weeks.map((w, i) => (
-          <text key={w} x={xCenter(i)} y={H - PAD.bottom + 16} textAnchor="middle" fontSize={10} fill="#9ca3af">W{w}</text>
-        ))}
-
-        {/* Assen */}
-        <line x1={PAD.left} x2={W - PAD.right} y1={H - PAD.bottom} y2={H - PAD.bottom} stroke="#e5e7eb" strokeWidth={1} />
-        <line x1={PAD.left} x2={PAD.left} y1={PAD.top} y2={H - PAD.bottom} stroke="#e5e7eb" strokeWidth={1} />
-
-        {/* Bars per week */}
-        {weekData.map((d, i) => {
-          if (!d.hasData) return null
-          const cx       = xCenter(i)
-          const bottom   = H - PAD.bottom
-          const insPixH  = (d.insecten / yMax) * chartH
-          const vogPixH  = (d.vogels  / yMax) * chartH
-          return (
-            <g key={i}>
-              {/* Insecten — lime */}
-              <rect
-                x={cx - BAR_W - 1} y={bottom - insPixH}
-                width={BAR_W} height={Math.max(insPixH, 2)}
-                rx={3} fill="#84cc16" opacity={0.85}
-              />
-              {d.insecten > 0 && (
-                <text x={cx - BAR_W / 2 - 1} y={bottom - insPixH - 4} textAnchor="middle" fontSize={9} fontWeight="600" fill="#65a30d">
-                  {d.insecten}
-                </text>
-              )}
-              {/* Vogels — sky */}
-              <rect
-                x={cx + 1} y={bottom - vogPixH}
-                width={BAR_W} height={Math.max(vogPixH, 2)}
-                rx={3} fill="#38bdf8" opacity={0.85}
-              />
-              {d.vogels > 0 && (
-                <text x={cx + BAR_W / 2 + 1} y={bottom - vogPixH - 4} textAnchor="middle" fontSize={9} fontWeight="600" fill="#0284c7">
-                  {d.vogels}
-                </text>
-              )}
-            </g>
-          )
-        })}
-      </svg>
-
-      {/* Legenda */}
-      <div className="flex gap-5 mt-2">
-        <div className="flex items-center gap-1.5">
-          <div className="w-3 h-3 rounded bg-lime-400" />
-          <span className="text-xs text-gray-500">Insectensoorten</span>
-        </div>
-        <div className="flex items-center gap-1.5">
-          <div className="w-3 h-3 rounded bg-sky-400" />
-          <span className="text-xs text-gray-500">Vogelsoorten</span>
-        </div>
-      </div>
-    </div>
-  )
-}
-
-// ---------------------------------------------------------------------------
 // Main page
 // ---------------------------------------------------------------------------
 
 export default function Observaties() {
   const { user, project } = useAuth()
 
-  const aantalWeken = project === 'wilgenvlechten' ? 5 : project === 'keuringsdienst' ? 6 : 6
+  const aantalWeken = 6
 
   const [week, setWeek] = useState(1)
   const [formData, setFormData] = useState(() => defaultVoorProject(project))
@@ -959,7 +1392,17 @@ export default function Observaties() {
     if (data) {
       setBestaandId(data.id)
       // Merge saved data with defaults to handle new fields gracefully
-      setFormData({ ...defaultVoorProject(project), ...data.data })
+      const defaults = defaultVoorProject(project)
+      if (project === 'keuringsdienst') {
+        // Deep merge for nested pot objects
+        const merged = { ...defaults, ...data.data }
+        for (const k of ['pot1', 'pot2', 'pot3']) {
+          merged[k] = { ...defaults.pot1, ...(data.data[k] || {}) }
+        }
+        setFormData(merged)
+      } else {
+        setFormData({ ...defaults, ...data.data })
+      }
     } else {
       setBestaandId(null)
       setFormData(defaultVoorProject(project))
@@ -1062,8 +1505,6 @@ export default function Observaties() {
             <p className="text-sm drop-shadow" style={{ opacity: 0.82 }}>
               {project === 'keuringsdienst'
                 ? 'Keuringsdienst van Waarde — planten bijhouden'
-                : project === 'wilgenvlechten'
-                ? 'Wilgenvlechten — natuur observeren'
                 : 'Wormenhotel — wekelijks controleren'}
             </p>
           </div>
@@ -1075,19 +1516,22 @@ export default function Observaties() {
         <div className="bg-white rounded-2xl shadow p-5">
           <p className="text-sm font-semibold text-gray-600 mb-3">Selecteer een week:</p>
           <div className="flex flex-wrap gap-2">
-            {Array.from({ length: aantalWeken }, (_, i) => i + 1).map(w => (
-              <button
-                key={w}
-                onClick={() => { setWeek(w); setOpgeslagen(false) }}
-                className={`px-4 py-2 rounded-xl font-semibold text-sm transition-all ${
-                  week === w
-                    ? 'bg-emerald-600 text-white shadow'
-                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                }`}
-              >
-                Week {w}
-              </button>
-            ))}
+            {Array.from({ length: aantalWeken }, (_, i) => i + 1).map(w => {
+              const isActive = week === w
+              return (
+                <button
+                  key={w}
+                  onClick={() => { setWeek(w); setOpgeslagen(false) }}
+                  className={`flex items-center gap-1.5 px-4 py-2 rounded-xl font-semibold text-sm transition-all ${
+                    isActive
+                      ? 'bg-emerald-600 text-white shadow'
+                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                  }`}
+                >
+                  Week {w}
+                </button>
+              )
+            })}
           </div>
         </div>
 
@@ -1110,11 +1554,23 @@ export default function Observaties() {
             <>
               {project === 'keuringsdienst' ? (
                 <KeuringsDienstForm data={formData} onChange={setFormData} />
-              ) : project === 'wilgenvlechten' ? (
-                <WilgenvlechtenForm data={formData} onChange={setFormData} />
               ) : (
-                <WormenhotelForm data={formData} onChange={setFormData} />
+                <>
+                  <WormenhotelVisualisatie data={formData} />
+                  <WormenhotelForm data={formData} onChange={setFormData} />
+                </>
               )}
+
+              {/* Foto upload */}
+              <div className="mt-6 pt-6 border-t border-gray-100">
+                <FotoUpload
+                  userId={user.id}
+                  project={project}
+                  week={week}
+                  fotoUrl={formData.foto_url}
+                  onUpload={url => setFormData(d => ({ ...d, foto_url: url }))}
+                />
+              </div>
 
               {/* Feedback berichten */}
               {fout && (
@@ -1173,15 +1629,11 @@ export default function Observaties() {
           <p className="text-sm text-gray-400 mb-5">
             {project === 'keuringsdienst'
               ? 'Planthoogte van alle drie de potten door de weken heen.'
-              : project === 'wilgenvlechten'
-              ? 'Aantal soorten insecten en vogels dat je hebt waargenomen per week.'
               : 'Vochtigheid van het wormenhotel door de weken heen.'}
           </p>
 
           {project === 'keuringsdienst' ? (
             <KeuringsDienstChart observaties={alleObservaties} />
-          ) : project === 'wilgenvlechten' ? (
-            <WilgenvlechtenChart observaties={alleObservaties} />
           ) : (
             <WormenhotelChart observaties={alleObservaties} />
           )}

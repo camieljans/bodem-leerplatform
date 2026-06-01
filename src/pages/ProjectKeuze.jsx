@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../App'
 import { supabase } from '../supabase'
-import { Worm, Sprout, Map, LogOut } from 'lucide-react'
+import { Worm, Sprout, LogOut } from 'lucide-react'
 
 const projecten = [
   {
@@ -18,13 +18,6 @@ const projecten = [
     icon: Sprout,
     kleur: 'teal',
   },
-  {
-    key: 'wilgenvlechten',
-    naam: 'Wilgenvlechten',
-    beschrijving: 'Ga aan de slag in het voedselbos. Vlecht wilgentakken en maak iets nuttigs voor de natuur.',
-    icon: Map,
-    kleur: 'lime',
-  },
 ]
 
 const kleurMap = {
@@ -39,12 +32,6 @@ const kleurMap = {
     icon: 'bg-emerald-100/80 text-emerald-800',
     btn: 'bg-emerald-700 hover:bg-emerald-800',
     badge: 'bg-teal-100 text-teal-700',
-  },
-  lime: {
-    card: 'hover:border-emerald-300',
-    icon: 'bg-lime-100/80 text-lime-800',
-    btn: 'bg-emerald-700 hover:bg-emerald-800',
-    badge: 'bg-lime-100 text-lime-700',
   },
 }
 

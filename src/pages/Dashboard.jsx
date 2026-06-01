@@ -3,19 +3,11 @@ import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../App'
 import { supabase } from '../supabase'
 import { opdrachten } from '../data/opdrachten'
-import { ClipboardList, BookOpen, MessageSquare, GraduationCap, Bell, ChevronRight, Lightbulb, BarChart2, User, ArrowRight, Map, Microscope, Trophy, BookA } from 'lucide-react'
+import { ClipboardList, BookOpen, MessageSquare, GraduationCap, Bell, ChevronRight, Lightbulb, BarChart2, User, ArrowRight, Map, Microscope, Trophy, BookA, CheckCircle } from 'lucide-react'
 
 import { bepaalNiveau } from '../utils/bepaalNiveau'
 
 const projectInfo = {
-  wilgenvlechten: {
-    naam: 'Wilgenvlechten',
-    licht: 'bg-lime-50/70',
-    tekst: 'text-lime-900',
-    subtekst: 'text-lime-800',
-    beschrijving: 'Ga naar buiten en bouw met wilgentakken iets dat bijdraagt aan het voedselbos. Leer over biodiversiteit en hoe jij de natuur kunt helpen.',
-    tip: 'Pak verse wilgentakken — die zijn flexibeler en makkelijker te vlechten. De takken moeten nat aanvoelen.',
-  },
   wormenhotel: {
     naam: 'Het Wormenhotel',
     licht: 'bg-emerald-50/70',
@@ -178,7 +170,7 @@ export default function Dashboard() {
                       disabled={!!reageerBezig[v.id]}
                       className="bg-green-600 hover:bg-green-700 disabled:opacity-50 text-white text-sm font-semibold px-3 py-2 rounded-xl transition-colors"
                     >
-                      {reageerBezig[v.id] === 'goedgekeurd' ? '...' : '✅ Goedkeuren'}
+                      {reageerBezig[v.id] === 'goedgekeurd' ? '...' : <><CheckCircle className="w-4 h-4 inline mr-1" />Goedkeuren</>}
                     </button>
                     <button
                       onClick={() => reageer(v.id, 'afgewezen')}
@@ -239,8 +231,8 @@ export default function Dashboard() {
           <p className="text-xs font-semibold uppercase mb-2 px-1 cinematic-section-label">Jouw project</p>
           <div className="grid grid-cols-2 gap-3">
             {[
-              { pad: '/briefing',    icon: Map,        iconBg: 'bg-emerald-50', iconClr: 'text-emerald-700', border: 'hover:border-emerald-300', titel: 'Projectbriefing',  omschrijving: 'Overzicht van het project, fases en leerdoelen.' },
-              { pad: '/eindproduct', icon: Trophy,     iconBg: 'bg-yellow-50',  iconClr: 'text-yellow-700',  border: 'hover:border-yellow-300',  titel: 'Eindproduct',      omschrijving: 'Upload en deel jouw eindpresentatie.' },
+              { pad: '/briefing',    icon: Map,    iconBg: 'bg-emerald-800', iconClr: 'text-emerald-100', border: 'hover:border-emerald-700', titel: 'Projectbriefing', omschrijving: 'Overzicht van het project, fases en leerdoelen.' },
+              { pad: '/eindproduct', icon: Trophy, iconBg: 'bg-emerald-700', iconClr: 'text-emerald-100', border: 'hover:border-emerald-600', titel: 'Eindproduct',     omschrijving: 'Upload en deel jouw eindpresentatie.' },
             ].map(item => {
               const Icon = item.icon
               return (
@@ -262,9 +254,9 @@ export default function Dashboard() {
           <p className="text-xs font-semibold uppercase mb-2 px-1 cinematic-section-label">Dagelijks werk</p>
           <div className="grid grid-cols-1 gap-3">
             {[
-              { pad: '/opdrachten',  icon: ClipboardList, iconBg: 'bg-emerald-50', iconClr: 'text-emerald-700', border: 'hover:border-emerald-300', titel: 'Wekelijkse Opdrachten', omschrijving: 'Wekelijkse opdrachten passend bij jouw project en niveau.' },
-              { pad: '/observaties', icon: Microscope,    iconBg: 'bg-teal-50',    iconClr: 'text-teal-700',    border: 'hover:border-teal-300',    titel: 'Observaties & Metingen',omschrijving: 'Vul wekelijks je metingen en observaties in. Bekijk je groeigrafiek.' },
-              { pad: '/logboek',     icon: BookOpen,      iconBg: 'bg-blue-50',    iconClr: 'text-blue-700',    border: 'hover:border-blue-300',    titel: 'Mijn Logboek',          omschrijving: 'Schrijf op wat je observeert, ontdekt en leert. Voeg foto\'s toe.' },
+              { pad: '/opdrachten',  icon: ClipboardList, iconBg: 'bg-emerald-500', iconClr: 'text-white',        border: 'hover:border-emerald-400', titel: 'Wekelijkse Opdrachten',  omschrijving: 'Wekelijkse opdrachten passend bij jouw project en niveau.' },
+              { pad: '/observaties', icon: Microscope,    iconBg: 'bg-emerald-300', iconClr: 'text-emerald-900', border: 'hover:border-emerald-300', titel: 'Observaties & Metingen', omschrijving: 'Vul wekelijks je metingen en observaties in. Bekijk je groeigrafiek.' },
+              { pad: '/logboek',     icon: BookOpen,      iconBg: 'bg-emerald-200', iconClr: 'text-emerald-800', border: 'hover:border-emerald-200', titel: 'Mijn Logboek',          omschrijving: 'Schrijf op wat je observeert, ontdekt en leert. Voeg foto\'s toe.' },
             ].map(item => {
               const Icon = item.icon
               return (
@@ -289,8 +281,8 @@ export default function Dashboard() {
           <p className="text-xs font-semibold uppercase mb-2 px-1 cinematic-section-label">Ondersteuning & kennis</p>
           <div className="grid grid-cols-1 gap-3">
             {[
-              { pad: '/vragen',      icon: MessageSquare, iconBg: 'bg-violet-50', iconClr: 'text-violet-700', border: 'hover:border-violet-300', titel: 'Stel een Vraag',      omschrijving: 'Heb je een vraag over het project? Stel hem aan je begeleider.' },
-              { pad: '/woordenlijst',icon: BookA,         iconBg: 'bg-pink-50',   iconClr: 'text-pink-700',   border: 'hover:border-pink-300',   titel: 'Woordenlijst',        omschrijving: 'Zoek uitleg bij begrippen zoals vermicompost, hypothese en kringloop.' },
+              { pad: '/vragen',      icon: MessageSquare, iconBg: 'bg-emerald-100', iconClr: 'text-emerald-700', border: 'hover:border-emerald-200', titel: 'Stel een Vraag', omschrijving: 'Heb je een vraag over het project? Stel hem aan je begeleider.' },
+              { pad: '/woordenlijst',icon: BookA,         iconBg: 'bg-emerald-50',  iconClr: 'text-emerald-600', border: 'hover:border-emerald-100', titel: 'Woordenlijst',   omschrijving: 'Zoek uitleg bij begrippen zoals vermicompost, hypothese en kringloop.' },
             ].map(item => {
               const Icon = item.icon
               return (

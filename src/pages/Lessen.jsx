@@ -1,31 +1,40 @@
 import { useState } from 'react'
 import { useAuth } from '../App'
 import { lesinhoud } from '../data/lesinhoud'
-import { GraduationCap, BookOpen, HelpCircle, Lightbulb, Trophy, Sprout, Dumbbell, RotateCcw, ChevronLeft, ChevronRight, CheckCircle, XCircle } from 'lucide-react'
+import { GraduationCap, BookOpen, HelpCircle, Lightbulb, Trophy, Sprout, Dumbbell, RotateCcw, ChevronLeft, ChevronRight, CheckCircle, XCircle, Brain, Zap } from 'lucide-react'
 
 import { bepaalNiveau } from '../utils/bepaalNiveau'
 
 const moeilijkheidKleuren = {
   makkelijk: {
     bg: 'bg-green-50',
-    rand: 'border-green-300',
+    rand: 'border-green-200',
     knop: 'bg-green-500',
     badge: 'bg-green-100 text-green-800',
-    dot: 'bg-green-500',
+    iconBg: 'bg-green-100',
+    iconClr: 'text-green-700',
+    Icon: Sprout,
+    label: 'Basisbegrip',
   },
   gemiddeld: {
-    bg: 'bg-yellow-50',
-    rand: 'border-yellow-300',
-    knop: 'bg-yellow-500',
-    badge: 'bg-yellow-100 text-yellow-800',
-    dot: 'bg-yellow-400',
+    bg: 'bg-amber-50',
+    rand: 'border-amber-200',
+    knop: 'bg-amber-500',
+    badge: 'bg-amber-100 text-amber-800',
+    iconBg: 'bg-amber-100',
+    iconClr: 'text-amber-700',
+    Icon: Dumbbell,
+    label: 'Verdieping',
   },
   moeilijk: {
     bg: 'bg-red-50',
-    rand: 'border-red-300',
+    rand: 'border-red-200',
     knop: 'bg-red-500',
     badge: 'bg-red-100 text-red-800',
-    dot: 'bg-red-500',
+    iconBg: 'bg-red-100',
+    iconClr: 'text-red-700',
+    Icon: Brain,
+    label: 'Uitdaging',
   },
 }
 
@@ -104,17 +113,21 @@ export default function Lessen() {
                 <button
                   key={m}
                   onClick={() => startMoeilijkheid(m)}
-                  className={`bg-white rounded-2xl p-6 shadow hover:shadow-lg transition-all text-left border-2 ${kleur.rand} flex items-center gap-5`}
+                  className={`bg-white rounded-2xl p-5 shadow hover:shadow-lg transition-all text-left border ${kleur.rand} flex items-center gap-4`}
                 >
-                  <div className={`w-10 h-10 rounded-full ${kleur.dot} shrink-0`} />
+                  <div className={`w-12 h-12 rounded-2xl ${kleur.iconBg} flex items-center justify-center shrink-0`}>
+                    <kleur.Icon className={`w-6 h-6 ${kleur.iconClr}`} />
+                  </div>
                   <div className="flex-1">
-                    <h3 className="text-xl font-bold text-gray-800 capitalize">{m}</h3>
-                    <p className="text-gray-500 text-sm mt-1">
+                    <div className="flex items-center gap-2">
+                      <h3 className="text-base font-bold text-gray-800 capitalize">{m}</h3>
+                      <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${kleur.badge}`}>
+                        {kleur.label}
+                      </span>
+                    </div>
+                    <p className="text-gray-400 text-sm mt-0.5">
                       {lesData.lessen.length} onderdelen · {aantalVragen} vragen
                     </p>
-                    <span className={`inline-block mt-2 ${kleur.badge} text-sm px-3 py-1 rounded-full font-medium`}>
-                      {m === 'makkelijk' ? 'Basisbegrip' : m === 'gemiddeld' ? 'Verdieping' : 'Uitdaging'}
-                    </span>
                   </div>
                 </button>
               )
