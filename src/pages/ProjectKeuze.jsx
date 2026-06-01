@@ -7,7 +7,7 @@ const projecten = [
   {
     key: 'wormenhotel',
     naam: 'Het Wormenhotel',
-    beschrijving: 'Bouw een wormenhotel en maak van keukenafval compost. Ontdek hoe wormen de bodem gezond houden.',
+    beschrijving: 'Bouw een wormenhotel en maak van het GFT-afval van de schoolkantine compost. Ontdek hoe wormen de bodem gezond houden.',
     icon: Worm,
     kleur: 'emerald',
   },
