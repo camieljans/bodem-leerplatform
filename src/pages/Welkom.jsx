@@ -17,12 +17,12 @@ export default function Welkom() {
       <div className="max-w-md w-full text-center cinematic-panel rounded-[2rem] p-8">
 
         {/* Logo */}
-        <div className="flex justify-center -mb-2">
+        <div className="flex justify-center">
           <CirkulairLogo className="w-80 h-80" />
         </div>
 
         {/* Titel */}
-        <h1 className="text-5xl font-black text-stone-950 mb-3 tracking-tight" style={{ fontFamily: "'Inter', system-ui, sans-serif" }}>
+        <h1 className="text-5xl font-black text-stone-950 mb-3 tracking-tight -mt-24" style={{ fontFamily: "'Inter', system-ui, sans-serif" }}>
           Leerplatform
         </h1>
         <p className="text-stone-600 text-lg mb-10 leading-relaxed">
