@@ -21,7 +21,6 @@ Twee projecten zijn hardcoded (Wormenhotel, Keuringsdienst van Waarde). Soil Val
 - **Frontend**: React 19 + Vite + Tailwind CSS + React Router
 - **Backend / Database**: Supabase (PostgreSQL met Row Level Security)
 - **Hosting**: Vercel (auto-deploy bij git push naar `main`)
-- **AI-chat**: Anthropic Claude (primair) + Google Gemini (fallback) — gebruikt via een Vercel serverless function
 - **E-mail**: Resend (voor notificaties bij vragen aan begeleider)
 
 ---
@@ -33,11 +32,9 @@ Twee projecten zijn hardcoded (Wormenhotel, Keuringsdienst van Waarde). Soil Val
 | **GitHub** | Code repository | Gratis (Free tier) |
 | **Vercel** | Hosting + serverless functions | Hobby (gratis) volstaat tot ~100GB/maand |
 | **Supabase** | Database + auth | Free tier (50k MAU, 500MB database) is voldoende voor schoolgebruik |
-| **Anthropic** | Claude API (AI-chat) | Pay-per-use — gemiddeld <€5/maand |
-| **Google Gemini** | Fallback AI | Gratis tier (15 req/min) is meer dan genoeg |
 | **Resend** | E-mail | Free tier: 100 mails/dag, 3.000/maand |
 
-**Totale kosten bij normaal schoolgebruik: minder dan €10/maand** (vooral Anthropic). Alles is opzegbaar zonder verplichtingen.
+**Totale kosten bij normaal schoolgebruik: €0/maand** — alles past binnen gratis tiers en is opzegbaar zonder verplichtingen.
 
 ---
 
@@ -94,21 +91,8 @@ Optie A is sterk aanbevolen — geen datamigratie nodig.
 
 ### 4.4 API-keys
 
-Deze sleutels staan in Camiel's persoonlijke accounts en moeten omgezet worden naar Soil Valley:
-
-**Anthropic (Claude)**:
-1. Soil Valley maakt account op [console.anthropic.com](https://console.anthropic.com)
-2. Voeg betaalmethode toe
-3. Genereer API-key
-4. Update `ANTHROPIC_API_KEY` in Vercel env vars
-
-**Google Gemini**:
-1. Account op [makersuite.google.com](https://makersuite.google.com)
-2. API-key genereren
-3. Update `GEMINI_API_KEY` in Vercel
-
-**Resend**:
-1. Account op [resend.com](https://resend.com)
+**Resend** (enige externe API-key):
+1. Soil Valley maakt account op [resend.com](https://resend.com)
 2. API-key genereren
 3. Update `RESEND_API_KEY` in Vercel
 4. *Optioneel*: domein verifiëren om mails te sturen vanaf `@soilvalley.nl` i.p.v. `@resend.dev`
@@ -123,8 +107,6 @@ Compleet overzicht van wat in Vercel ingesteld moet zijn:
 |---|---|---|
 | `VITE_SUPABASE_URL` | Supabase project → Settings → API | `https://xxx.supabase.co` |
 | `VITE_SUPABASE_ANON_KEY` | Supabase project → Settings → API → `anon public` | `sb_publishable_...` |
-| `ANTHROPIC_API_KEY` | Anthropic Console | `sk-ant-...` |
-| `GEMINI_API_KEY` | Google AI Studio | `AIza...` |
 | `RESEND_API_KEY` | Resend dashboard | `re_...` |
 
 **Instellen**: Vercel → Project → Settings → Environment Variables → Add → vink alle environments aan (Production, Preview, Development).
