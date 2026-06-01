@@ -21,7 +21,6 @@ Twee projecten zijn hardcoded (Wormenhotel, Keuringsdienst van Waarde). Soil Val
 - **Frontend**: React 19 + Vite + Tailwind CSS + React Router
 - **Backend / Database**: Supabase (PostgreSQL met Row Level Security)
 - **Hosting**: Vercel (auto-deploy bij git push naar `main`)
-- **E-mail**: Resend (voor notificaties bij vragen aan begeleider)
 
 ---
 
@@ -32,7 +31,6 @@ Twee projecten zijn hardcoded (Wormenhotel, Keuringsdienst van Waarde). Soil Val
 | **GitHub** | Code repository | Gratis (Free tier) |
 | **Vercel** | Hosting + serverless functions | Hobby (gratis) volstaat tot ~100GB/maand |
 | **Supabase** | Database + auth | Free tier (50k MAU, 500MB database) is voldoende voor schoolgebruik |
-| **Resend** | E-mail | Free tier: 100 mails/dag, 3.000/maand |
 
 **Totale kosten bij normaal schoolgebruik: €0/maand** — alles past binnen gratis tiers en is opzegbaar zonder verplichtingen.
 
@@ -89,14 +87,6 @@ Vercel haalt de code automatisch uit GitHub. Na de GitHub-overdracht:
 
 Optie A is sterk aanbevolen — geen datamigratie nodig.
 
-### 4.4 API-keys
-
-**Resend** (enige externe API-key):
-1. Soil Valley maakt account op [resend.com](https://resend.com)
-2. API-key genereren
-3. Update `RESEND_API_KEY` in Vercel
-4. *Optioneel*: domein verifiëren om mails te sturen vanaf `@soilvalley.nl` i.p.v. `@resend.dev`
-
 ---
 
 ## 5. Environment variables (Vercel)
@@ -107,7 +97,6 @@ Compleet overzicht van wat in Vercel ingesteld moet zijn:
 |---|---|---|
 | `VITE_SUPABASE_URL` | Supabase project → Settings → API | `https://xxx.supabase.co` |
 | `VITE_SUPABASE_ANON_KEY` | Supabase project → Settings → API → `anon public` | `sb_publishable_...` |
-| `RESEND_API_KEY` | Resend dashboard | `re_...` |
 
 **Instellen**: Vercel → Project → Settings → Environment Variables → Add → vink alle environments aan (Production, Preview, Development).
 

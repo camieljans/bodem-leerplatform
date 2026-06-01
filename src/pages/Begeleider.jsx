@@ -229,28 +229,6 @@ export default function Begeleider() {
         beantwoord_op: new Date().toISOString(),
       })
       .eq('id', vraagId)
-    // E-mailnotificatie naar de leerling
-    try {
-      const vraag = vragen.find(v => v.id === vraagId)
-      if (vraag) {
-        const { data: leerlingProfiel } = await supabase
-          .from('profiles')
-          .select('email, naam')
-          .eq('id', vraag.leerling_id)
-          .single()
-        if (leerlingProfiel?.email) {
-          await fetch('/api/send-email', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              naar: leerlingProfiel.email,
-              onderwerp: 'Je begeleider heeft je vraag beantwoord',
-              tekst: `Hoi ${leerlingProfiel.naam},\n\nJe begeleider ${profile.naam} heeft je vraag beantwoord:\n\nJouw vraag: "${vraag.vraag}"\n\nAntwoord: "${tekst.trim()}"\n\nBekijk het via: ${window.location.origin}/vragen`,
-            }),
-          })
-        }
-      }
-    } catch { /* e-mail fout is niet kritiek */ }
     setAntwoorden(prev => ({ ...prev, [vraagId]: '' }))
     setVersturenId(null)
     laadVragen()
