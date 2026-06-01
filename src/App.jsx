@@ -21,6 +21,7 @@ import Beheer from './pages/Beheer'
 import BeheerNieuwProject from './pages/BeheerNieuwProject'
 import BeheerProject from './pages/BeheerProject'
 import BeheerWeek from './pages/BeheerWeek'
+import BeheerIngebouwd from './pages/BeheerIngebouwd'
 import Navbar from './components/Navbar'
 import NatuurAchtergrond from './components/NatuurAchtergrond'
 
@@ -115,6 +116,7 @@ export default function App() {
           <Route path="/beheer/project/:sleutel" element={<BeheerRoute><BeheerProject /></BeheerRoute>} />
           <Route path="/beheer/project/:sleutel/week/nieuw" element={<BeheerRoute><BeheerWeek /></BeheerRoute>} />
           <Route path="/beheer/project/:sleutel/week/:weekId" element={<BeheerRoute><BeheerWeek /></BeheerRoute>} />
+          <Route path="/beheer/ingebouwd/:sleutel" element={<BeheerRoute><BeheerIngebouwd /></BeheerRoute>} />
           <Route path="/projectkeuze" element={user ? <ProjectKeuze /> : <Navigate to="/login" />} />
           <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
           <Route path="/opdrachten" element={<ProtectedRoute><Opdrachten /></ProtectedRoute>} />

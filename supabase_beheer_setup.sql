@@ -25,9 +25,22 @@ CREATE TABLE IF NOT EXISTS beheer_projecten (
   centrale_vraag  text,
   duur            text,                          -- bijv. '5 weken'
   kleur           text DEFAULT 'emerald',        -- emerald | teal | lime | amber | rose | sky
+  themas          jsonb NOT NULL DEFAULT '[]'::jsonb,
+  leerdoelen      jsonb NOT NULL DEFAULT '{"kennis":[],"vaardigheden":[],"houding":[]}'::jsonb,
+  eindproduct     jsonb NOT NULL DEFAULT '{"beschrijving":"","vormen":[]}'::jsonb,
+  fases           jsonb NOT NULL DEFAULT '[]'::jsonb,
+  weetjes         jsonb NOT NULL DEFAULT '[]'::jsonb,
   aangemaakt_op   timestamptz DEFAULT now() NOT NULL,
   bijgewerkt_op   timestamptz DEFAULT now() NOT NULL
 );
+
+-- Voor bestaande installaties: voeg ontbrekende kolommen toe (no-op als ze er al zijn)
+ALTER TABLE beheer_projecten
+  ADD COLUMN IF NOT EXISTS themas jsonb NOT NULL DEFAULT '[]'::jsonb,
+  ADD COLUMN IF NOT EXISTS leerdoelen jsonb NOT NULL DEFAULT '{"kennis":[],"vaardigheden":[],"houding":[]}'::jsonb,
+  ADD COLUMN IF NOT EXISTS eindproduct jsonb NOT NULL DEFAULT '{"beschrijving":"","vormen":[]}'::jsonb,
+  ADD COLUMN IF NOT EXISTS fases jsonb NOT NULL DEFAULT '[]'::jsonb,
+  ADD COLUMN IF NOT EXISTS weetjes jsonb NOT NULL DEFAULT '[]'::jsonb;
 
 ALTER TABLE beheer_projecten ENABLE ROW LEVEL SECURITY;
 

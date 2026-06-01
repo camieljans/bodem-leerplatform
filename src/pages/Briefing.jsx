@@ -37,11 +37,21 @@ export default function Briefing() {
 
   if (isBeheer) {
     if (!beheerProject) return <div className="p-8 text-center text-gray-500">Laden...</div>
+    const ld = beheerProject.leerdoelen || {}
+    const ep = beheerProject.eindproduct || {}
+    const fs = beheerProject.fases || []
+    const wj = beheerProject.weetjes || []
+    const tm = beheerProject.themas || []
     return (
       <div className="min-h-screen p-4 sm:p-6">
         <div className="max-w-3xl mx-auto">
           <div className="bg-white rounded-3xl shadow-lg overflow-hidden mb-6">
             <div className="relative overflow-hidden text-white p-8" style={{ background: 'linear-gradient(135deg, #1b4332 0%, #2d6a4f 50%, #40916c 100%)' }}>
+              {tm.length > 0 && (
+                <div className="flex items-center gap-2 mb-3 flex-wrap">
+                  {tm.map(t => <span key={t} className="text-xs bg-white/20 rounded-full px-3 py-1 font-medium">{t}</span>)}
+                </div>
+              )}
               <h1 className="text-3xl font-bold mb-1">{beheerProject.naam}</h1>
               {beheerProject.ondertitel && <p className="text-white/80 text-base">{beheerProject.ondertitel}</p>}
               {beheerProject.duur && (
@@ -65,6 +75,64 @@ export default function Briefing() {
               </div>
             )}
           </div>
+
+          {/* Leerdoelen */}
+          {(ld.kennis?.length || ld.vaardigheden?.length || ld.houding?.length) && (
+            <div className="bg-white rounded-2xl shadow p-6 mb-6">
+              <h2 className="font-bold text-gray-800 mb-4 flex items-center gap-2"><Target className="w-5 h-5 text-emerald-600" /> Leerdoelen</h2>
+              {['kennis', 'vaardigheden', 'houding'].map(cat => (ld[cat]?.length ? (
+                <div key={cat} className="mb-4 last:mb-0">
+                  <h3 className="font-semibold text-stone-800 capitalize mb-1">{cat}</h3>
+                  <ul className="list-disc list-inside space-y-1 text-stone-700 text-sm">
+                    {ld[cat].map((d, i) => <li key={i}>{d}</li>)}
+                  </ul>
+                </div>
+              ) : null))}
+            </div>
+          )}
+
+          {/* Eindproduct */}
+          {(ep.beschrijving || (ep.vormen || []).length > 0) && (
+            <div className="bg-white rounded-2xl shadow p-6 mb-6">
+              <h2 className="font-bold text-gray-800 mb-3 flex items-center gap-2"><Flag className="w-5 h-5 text-emerald-600" /> Eindproduct</h2>
+              {ep.beschrijving && <p className="text-stone-700 mb-4 leading-relaxed">{ep.beschrijving}</p>}
+              {(ep.vormen || []).map((v, i) => (
+                <div key={i} className="bg-stone-50 rounded-xl p-3 mb-2">
+                  <p className="font-semibold text-stone-900 text-sm">{v.label}</p>
+                  <p className="text-stone-700 text-sm">{v.beschrijving}</p>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* Fases */}
+          {fs.length > 0 && (
+            <div className="bg-white rounded-2xl shadow p-6 mb-6">
+              <h2 className="font-bold text-gray-800 mb-4 flex items-center gap-2"><Layers className="w-5 h-5 text-emerald-600" /> Fases</h2>
+              <div className="space-y-3">
+                {fs.map((f, i) => (
+                  <div key={i} className="border-l-4 border-emerald-500 pl-4 py-2">
+                    <div className="flex items-baseline gap-2 mb-1">
+                      <span className="text-emerald-700 font-bold">Fase {f.nr || i + 1}</span>
+                      <span className="text-stone-900 font-semibold">— {f.naam}</span>
+                      {f.duur && <span className="text-stone-500 text-sm">({f.duur})</span>}
+                    </div>
+                    {f.beschrijving && <p className="text-sm text-stone-600 italic">{f.beschrijving}</p>}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Weetjes */}
+          {wj.length > 0 && (
+            <div className="bg-white rounded-2xl shadow p-6 mb-6">
+              <h2 className="font-bold text-gray-800 mb-3 flex items-center gap-2"><Sparkles className="w-5 h-5 text-emerald-600" /> Weetjes</h2>
+              <ul className="list-disc list-inside space-y-2 text-stone-700 text-sm">
+                {wj.map((w, i) => <li key={i}>{w}</li>)}
+              </ul>
+            </div>
+          )}
         </div>
       </div>
     )
