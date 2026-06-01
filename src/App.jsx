@@ -16,6 +16,11 @@ import Eindproduct from './pages/Eindproduct'
 import Handleiding from './pages/Handleiding'
 import ProjectKeuze from './pages/ProjectKeuze'
 import CinematicPreview from './pages/CinematicPreview'
+import BeheerLogin from './pages/BeheerLogin'
+import Beheer from './pages/Beheer'
+import BeheerNieuwProject from './pages/BeheerNieuwProject'
+import BeheerProject from './pages/BeheerProject'
+import BeheerWeek from './pages/BeheerWeek'
 import Navbar from './components/Navbar'
 import NatuurAchtergrond from './components/NatuurAchtergrond'
 
@@ -39,7 +44,17 @@ function ProtectedRoute({ children }) {
   )
   if (!user) return <Navigate to="/login" />
   const isBegeleider = profile?.rol === 'begeleider'
+  const isEigenaar  = profile?.rol === 'eigenaar'
+  if (isEigenaar) return <Navigate to="/beheer" />
   if (!isBegeleider && !project) return <Navigate to="/projectkeuze" />
+  return children
+}
+
+function BeheerRoute({ children }) {
+  const { user, profile, loading } = useAuth()
+  if (loading) return null
+  if (!user) return <Navigate to="/beheer-login" />
+  if (profile?.rol !== 'eigenaar') return <Navigate to="/" />
   return children
 }
 
@@ -90,6 +105,12 @@ export default function App() {
           <Route path="/" element={<Welkom />} />
           <Route path="/cinematic-preview" element={<CinematicPreview />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/beheer-login" element={<BeheerLogin />} />
+          <Route path="/beheer" element={<BeheerRoute><Beheer /></BeheerRoute>} />
+          <Route path="/beheer/nieuw" element={<BeheerRoute><BeheerNieuwProject /></BeheerRoute>} />
+          <Route path="/beheer/project/:sleutel" element={<BeheerRoute><BeheerProject /></BeheerRoute>} />
+          <Route path="/beheer/project/:sleutel/week/nieuw" element={<BeheerRoute><BeheerWeek /></BeheerRoute>} />
+          <Route path="/beheer/project/:sleutel/week/:weekId" element={<BeheerRoute><BeheerWeek /></BeheerRoute>} />
           <Route path="/projectkeuze" element={user ? <ProjectKeuze /> : <Navigate to="/login" />} />
           <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
           <Route path="/opdrachten" element={<ProtectedRoute><Opdrachten /></ProtectedRoute>} />

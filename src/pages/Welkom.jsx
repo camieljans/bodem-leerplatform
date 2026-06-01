@@ -9,7 +9,10 @@ export default function Welkom() {
   const navigate = useNavigate()
 
   useEffect(() => {
-    if (user && profile) navigate('/dashboard')
+    if (user && profile) {
+      if (profile.rol === 'eigenaar') navigate('/beheer')
+      else navigate('/dashboard')
+    }
   }, [user, profile])
 
   return (
@@ -49,6 +52,13 @@ export default function Welkom() {
         <p className="text-stone-500 text-xs mt-8">
           Na het inloggen kies je zelf met welk project je aan de slag gaat.
         </p>
+
+        <button
+          onClick={() => navigate('/beheer-login')}
+          className="mt-4 text-stone-500 hover:text-emerald-700 text-xs font-semibold transition-colors"
+        >
+          Ik werk bij Soil Valley →
+        </button>
       </div>
     </div>
   )

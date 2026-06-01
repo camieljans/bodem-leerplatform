@@ -1,6 +1,7 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { useAuth } from '../App'
 import { briefing } from '../data/briefing'
+import { haalBeheerProject } from '../utils/beheerProjecten'
 import {
   FileText, Target, Lightbulb, CheckCircle, BookOpen, Layers,
   ChevronDown, ChevronUp, Sparkles, Clock, Users, ArrowRight, Flag,
@@ -24,9 +25,50 @@ const FASE_STIJLEN = [
 export default function Briefing() {
   const { project } = useAuth()
   const data = briefing[project]
+  const isBeheer = project && !data
+  const [beheerProject, setBeheerProject] = useState(null)
   const [openFase, setOpenFase] = useState(null)
   const [activeTab, setActiveTab] = useState('project')
   const [openPot, setOpenPot] = useState(null)
+
+  useEffect(() => {
+    if (isBeheer) haalBeheerProject(project).then(setBeheerProject)
+  }, [project, isBeheer])
+
+  if (isBeheer) {
+    if (!beheerProject) return <div className="p-8 text-center text-gray-500">Laden...</div>
+    return (
+      <div className="min-h-screen p-4 sm:p-6">
+        <div className="max-w-3xl mx-auto">
+          <div className="bg-white rounded-3xl shadow-lg overflow-hidden mb-6">
+            <div className="relative overflow-hidden text-white p-8" style={{ background: 'linear-gradient(135deg, #1b4332 0%, #2d6a4f 50%, #40916c 100%)' }}>
+              <h1 className="text-3xl font-bold mb-1">{beheerProject.naam}</h1>
+              {beheerProject.ondertitel && <p className="text-white/80 text-base">{beheerProject.ondertitel}</p>}
+              {beheerProject.duur && (
+                <div className="flex items-center gap-4 mt-4 text-sm text-white/70">
+                  <span className="flex items-center gap-1.5"><Clock className="w-4 h-4" />{beheerProject.duur}</span>
+                </div>
+              )}
+            </div>
+            {beheerProject.centrale_vraag && (
+              <div className="p-6 bg-emerald-50 border-b border-emerald-100">
+                <p className="text-xs font-semibold text-emerald-600 uppercase tracking-wide mb-2 flex items-center gap-1.5">
+                  <Lightbulb className="w-3.5 h-3.5" /> Centrale onderzoeksvraag
+                </p>
+                <p className="text-gray-900 font-semibold text-lg leading-relaxed">"{beheerProject.centrale_vraag}"</p>
+              </div>
+            )}
+            {beheerProject.beschrijving && (
+              <div className="p-6">
+                <h2 className="font-bold text-gray-800 mb-3 flex items-center gap-2"><FileText className="w-5 h-5 text-emerald-600" /> Over dit project</h2>
+                <p className="text-gray-700 leading-relaxed">{beheerProject.beschrijving}</p>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    )
+  }
 
   if (!data) return (
     <div className="p-8 text-center text-gray-500">Geen project geselecteerd.</div>

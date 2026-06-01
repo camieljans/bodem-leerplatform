@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../App'
 import { supabase } from '../supabase'
 import { opdrachten } from '../data/opdrachten'
+import { haalBeheerProject, haalBeheerWeken } from '../utils/beheerProjecten'
 import { ClipboardList, BookOpen, MessageSquare, GraduationCap, Bell, ChevronRight, Lightbulb, BarChart2, User, ArrowRight, Map, Microscope, Trophy, BookA, CheckCircle } from 'lucide-react'
 
 import { bepaalNiveau } from '../utils/bepaalNiveau'
@@ -29,7 +30,20 @@ const projectInfo = {
 export default function Dashboard() {
   const { user, profile, project } = useAuth()
   const navigate = useNavigate()
-  const info = projectInfo[project] || projectInfo.wormenhotel
+  const [beheerProject, setBeheerProject] = useState(null)
+  const isBeheer = project && !projectInfo[project]
+  const info = projectInfo[project] || (beheerProject ? {
+    naam: beheerProject.naam,
+    licht: 'bg-emerald-50/70',
+    tekst: 'text-emerald-900',
+    subtekst: 'text-emerald-800',
+    beschrijving: beheerProject.beschrijving || '',
+    tip: beheerProject.centrale_vraag ? `Centrale vraag: ${beheerProject.centrale_vraag}` : 'Werk verder aan dit project en houd je voortgang bij.',
+  } : projectInfo.wormenhotel)
+
+  useEffect(() => {
+    if (isBeheer) haalBeheerProject(project).then(setBeheerProject)
+  }, [project, isBeheer])
 
   const [verzoeken, setVerzoeken] = useState([])
   const [reageerBezig, setReageerBezig] = useState({})
@@ -48,8 +62,22 @@ export default function Dashboard() {
 
   async function laadVoortgang() {
     const schoolGroep = bepaalNiveau(profile?.niveau, profile?.leeftijd)
-    const projectData = opdrachten[project] || {}
-    const weekenData = projectData[schoolGroep] || projectData.midden || projectData.basis || projectData.havo || projectData.pro || Object.values(projectData)[0] || []
+    let weekenData = []
+    if (isBeheer) {
+      const p = await haalBeheerProject(project)
+      if (p) {
+        weekenData = await haalBeheerWeken(p.id, schoolGroep)
+        if (weekenData.length === 0) {
+          for (const n of ['midden', 'basis', 'havo', 'pro']) {
+            weekenData = await haalBeheerWeken(p.id, n)
+            if (weekenData.length > 0) break
+          }
+        }
+      }
+    } else {
+      const projectData = opdrachten[project] || {}
+      weekenData = projectData[schoolGroep] || projectData.midden || projectData.basis || projectData.havo || projectData.pro || Object.values(projectData)[0] || []
+    }
     const totaal = weekenData.reduce((sum, w) => sum + (w.taken?.length || 0), 0)
     const { data } = await supabase
       .from('opdracht_voortgang')

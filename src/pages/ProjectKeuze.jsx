@@ -1,9 +1,11 @@
 import { useNavigate } from 'react-router-dom'
+import { useState, useEffect } from 'react'
 import { useAuth } from '../App'
 import { supabase } from '../supabase'
-import { Worm, Sprout, LogOut } from 'lucide-react'
+import { haalBeheerProjecten } from '../utils/beheerProjecten'
+import { Worm, Sprout, LogOut, Leaf } from 'lucide-react'
 
-const projecten = [
+const ingebouwd = [
   {
     key: 'wormenhotel',
     naam: 'Het Wormenhotel',
@@ -20,24 +22,28 @@ const projecten = [
   },
 ]
 
-const kleurMap = {
-  emerald: {
-    card: 'hover:border-emerald-300',
-    icon: 'bg-emerald-100/80 text-emerald-800',
-    btn: 'bg-emerald-700 hover:bg-emerald-800',
-    badge: 'bg-emerald-100 text-emerald-700',
-  },
-  teal: {
-    card: 'hover:border-emerald-300',
-    icon: 'bg-emerald-100/80 text-emerald-800',
-    btn: 'bg-emerald-700 hover:bg-emerald-800',
-    badge: 'bg-teal-100 text-teal-700',
-  },
+const kleurStyle = {
+  card: 'hover:border-emerald-300',
+  icon: 'bg-emerald-100/80 text-emerald-800',
+  btn: 'bg-emerald-700 hover:bg-emerald-800',
 }
 
 export default function ProjectKeuze() {
   const { profile, selectProject } = useAuth()
   const navigate = useNavigate()
+  const [extra, setExtra] = useState([])
+
+  useEffect(() => {
+    haalBeheerProjecten().then(p => {
+      setExtra(p.map(b => ({
+        key: b.sleutel, naam: b.naam,
+        beschrijving: b.beschrijving || b.ondertitel || '',
+        icon: Leaf, kleur: b.kleur || 'emerald',
+      })))
+    })
+  }, [])
+
+  const projecten = [...ingebouwd, ...extra]
 
   function kies(key) {
     selectProject(key)
@@ -67,23 +73,22 @@ export default function ProjectKeuze() {
         {/* Projectkaarten */}
         <div className="flex flex-col gap-4 mb-8">
           {projecten.map(p => {
-            const k = kleurMap[p.kleur]
             const Icon = p.icon
             return (
               <button
                 key={p.key}
                 onClick={() => kies(p.key)}
-                className={`w-full text-left cinematic-card rounded-3xl p-6 transition-all ${k.card}`}
+                className={`w-full text-left cinematic-card rounded-3xl p-6 transition-all ${kleurStyle.card}`}
               >
                 <div className="flex items-center gap-5">
-                  <div className={`w-14 h-14 rounded-2xl flex items-center justify-center shrink-0 ${k.icon}`}>
+                  <div className={`w-14 h-14 rounded-2xl flex items-center justify-center shrink-0 ${kleurStyle.icon}`}>
                     <Icon className="w-7 h-7" />
                   </div>
                   <div className="flex-1">
                     <h2 className="text-xl font-bold text-stone-950 mb-1">{p.naam}</h2>
                     <p className="text-stone-600 text-sm leading-relaxed">{p.beschrijving}</p>
                   </div>
-                  <div className={`shrink-0 text-sm font-semibold px-4 py-2 rounded-xl text-white ${k.btn}`}>
+                  <div className={`shrink-0 text-sm font-semibold px-4 py-2 rounded-xl text-white ${kleurStyle.btn}`}>
                     Kies dit →
                   </div>
                 </div>

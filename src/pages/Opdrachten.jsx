@@ -3,6 +3,7 @@ import { useAuth } from '../App'
 import { useNavigate } from 'react-router-dom'
 import { supabase } from '../supabase'
 import { opdrachten } from '../data/opdrachten'
+import { haalBeheerProject, haalBeheerWeken } from '../utils/beheerProjecten'
 import { ClipboardList, MessageCircle, Microscope, Wrench, PenLine, Palette, Brain, BookOpen, Lightbulb, ChevronLeft, ChevronRight, CheckCircle2, XCircle, Check } from 'lucide-react'
 import { bepaalNiveau } from '../utils/bepaalNiveau'
 
@@ -123,9 +124,30 @@ export default function Opdrachten() {
   const [afgerond, setAfgerond] = useState(new Set())
   const [bezig, setBezig] = useState(false)
 
+  const [extraWeken, setExtraWeken] = useState(null) // null = nog niet geladen; [] = leeg
+  const isBeheer = project && !opdrachten[project]
   const data = opdrachten[project]
   const schoolGroep = bepaalNiveau(profile?.niveau, profile?.leeftijd)
-  const weekenData = data?.[schoolGroep] || data?.['midden'] || data?.['basis'] || Object.values(data || {})[0] || []
+
+  useEffect(() => {
+    if (!isBeheer) { setExtraWeken(null); return }
+    haalBeheerProject(project).then(async p => {
+      if (!p) { setExtraWeken([]); return }
+      let weken = await haalBeheerWeken(p.id, schoolGroep)
+      if (weken.length === 0) {
+        // Fallback: probeer andere niveaus als gekozen niveau leeg is
+        for (const n of ['midden', 'basis', 'havo', 'pro']) {
+          weken = await haalBeheerWeken(p.id, n)
+          if (weken.length > 0) break
+        }
+      }
+      setExtraWeken(weken)
+    })
+  }, [project, schoolGroep, isBeheer])
+
+  const weekenData = isBeheer
+    ? (extraWeken || [])
+    : (data?.[schoolGroep] || data?.['midden'] || data?.['basis'] || Object.values(data || {})[0] || [])
   const totaalWeken = weekenData.length
   const huidigeWeek = weekenData.find(w => w.week === gekozenWeek) || weekenData[0]
   const niveauInfo = niveauLabels[schoolGroep]
@@ -179,7 +201,18 @@ export default function Opdrachten() {
     setAfgerond(new Set())
   }
 
-  if (!data) return (
+  if (!project) return (
+    <div className="p-8 text-center text-gray-500">Geen project geselecteerd.</div>
+  )
+  if (isBeheer && extraWeken === null) return (
+    <div className="p-8 text-center text-gray-500">Opdrachten laden...</div>
+  )
+  if (isBeheer && extraWeken.length === 0) return (
+    <div className="p-8 text-center text-gray-500">
+      Voor dit project zijn nog geen opdrachten toegevoegd.
+    </div>
+  )
+  if (!isBeheer && !data) return (
     <div className="p-8 text-center text-gray-500">Geen project geselecteerd.</div>
   )
 
