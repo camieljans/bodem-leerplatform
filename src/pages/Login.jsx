@@ -154,7 +154,7 @@ export default function Login() {
         {/* Header */}
         <div className="text-center mb-8">
           <div className="flex justify-center -mb-2">
-            <CirkulairLogo className="w-28 h-28" />
+            <CirkulairLogo className="w-56 h-56" />
           </div>
           <h1 className="text-3xl font-black text-gray-900 tracking-tight" style={{ fontFamily: "'Inter', system-ui, sans-serif" }}>Leerplatform</h1>
           <p className="text-gray-500 mt-1 text-sm">

@@ -18,7 +18,7 @@ export default function Welkom() {
 
         {/* Logo */}
         <div className="flex justify-center -mb-2">
-          <CirkulairLogo className="w-40 h-40" />
+          <CirkulairLogo className="w-80 h-80" />
         </div>
 
         {/* Titel */}
