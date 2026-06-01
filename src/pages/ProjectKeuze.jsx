@@ -14,7 +14,7 @@ const projecten = [
   {
     key: 'keuringsdienst',
     naam: 'Keuringsdienst van Waarde',
-    beschrijving: 'Onderzoek de bodem van je schooltuin. Hoe gezond is de grond? Wat leeft er en wat ontbreekt er?',
+    beschrijving: 'Doe een echt experiment met drie potten radijs: één zonder toevoeging, één met kunstmest en één met compostthee. Welke werkt het best?',
     icon: Sprout,
     kleur: 'teal',
   },
