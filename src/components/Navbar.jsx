@@ -1,7 +1,7 @@
 import { useNavigate, useLocation } from 'react-router-dom'
 import { supabase } from '../supabase'
 import { useAuth } from '../App'
-import { Home, ClipboardList, BookOpen, MessageSquare, Users, LogOut, Worm, Sprout, Microscope, BookA, Trophy, Map, GraduationCap, RefreshCw } from 'lucide-react'
+import { Home, ClipboardList, BookOpen, MessageSquare, Users, LogOut, Worm, Sprout, Microscope, BookA, Trophy, Map, GraduationCap, RefreshCw, Box } from 'lucide-react'
 
 const projectInfo = {
   wormenhotel:    { icon: Worm,   naam: 'Wormenhotel',             kleur: 'text-emerald-400' },
@@ -12,6 +12,7 @@ const leerlingLinks = [
   { pad: '/dashboard',   label: 'Home',                icon: Home },
   { pad: '/briefing',    label: 'Project',             icon: Map },
   { pad: '/opdrachten',  label: 'Opdrachten',          icon: ClipboardList },
+  { pad: '/materialen',  label: 'Benodigdheden',       icon: Box },
   { pad: '/observaties', label: 'Observaties',         icon: Microscope },
   { pad: '/logboek',     label: 'Logboek',             icon: BookOpen },
   { pad: '/eindproduct', label: 'Eindproduct',         icon: Trophy },
