@@ -6,7 +6,8 @@ import {
   FileText, Target, Lightbulb, CheckCircle, BookOpen, Layers,
   ChevronDown, ChevronUp, Sparkles, Clock, Users, ArrowRight, Flag,
   FlaskConical, Leaf, Minus, Info, X, Brain, Wrench,
-  Sprout, BarChart2, MapPin, Microscope, Film
+  Sprout, BarChart2, MapPin, Microscope, Film,
+  Hammer, Package, Shield, ListChecks
 } from 'lucide-react'
 
 // Vaste Lucide-iconen per fase-index (0–5), onafhankelijk van projectdata
@@ -144,6 +145,7 @@ export default function Briefing() {
 
   const tabs = [
     { id: 'project',   label: 'Project',     icon: FileText },
+    ...(data.bouwpakket ? [{ id: 'bouwpakket', label: 'Bouwpakket', icon: Hammer }] : []),
     { id: 'fases',     label: 'Fases',       icon: Layers },
     { id: 'leerdoelen',label: 'Leerdoelen',  icon: Target },
     { id: 'eindproduct',label: 'Eindproduct',icon: Flag },
@@ -326,6 +328,11 @@ export default function Briefing() {
               </div>
             )}
 
+            {/* Bouwpakket tab */}
+            {activeTab === 'bouwpakket' && data.bouwpakket && (
+              <BouwpakketPaneel bp={data.bouwpakket} />
+            )}
+
             {/* Fases tab */}
             {activeTab === 'fases' && (
               <div className="space-y-3">
@@ -442,6 +449,134 @@ export default function Briefing() {
         </div>
 
       </div>
+    </div>
+  )
+}
+
+// ─── Bouwpakket paneel ─────────────────────────────────────────────────────
+function BouwpakketPaneel({ bp }) {
+  return (
+    <div className="space-y-5">
+
+      {/* Header */}
+      <div className="bg-amber-50 border-l-4 border-amber-500 rounded-2xl p-5">
+        <div className="flex items-center gap-2 mb-2">
+          <Hammer className="w-5 h-5 text-amber-700" />
+          <h2 className="text-lg font-bold text-amber-900">Bouwpakket Wormenhotel</h2>
+        </div>
+        <div className="flex flex-wrap gap-3 text-sm text-amber-800 mb-3">
+          {bp.wanneer && <span className="flex items-center gap-1"><Clock className="w-3.5 h-3.5" /> {bp.wanneer}</span>}
+          {bp.duur && <span className="flex items-center gap-1"><Users className="w-3.5 h-3.5" /> {bp.duur}</span>}
+        </div>
+        {bp.intro && <p className="text-sm text-amber-900/90 leading-relaxed">{bp.intro}</p>}
+        {bp.filosofie && (
+          <p className="mt-3 text-sm italic text-amber-800 border-t border-amber-200 pt-3">
+            {bp.filosofie}
+          </p>
+        )}
+      </div>
+
+      {/* Materialen */}
+      {bp.materialen && bp.materialen.length > 0 && (
+        <div className="bg-white rounded-2xl shadow p-6">
+          <h3 className="font-bold text-gray-800 mb-4 flex items-center gap-2">
+            <Package className="w-5 h-5 text-emerald-600" /> Circulaire materialen
+          </h3>
+          <div className="space-y-3">
+            {bp.materialen.map((m, i) => (
+              <div key={i} className="border border-gray-100 rounded-xl p-4 hover:border-emerald-200 transition-colors">
+                <div className="flex items-start justify-between gap-3 mb-1">
+                  <h4 className="font-semibold text-gray-900">{m.naam}</h4>
+                  {m.hoeveelheid && (
+                    <span className="text-xs bg-emerald-50 text-emerald-700 rounded-full px-2 py-0.5 font-semibold shrink-0">
+                      {m.hoeveelheid}
+                    </span>
+                  )}
+                </div>
+                {m.waarvoor && <p className="text-sm text-gray-600 mb-1.5">{m.waarvoor}</p>}
+                {m.tip && (
+                  <p className="text-xs text-emerald-700 bg-emerald-50 rounded-lg px-3 py-1.5 flex items-start gap-1.5">
+                    <Lightbulb className="w-3 h-3 mt-0.5 shrink-0" /> {m.tip}
+                  </p>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Gereedschap */}
+      {bp.gereedschap && bp.gereedschap.length > 0 && (
+        <div className="bg-white rounded-2xl shadow p-6">
+          <h3 className="font-bold text-gray-800 mb-3 flex items-center gap-2">
+            <Wrench className="w-5 h-5 text-blue-600" /> Gereedschap
+          </h3>
+          <ul className="space-y-1.5">
+            {bp.gereedschap.map((g, i) => (
+              <li key={i} className="text-sm text-gray-700 flex items-start gap-2">
+                <span className="text-blue-500 mt-0.5">•</span> {g}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {/* Veiligheid */}
+      {bp.veiligheid && bp.veiligheid.length > 0 && (
+        <div className="bg-red-50 border border-red-200 rounded-2xl p-6">
+          <h3 className="font-bold text-red-900 mb-3 flex items-center gap-2">
+            <Shield className="w-5 h-5 text-red-600" /> Veiligheid
+          </h3>
+          <ul className="space-y-1.5">
+            {bp.veiligheid.map((v, i) => (
+              <li key={i} className="text-sm text-red-900 flex items-start gap-2">
+                <span className="text-red-500 mt-0.5">•</span> {v}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {/* Stappen */}
+      {bp.stappen && bp.stappen.length > 0 && (
+        <div className="bg-white rounded-2xl shadow p-6">
+          <h3 className="font-bold text-gray-800 mb-4 flex items-center gap-2">
+            <Layers className="w-5 h-5 text-emerald-600" /> Bouwstappen
+          </h3>
+          <ol className="space-y-3">
+            {bp.stappen.map(s => (
+              <li key={s.nr} className="flex gap-3">
+                <span className="shrink-0 w-8 h-8 bg-emerald-100 text-emerald-800 rounded-full flex items-center justify-center font-bold text-sm">
+                  {s.nr}
+                </span>
+                <div className="flex-1 pt-0.5">
+                  <div className="flex items-baseline gap-2 flex-wrap">
+                    <span className="font-semibold text-gray-900">{s.titel}</span>
+                    {s.rol && <span className="text-xs bg-gray-100 text-gray-600 rounded-full px-2 py-0.5">{s.rol}</span>}
+                  </div>
+                  <p className="text-sm text-gray-700 mt-1 leading-relaxed">{s.beschrijving}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </div>
+      )}
+
+      {/* Eindcheck */}
+      {bp.checks && bp.checks.length > 0 && (
+        <div className="bg-emerald-50 border border-emerald-200 rounded-2xl p-6">
+          <h3 className="font-bold text-emerald-900 mb-3 flex items-center gap-2">
+            <ListChecks className="w-5 h-5 text-emerald-700" /> Eindcheck — klopt alles?
+          </h3>
+          <ul className="space-y-1.5">
+            {bp.checks.map((c, i) => (
+              <li key={i} className="text-sm text-emerald-900 flex items-start gap-2">
+                <CheckCircle className="w-4 h-4 text-emerald-600 mt-0.5 shrink-0" /> {c}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   )
 }
