@@ -79,6 +79,79 @@ const inputCls =
 const selectCls = inputCls
 
 // ---------------------------------------------------------------------------
+// FotoUpload — uploadt een foto naar Supabase Storage
+// ---------------------------------------------------------------------------
+
+function FotoUpload({ userId, project, week, fotoUrl, onUpload }) {
+  const fileRef = useRef(null)
+  const [bezig, setBezig] = useState(false)
+  const [fout, setFout] = useState('')
+
+  async function uploaden(e) {
+    const file = e.target.files?.[0]
+    if (!file) return
+    setBezig(true)
+    setFout('')
+    try {
+      const ext = file.name.split('.').pop() || 'jpg'
+      const naam = `observaties/${userId}/${project}-w${week}-${Date.now()}.${ext}`
+      const { error } = await supabase.storage.from('logboek-fotos').upload(naam, file)
+      if (error) throw error
+      const url = supabase.storage.from('logboek-fotos').getPublicUrl(naam).data.publicUrl
+      onUpload(url)
+    } catch (err) {
+      setFout('Upload mislukt: ' + (err.message || 'onbekende fout'))
+    } finally {
+      setBezig(false)
+      if (fileRef.current) fileRef.current.value = ''
+    }
+  }
+
+  return (
+    <div>
+      <p className="text-sm font-semibold text-gray-700 mb-2 flex items-center gap-1.5">
+        <Camera className="w-4 h-4" /> Foto bij deze week
+      </p>
+      {fotoUrl ? (
+        <div className="relative inline-block">
+          <img src={fotoUrl} alt="Observatie" className="rounded-xl max-h-48 border border-gray-200" />
+          <button
+            type="button"
+            onClick={() => onUpload(null)}
+            className="absolute -top-2 -right-2 w-7 h-7 bg-white border border-gray-200 rounded-full flex items-center justify-center text-gray-500 hover:text-red-600 shadow"
+            title="Foto verwijderen"
+          >
+            <X className="w-3.5 h-3.5" />
+          </button>
+        </div>
+      ) : (
+        <button
+          type="button"
+          onClick={() => fileRef.current?.click()}
+          disabled={bezig}
+          className="w-full border-2 border-dashed border-gray-200 hover:border-emerald-400 hover:bg-emerald-50 disabled:opacity-50 text-gray-500 hover:text-emerald-700 rounded-xl py-6 transition-colors flex flex-col items-center gap-2"
+        >
+          <Camera className="w-6 h-6" />
+          <span className="text-sm font-semibold">{bezig ? 'Uploaden...' : 'Foto toevoegen'}</span>
+        </button>
+      )}
+      <input
+        type="file"
+        accept="image/*"
+        ref={fileRef}
+        onChange={uploaden}
+        className="hidden"
+      />
+      {fout && (
+        <p className="mt-2 text-sm text-red-600 flex items-center gap-1.5">
+          <AlertCircle className="w-3.5 h-3.5" /> {fout}
+        </p>
+      )}
+    </div>
+  )
+}
+
+// ---------------------------------------------------------------------------
 // Wormenhotel visualisatie
 // ---------------------------------------------------------------------------
 
