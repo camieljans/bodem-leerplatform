@@ -13,6 +13,7 @@ import Briefing from './pages/Briefing'
 import Observaties from './pages/Observaties'
 import Woordenlijst from './pages/Woordenlijst'
 import Eindproduct from './pages/Eindproduct'
+import Materialen from './pages/Materialen'
 import Handleiding from './pages/Handleiding'
 import ProjectKeuze from './pages/ProjectKeuze'
 import CinematicPreview from './pages/CinematicPreview'
@@ -128,6 +129,7 @@ export default function App() {
           <Route path="/observaties" element={<ProtectedRoute><Observaties /></ProtectedRoute>} />
           <Route path="/woordenlijst" element={<ProtectedRoute><Woordenlijst /></ProtectedRoute>} />
           <Route path="/eindproduct" element={<ProtectedRoute><Eindproduct /></ProtectedRoute>} />
+          <Route path="/materialen" element={<ProtectedRoute><Materialen /></ProtectedRoute>} />
           <Route path="/handleiding" element={<ProtectedRoute><Handleiding /></ProtectedRoute>} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
