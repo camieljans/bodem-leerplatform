@@ -482,25 +482,42 @@ function BouwpakketPaneel({ bp }) {
           <h3 className="font-bold text-gray-800 mb-4 flex items-center gap-2">
             <Package className="w-5 h-5 text-emerald-600" /> Circulaire materialen
           </h3>
+          <p className="text-xs text-gray-500 mb-4 -mt-2">Zie tabblad "Benodigdheden" voor volledige lijst met details.</p>
           <div className="space-y-3">
-            {bp.materialen.map((m, i) => (
-              <div key={i} className="border border-gray-100 rounded-xl p-4 hover:border-emerald-200 transition-colors">
-                <div className="flex items-start justify-between gap-3 mb-1">
-                  <h4 className="font-semibold text-gray-900">{m.naam}</h4>
-                  {m.hoeveelheid && (
-                    <span className="text-xs bg-emerald-50 text-emerald-700 rounded-full px-2 py-0.5 font-semibold shrink-0">
-                      {m.hoeveelheid}
-                    </span>
+            {bp.materialen.map((m, i) => {
+              const viaSV = m.bron === 'soil_valley'
+              return (
+                <div key={i} className={`border rounded-xl p-4 transition-colors ${
+                  viaSV ? 'border-emerald-200 bg-emerald-50/30' : 'border-gray-100 hover:border-amber-200'
+                }`}>
+                  <div className="flex items-start justify-between gap-3 mb-1 flex-wrap">
+                    <h4 className="font-semibold text-gray-900 flex items-center gap-2">
+                      {m.naam}
+                      {viaSV && (
+                        <span className="text-xs bg-emerald-700 text-white rounded-full px-2 py-0.5 font-semibold flex items-center gap-1">
+                          <Sprout className="w-3 h-3" /> Via Soil Valley
+                        </span>
+                      )}
+                    </h4>
+                    {m.hoeveelheid && (
+                      <span className={`text-xs rounded-full px-2 py-0.5 font-semibold shrink-0 ${
+                        viaSV ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-50 text-amber-800'
+                      }`}>
+                        {m.hoeveelheid}
+                      </span>
+                    )}
+                  </div>
+                  {m.waarvoor && <p className="text-sm text-gray-600 mb-1.5">{m.waarvoor}</p>}
+                  {m.tip && (
+                    <p className={`text-xs rounded-lg px-3 py-1.5 flex items-start gap-1.5 ${
+                      viaSV ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-50 text-amber-800'
+                    }`}>
+                      <Lightbulb className="w-3 h-3 mt-0.5 shrink-0" /> {m.tip}
+                    </p>
                   )}
                 </div>
-                {m.waarvoor && <p className="text-sm text-gray-600 mb-1.5">{m.waarvoor}</p>}
-                {m.tip && (
-                  <p className="text-xs text-emerald-700 bg-emerald-50 rounded-lg px-3 py-1.5 flex items-start gap-1.5">
-                    <Lightbulb className="w-3 h-3 mt-0.5 shrink-0" /> {m.tip}
-                  </p>
-                )}
-              </div>
-            ))}
+              )
+            })}
           </div>
         </div>
       )}

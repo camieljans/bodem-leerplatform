@@ -530,7 +530,7 @@ export const opdrachten = {
           },
           {
             type: 'doe',
-            tekst: 'Geef meteen de eerste voeding:\n• Pot 2 (kunstmest): los 1 gram kunstmest op in 1 liter water. Geef 50 ml van deze oplossing aan pot 2.\n• Pot 3 (compostthee): roer 2–3 eetlepels SYBASoil Worm Castings door 1 liter water, laat 30 minuten staan en zeef het. Geef 50 ml van dit theewater aan pot 3.\n• Pot 1 (controle): geef alleen 50 ml gewoon water.\nNoteer hoeveel je hebt toegevoegd en om hoe laat.',
+            tekst: 'Geef meteen de eerste voeding:\n• Pot 2 (kunstmest): los 1 gram kunstmest op in 1 liter water. Geef 50 ml van deze oplossing aan pot 2.\n• Pot 3 (compostthee): gebruik 50 ml wormenthee van Soil Valley voor pot 3.\n• Pot 1 (controle): geef alleen 50 ml gewoon water.\nNoteer hoeveel je hebt toegevoegd en om hoe laat.',
           },
         ],
         reflectie: [
@@ -559,7 +559,7 @@ export const opdrachten = {
         taken: [
           {
             type: 'doe',
-            tekst: 'Wekelijkse voeding (doe dit elke week op dezelfde dag):\n• Pot 2: 50 ml kunstmestoplossing (1 g/L water)\n• Pot 3: 50 ml compostthee (2–3 eetlepels Worm Castings per liter, zeven)\n• Pot 1: 50 ml gewoon water\nDe rest van de week geven alle potten alleen gewoon water.',
+            tekst: 'Wekelijkse voeding (doe dit elke week op dezelfde dag):\n• Pot 2: 50 ml kunstmestoplossing (1 g/L water)\n• Pot 3: 50 ml wormenthee van Soil Valley\n• Pot 1: 50 ml gewoon water\nDe rest van de week geven alle potten alleen gewoon water.',
           },
           {
             type: 'onderzoek',
@@ -600,7 +600,7 @@ export const opdrachten = {
         taken: [
           {
             type: 'doe',
-            tekst: 'Wekelijkse voeding:\n• Pot 2: 50 ml kunstmestoplossing (1 g/L water)\n• Pot 3: 50 ml compostthee (2–3 eetlepels Worm Castings per liter, zeven)\n• Pot 1: 50 ml gewoon water',
+            tekst: 'Wekelijkse voeding:\n• Pot 2: 50 ml kunstmestoplossing (1 g/L water)\n• Pot 3: 50 ml wormenthee van Soil Valley\n• Pot 1: 50 ml gewoon water',
           },
           {
             type: 'doe',
@@ -641,7 +641,7 @@ export const opdrachten = {
         taken: [
           {
             type: 'doe',
-            tekst: 'Wekelijkse voeding:\n• Pot 2: 50 ml kunstmestoplossing (1 g/L water)\n• Pot 3: 50 ml compostthee (2–3 eetlepels Worm Castings per liter, zeven)\n• Pot 1: 50 ml gewoon water',
+            tekst: 'Wekelijkse voeding:\n• Pot 2: 50 ml kunstmestoplossing (1 g/L water)\n• Pot 3: 50 ml wormenthee van Soil Valley\n• Pot 1: 50 ml gewoon water',
           },
           {
             type: 'onderzoek',
@@ -779,7 +779,7 @@ export const opdrachten = {
           },
           {
             type: 'doe',
-            tekst: 'Geef nu meteen de eerste voeding:\n• Pot 2 (kunstmest): los 1 gram kunstmest op in 1 liter water. Geef 50 ml van deze oplossing aan pot 2.\n• Pot 3 (compostthee): roer 2–3 eetlepels SYBASoil Worm Castings door 1 liter water, laat 30 minuten staan en zeef het. Geef 50 ml van dit theewater aan pot 3.\n• Pot 1 (controle): geef alleen 50 ml gewoon water.\nNoteer exact: hoeveelheid, tijdstip en eventuele observaties.',
+            tekst: 'Geef nu meteen de eerste voeding:\n• Pot 2 (kunstmest): los 1 gram kunstmest op in 1 liter water. Geef 50 ml van deze oplossing aan pot 2.\n• Pot 3 (compostthee): gebruik 50 ml wormenthee van Soil Valley voor pot 3.\n• Pot 1 (controle): geef alleen 50 ml gewoon water.\nNoteer exact: hoeveelheid, tijdstip en eventuele observaties.',
           },
         ],
         reflectie: [
@@ -808,7 +808,7 @@ export const opdrachten = {
         taken: [
           {
             type: 'doe',
-            tekst: 'Wekelijkse voeding:\n• Pot 2: 50 ml kunstmestoplossing (1 g/L water)\n• Pot 3: 50 ml compostthee (2–3 eetlepels Worm Castings per liter, zeven)\n• Pot 1: 50 ml gewoon water',
+            tekst: 'Wekelijkse voeding:\n• Pot 2: 50 ml kunstmestoplossing (1 g/L water)\n• Pot 3: 50 ml wormenthee van Soil Valley\n• Pot 1: 50 ml gewoon water',
           },
           {
             type: 'onderzoek',
@@ -849,7 +849,7 @@ export const opdrachten = {
         taken: [
           {
             type: 'doe',
-            tekst: 'Wekelijkse voeding:\n• Pot 2: 50 ml kunstmestoplossing (1 g/L water)\n• Pot 3: 50 ml compostthee (2–3 eetlepels Worm Castings per liter, zeven)\n• Pot 1: 50 ml gewoon water',
+            tekst: 'Wekelijkse voeding:\n• Pot 2: 50 ml kunstmestoplossing (1 g/L water)\n• Pot 3: 50 ml wormenthee van Soil Valley\n• Pot 1: 50 ml gewoon water',
           },
           {
             type: 'doe',
@@ -894,7 +894,7 @@ export const opdrachten = {
         taken: [
           {
             type: 'doe',
-            tekst: 'Wekelijkse voeding:\n• Pot 2: 50 ml kunstmestoplossing (1 g/L water)\n• Pot 3: 50 ml compostthee (2–3 eetlepels Worm Castings per liter, zeven)\n• Pot 1: 50 ml gewoon water',
+            tekst: 'Wekelijkse voeding:\n• Pot 2: 50 ml kunstmestoplossing (1 g/L water)\n• Pot 3: 50 ml wormenthee van Soil Valley\n• Pot 1: 50 ml gewoon water',
           },
           {
             type: 'onderzoek',
